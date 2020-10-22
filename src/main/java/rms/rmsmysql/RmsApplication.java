@@ -10,9 +10,7 @@ import java.sql.Statement;
 @SpringBootApplication
 public class RmsApplication {
 
-	private Connection connect = null;
-	private Statement state = null;
-	private ResultSet result = null;
+
 
 
 	public static void main(String[] args) {

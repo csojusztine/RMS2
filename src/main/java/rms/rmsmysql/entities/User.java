@@ -18,11 +18,14 @@ import java.util.List;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(unique = true, name = "username")
+    @Column(name = "username", nullable = false)
     private String username;
+
+    /*@Column(name = "password", nullable = false)
+    private String password;*/
 
     @Column(nullable = false, name = "name")
     private String name;

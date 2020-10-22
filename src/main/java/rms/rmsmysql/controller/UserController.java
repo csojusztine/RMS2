@@ -37,6 +37,35 @@ public class UserController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<User> put(@RequestBody User user, @PathVariable Integer id) {
+        Optional<User> oUser = userRepository.findById(id);
+        if (oUser.isPresent()) {
+            user.setId(id);
+            return ResponseEntity.ok(userRepository.save(user));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Integer id) {
+        Optional<User> oUser = userRepository.findById(id);
+        User user = oUser.get();
+        if (oUser.isPresent() && user.getMachines() != null) {
+            for(Machine m : user.getMachines()) {
+                m.setUser(null);
+                m.setStatus(Status.RETURNED);
+                machineRepository.save(m);
+            }
+            userRepository.deleteById(id);
+            System.out.println("User deleted");
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("")
     public ResponseEntity<User> post(@RequestBody User user) {
         User savedUser = userRepository.save(user);
@@ -52,9 +81,26 @@ public class UserController {
             user.getMachines().add(addedMachine);
             userRepository.save(user);
             addedMachine.setUser(user);
-            //addedMachine.setStatus(Status.UNDER_REPARATION);
+            addedMachine.setStatus(Status.UNDER_REPARATION);
             machineRepository.save(addedMachine);
             return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}/machine")
+    public ResponseEntity deleteMachineFromUser(@PathVariable Integer id, @RequestBody Machine machine) {
+        Optional<User> oUser = userRepository.findById(id);
+        if (oUser.isPresent()) {
+            User u = oUser.get();
+            Machine deletedMachine = machineRepository.save(machine);
+            u.getMachines().remove(deletedMachine);
+            deletedMachine.setStatus(Status.RETURNED);
+            deletedMachine.setUser(null);
+            userRepository.save(u);
+            machineRepository.save(deletedMachine);
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
         }
