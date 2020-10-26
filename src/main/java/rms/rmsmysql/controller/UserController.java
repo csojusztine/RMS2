@@ -11,6 +11,7 @@ import rms.rmsmysql.entities.enums.Role;
 import rms.rmsmysql.entities.enums.Status;
 import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.UserRepository;
+import rms.rmsmysql.security.AuthenticatedUser;
 import rms.rmsmysql.security.MyUserDetailsService;
 
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class UserController {
     private MachineRepository machineRepository;
 
     @Autowired
-    private MyUserDetailsService myUserDetailsService;
+    private AuthenticatedUser authenticatedUser;
 
 
     @Secured({ "ROLE_ADMIN" })
@@ -51,7 +52,10 @@ public class UserController {
     public ResponseEntity<User> put(@RequestBody User user, @PathVariable Integer id) {
         Optional<User> oUser = userRepository.findById(id);
         User _user = oUser.get();
-        if (oUser.isPresent()){
+        User authenticated = authenticatedUser.getUser();
+        if (oUser.isPresent() && (authenticated.getRole().equals(Role.ROLE_ADMIN) || _user.getId() == authenticated.getId())){
+            //System.out.println(_user.getId());
+            //System.out.println(authenticated.getId());
             user.setId(id);
             return ResponseEntity.ok(userRepository.save(user));
         } else {
