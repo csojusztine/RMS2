@@ -1,0 +1,29 @@
+<p>person-list works!</p>
+<h2>Person List</h2>
+
+<div class="card my-5">
+    <div class="card-body">
+        <table class = "table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Username</th>
+                <th scope="col">Password</th>
+                <th scope="col"> Name </th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Role</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor = "let person of persons">
+                    <th scope="row">{{person.id}}</th>
+                    <td> {{person.username}}</td>
+                    <td> {{person.password}}</td>
+                    <td> {{person.name}}</td>
+                    <td> {{person.e_mail}}</td>
+                    <td>{{ person.role }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
