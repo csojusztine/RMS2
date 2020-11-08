@@ -1,25 +1,78 @@
-<p>person-list works!</p>
-<h2>Person List</h2>
+<h2>Users List</h2>
 
-<table class = "table table-striped">
+
+
+<div class="container">
+    <div class="border">
+        <button class="btn btn-md btn-outline-primary"(click)="open(content)">
+          <i class="fa fa-user" ></i>Add User</button>
+    </div>
+    <table class="table table-bordered table-striped">
     <thead>
     <tr>
         <th scope="col">#</th>
         <th scope="col">Username</th>
-        <th scope="col">Password</th>
         <th scope="col"> Name </th>
         <th scope="col">E-mail</th>
-        <th scope="col">Role</th>
+        <th scope="col">Action</th>
     </tr>
     </thead>
     <tbody>
         <tr *ngFor = "let person of persons">
             <th scope="row">{{person.id}}</th>
             <td> {{person.username}}</td>
-            <td> {{person.password}}</td>
             <td> {{person.name}}</td>
             <td> {{person.e_mail}}</td>
-            <td>{{ person.role }}</td>
+            <td>
+                <button class="btn btn-sm btn-info">
+                  <i class="fa fa-search"></i>Details</button>
+                <button class="btn btn-sm btn-warning">
+                  <i class="fa fa-edit"></i>Edit</button>
+                <button class="btn btn-sm btn-danger">
+                  <i class="fa fa-remove"></i>Delete</button>
+              </td>
         </tr>
     </tbody>
-</table>
+    </table>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add User</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <div class="input-group">
+            <input id="name" class="form-control" >
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <div class="input-group">
+              <input id="username" class="form-control" >
+            </div>
+        </div>
+        <div class="form-group">
+                <label for="e_mail">E-mail</label>
+                <div class="input-group">
+                  <input id="e_mail" class="form-control" >
+                </div>
+        </div>
+        <div class="form-group">
+            <label for="role">Role</label>
+            <div class="input-group">
+              <input id="role" class="form-control" >
+            </div>
+        </div>
+                
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>

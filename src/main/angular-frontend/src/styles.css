@@ -1,4 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~font-awesome/css/font-awesome.css";
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.border{
+    padding: 10px;
+  }
+  .btn{
+    margin-right: 10px;
+  }
+  .fa {
+    margin-right: 10px;
+  }
+  table .btn{
+    margin: 2px;
+  }
+ div h4{
+    font-size: 2em;
+    font-weight: bold;
+}

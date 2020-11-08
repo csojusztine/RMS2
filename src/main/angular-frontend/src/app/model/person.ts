@@ -2,6 +2,5 @@ export class Person {
     id: number;
     username: string;
     name: string;
-    e_mail: string;
-    role: string;
+    e_mail: string
 }

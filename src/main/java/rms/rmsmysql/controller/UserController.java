@@ -83,7 +83,7 @@ public class UserController {
 
     //@Secured({ "ROLE_ADMIN" })
     @PostMapping("")
-    public ResponseEntity<User> post(@RequestBody User user) {
+    public ResponseEntity<User> addUser(@RequestBody User user) {
         User savedUser = userRepository.save(user);
         return ResponseEntity.ok(savedUser);
     }
