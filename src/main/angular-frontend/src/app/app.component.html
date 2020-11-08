@@ -1,5 +1,23 @@
 <h1 class = "text-center"> {{title}} </h1>
 
-<div class = "container">
-  <app-person-list></app-person-list>  
-</div>
+<mat-toolbar color="primary">
+  <button mat-button routerLink="/">
+    <mat-icon>home</mat-icon>
+    RMS
+  </button>
+
+  <span class="fill-remaining-space" fxHide="false" fxHide.gt-sm></span>
+  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+    <button mat-button routerLink="/persons">Users</button>
+    <button mat-button routerLink="/">New issues</button>
+  </div>
+  <button mat-icon-button  fxHide="false" fxHide.gt-sm>
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-menu xPosition="before">
+  <button mat-menu-item routerLink="/persons">Users</button>
+  <button mat-menu-item routerLink="/">BlabLa</button>
+</mat-menu>
+
+<router-outlet></router-outlet>

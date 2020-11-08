@@ -11,9 +11,9 @@ import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.WorkRepository;
 
 import java.util.Optional;
-
+@CrossOrigin
 @RestController
-@RequestMapping("/works")
+@RequestMapping("/api/works")
 public class WorkController {
 
     @Autowired

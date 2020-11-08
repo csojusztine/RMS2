@@ -1,9 +1,8 @@
 package rms.rmsmysql.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import rms.rmsmysql.entities.Machine;
 import rms.rmsmysql.entities.User;
@@ -12,12 +11,11 @@ import rms.rmsmysql.entities.enums.Status;
 import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.UserRepository;
 import rms.rmsmysql.security.AuthenticatedUser;
-import rms.rmsmysql.security.MyUserDetailsService;
 
 import java.util.Optional;
-
+@CrossOrigin
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     @Autowired
@@ -30,13 +28,13 @@ public class UserController {
     private AuthenticatedUser authenticatedUser;
 
 
-    @Secured({ "ROLE_ADMIN" })
+    //@Secured({ "ROLE_ADMIN" })
     @GetMapping("")
     public ResponseEntity<Iterable<User>> getAll() {
         return ResponseEntity.ok(userRepository.findAll());
     }
 
-    @Secured({ "ROLE_ADMIN" })
+    //@Secured({ "ROLE_ADMIN" })
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable Integer id) {
         Optional<User> user = userRepository.findById(id);
@@ -47,7 +45,7 @@ public class UserController {
         }
     }
 
-    @Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
+    //@Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
     @PutMapping("/{id}")
     public ResponseEntity<User> put(@RequestBody User user, @PathVariable Integer id) {
         Optional<User> oUser = userRepository.findById(id);
@@ -64,7 +62,7 @@ public class UserController {
         }
     }
 
-    @Secured({ "ROLE_ADMIN" })
+    //@Secured({ "ROLE_ADMIN" })
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable Integer id) {
         Optional<User> oUser = userRepository.findById(id);
@@ -83,14 +81,14 @@ public class UserController {
         }
     }
 
-    @Secured({ "ROLE_ADMIN" })
+    //@Secured({ "ROLE_ADMIN" })
     @PostMapping("")
     public ResponseEntity<User> post(@RequestBody User user) {
         User savedUser = userRepository.save(user);
         return ResponseEntity.ok(savedUser);
     }
 
-    @Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
+    //@Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
     @PostMapping("/{id}/machines")
     public ResponseEntity<User> addMachine(@PathVariable Integer id, @RequestBody Machine machine) {
         Optional<User> userID = userRepository.findById(id);
@@ -108,7 +106,7 @@ public class UserController {
         }
     }
 
-    @Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
+    //@Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
     @DeleteMapping("/{id}/machine")
     public ResponseEntity deleteMachineFromUser(@PathVariable Integer id, @RequestBody Machine machine) {
         Optional<User> oUser = userRepository.findById(id);
@@ -124,6 +122,12 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+
+    @PostMapping("login")
+    public ResponseEntity login() {
+        return ResponseEntity.ok(authenticatedUser.getUser());
     }
 
 }

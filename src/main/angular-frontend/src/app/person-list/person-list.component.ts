@@ -7,7 +7,7 @@ import { PersonService } from '../service/person.service';
   templateUrl: './person-list.component.html',
   styleUrls: ['./person-list.component.css']
 })
-export class PersonListComponent implements OnInit{
+export class PersonListComponent implements OnInit {
 
   persons: Person[];
   
@@ -16,13 +16,13 @@ export class PersonListComponent implements OnInit{
   constructor(private personService: PersonService) { }
 
   ngOnInit(): void {
+    this.getPersons();
+  }
+
+  private getPersons() {
     this.personService.findAllPerson().subscribe(data => {
       this.persons = data;
     })
   }
-
-  /*private getPersons() {
-    
-  }*/
 
 }

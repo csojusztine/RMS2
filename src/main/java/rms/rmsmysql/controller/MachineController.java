@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rms.rmsmysql.entities.Machine;
-import rms.rmsmysql.entities.Role;
 import rms.rmsmysql.entities.User;
 import rms.rmsmysql.entities.Work;
 import rms.rmsmysql.entities.enums.Status;
@@ -13,11 +12,10 @@ import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.UserRepository;
 import rms.rmsmysql.repository.WorkRepository;
 
-import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin
 @RestController
-@RequestMapping("/machines")
+@RequestMapping("/api/machines")
 public class MachineController {
 
     @Autowired
