@@ -21,17 +21,17 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "password", nullable = false)
-    private String password;
-
-    @Column(nullable = false, name = "name")
+    @Column(name = "name")
     private String name;
 
-    @Column(nullable = false, name = "e_mail")
+    @Column(name = "e_mail")
     private String e_mail;
+
+    @Column(name = "password")
+    private String password;
 
     @Column
     @Enumerated(EnumType.STRING)

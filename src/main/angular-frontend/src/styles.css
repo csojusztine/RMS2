@@ -17,7 +17,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   table .btn{
     margin: 2px;
   }
- div h4{
-    font-size: 2em;
+h4 {
+    font-size: large;
     font-weight: bold;
+}
+.ng-valid[required], .ng-valid.required  {
+  border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid:not(form)  {
+  border-left: 5px solid #a94442; /* red */
 }

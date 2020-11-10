@@ -15,6 +15,7 @@ const routes: Routes = [
   {
     path: 'persons', component: PersonListComponent,
   },
+  
 
 ];
 

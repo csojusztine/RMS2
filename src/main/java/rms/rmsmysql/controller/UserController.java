@@ -28,7 +28,6 @@ public class UserController {
     private AuthenticatedUser authenticatedUser;
 
 
-    //@Secured({ "ROLE_ADMIN" })
     @GetMapping("")
     public ResponseEntity<Iterable<User>> getAll() {
         return ResponseEntity.ok(userRepository.findAll());
@@ -81,10 +80,12 @@ public class UserController {
         }
     }
 
-    //@Secured({ "ROLE_ADMIN" })
-    @PostMapping("")
+
+    @PostMapping("/addUser")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         User savedUser = userRepository.save(user);
+        savedUser.setPassword("$2a$10$A/sHe5HY.A8XpqtKpBQil.f39XwK8AiFx3N3ey5/1szuuLjSHk16O");
+        userRepository.save(savedUser);
         return ResponseEntity.ok(savedUser);
     }
 

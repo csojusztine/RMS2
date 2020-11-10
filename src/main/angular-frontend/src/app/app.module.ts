@@ -17,6 +17,7 @@ import { HomeComponent } from './component/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './component/header/header.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
