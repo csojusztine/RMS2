@@ -16,6 +16,8 @@ import { PersonService } from './service/person.service';
 import { HomeComponent } from './component/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './component/header/header.component';
+import { MachineListComponent } from './machine-list/machine-list.component';
+import { MachineService } from './service/machine.service';
 
 
 @NgModule({
@@ -23,7 +25,8 @@ import { HeaderComponent } from './component/header/header.component';
     AppComponent,
     PersonListComponent,
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    MachineListComponent
     
   ],
   imports: [
@@ -37,7 +40,7 @@ import { HeaderComponent } from './component/header/header.component';
     MatIconModule,
     MatButtonModule
   ],
-  providers: [PersonService],
+  providers: [PersonService, MachineService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

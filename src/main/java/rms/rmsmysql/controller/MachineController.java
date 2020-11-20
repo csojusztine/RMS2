@@ -54,7 +54,7 @@ public class MachineController {
     }
 
 
-    @PostMapping("")
+    @PostMapping("/addMachine")
     public ResponseEntity<Machine> post(@RequestBody Machine machine) {
         Machine savedMachine = machineRepository.save(machine);
         savedMachine.setStatus(Status.ON_WAITING_LIST);

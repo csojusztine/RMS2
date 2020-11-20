@@ -1,0 +1,92 @@
+<p>machine-list works!</p>
+
+
+<div class="container">
+    <div class="border">
+        <button class="btn btn-md btn-outline-primary"(click)="open(content)">
+          <i class="fa fa-user" ></i>Add Machine</button>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Manufacturer</th>
+        <th scope="col">Type</th>
+        <th scope="col">Description of failure</th>
+        <th scope="col">Reparation price</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let machine of machines">
+            <th scope="row">{{ machine.id }}</th>
+            <td>{{ machine.manufacturer }}</td>
+            <td>{{ machine.type }}</td>
+            <td>{{ machine.description_of_failure}}</td>
+            <td>{{ machine.reparation_price | number }}</td>
+            <td>{{ machine.status}}</td>
+              <td>
+                  <button class="btn btn-sm btn-info">
+                    <i class="fa fa-search"></i>Details</button>
+                  <button class="btn btn-sm btn-warning">
+                    <i class="fa fa-edit"></i>Edit</button>
+                  <button class="btn btn-sm btn-danger">
+                    <i class="fa fa-remove"></i>Delete</button>
+                </td>
+            </tr>
+      </tbody>
+    </table>
+    
+    <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshMachines()">
+        </ngb-pagination>
+    
+        <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (pageChange)="refreshMachines()">
+        <option [ngValue]="2">2 items per page</option>
+        <option [ngValue]="4">4 items per page</option>
+        <option [ngValue]="6">6 items per page</option>
+        </select>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Machine</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <div class="form-group">
+        <label for="manufacturer">Manufacturer</label>
+        <div class="input-group">
+          <input [(ngModel)] = "machines.manufacturer" type ="text" id="manufacturer" class="form-control"  name="manufacturer" required>
+        
+        </div>
+      </div>
+
+      <div class="form-group">
+          <label for="type">Type</label>
+          <div class="input-group">
+            <input [(ngModel)] = "machines.type" type ="text" id="type" name="type" class="form-control" required >
+          </div>
+      </div>
+
+      <div class="form-group">
+              <label for="e_mail">Description of failure</label>
+              <div class="input-group">
+                <input [(ngModel)] = "machines.description_of_failure "type ="text "id="description_of_failure" name="description_of_failure" class="form-control" required>
+              </div>
+      </div>
+      
+      <div class="border text-center">
+        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
