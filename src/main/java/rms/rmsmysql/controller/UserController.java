@@ -62,7 +62,7 @@ public class UserController {
     }
 
     //@Secured({ "ROLE_ADMIN" })
-    @DeleteMapping("/{id}")
+    @DeleteMapping("delete/{id}")
     public ResponseEntity delete(@PathVariable Integer id) {
         Optional<User> oUser = userRepository.findById(id);
         User user = oUser.get();

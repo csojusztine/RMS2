@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.css";
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body { height: 100%;  font-family: 'Noto Sans JP', sans-serif;}
+body { margin: 0;}
 
 
 .border{
@@ -18,7 +18,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     margin: 2px;
   }
 h4 {
-    font-size: large;
+    font-size: xx-large;
     font-weight: bold;
 }
 .ng-valid[required], .ng-valid.required  {

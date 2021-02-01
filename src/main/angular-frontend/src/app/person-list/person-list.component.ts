@@ -18,6 +18,8 @@ export class PersonListComponent implements OnInit {
   
   closeResult: string;
 
+  deleteId : number;
+
 
   roles = ["ROLE_ADMIN", "ROLE_WORKER"]
   
@@ -60,5 +62,34 @@ export class PersonListComponent implements OnInit {
       });
     this.modalService.dismissAll(); //dismiss the modal
   }
+
+  openDetails(targetModal, person: Person) {
+    this.modalService.open(targetModal, {
+     centered: true,
+     backdrop: 'static',
+     size: 'lg'
+   });
+    document.getElementById('_name').setAttribute('value', person.name);
+    document.getElementById('_username').setAttribute('value', person.username);
+    document.getElementById('_e_mail').setAttribute('value', person.e_mail);
+        
+ }
+ 
+ openDelete(targetModal, person: Person) {
+  this.deleteId = person.id;
+  this.modalService.open(targetModal, {
+    backdrop: 'static',
+    size: 'lg'
+  });
+}
+
+onDelete() {
+  const deleteURL = 'http://localhost:8080/api/users/delete/' + this.deleteId;
+  this.httpClient.delete(deleteURL)
+    .subscribe((results) => {
+      this.ngOnInit();
+      this.modalService.dismissAll();
+    });
+}
 
 }

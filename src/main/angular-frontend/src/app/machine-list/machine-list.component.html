@@ -39,7 +39,7 @@
     </table>
     
     <div class="d-flex justify-content-between p-2">
-        <ngb-pagination [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshMachines()">
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshMachines()">
         </ngb-pagination>
     
         <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (pageChange)="refreshMachines()">

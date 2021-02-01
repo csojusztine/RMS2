@@ -18,6 +18,7 @@ export class MachineListComponent implements OnInit {
   
   statuses = ["UNDER_REPARATION", "DONE", "ON_WAITING_LIST", "RETURNED"];
 
+  collectionSize = Machine.length;
 
   machines: Machine[];
   

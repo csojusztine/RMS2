@@ -14,6 +14,7 @@
         <th scope="col">Username</th>
         <th scope="col"> Name </th>
         <th scope="col">E-mail</th>
+        <th scope="col">Role</th>
         <th scope="col">Action</th>
     </tr>
     </thead>
@@ -23,13 +24,14 @@
             <td> {{person.username}}</td>
             <td> {{person.name}}</td>
             <td> {{person.e_mail}}</td>
+            <td> {{person.role}}</td>
             <td>
-                <button class="btn btn-sm btn-info">
+                <button class="btn btn-sm btn-info" (click) = "openDetails(contentDetails, person)">
                   <i class="fa fa-search"></i>Details</button>
                 <button class="btn btn-sm btn-warning">
                   <i class="fa fa-edit"></i>Edit</button>
-                <button class="btn btn-sm btn-danger">
-                  <i class="fa fa-remove"></i>Delete</button>
+                <button class="btn btn-sm btn-danger" (click)="openDelete(contentDelete, person)">
+                  <i class="fa fa-remove" ></i>Delete</button>
               </td>
         </tr>
     </tbody>
@@ -69,7 +71,7 @@
         <div class="form-group">
             <label for="role">Role</label>
             <select class="form-control" id="role" required>
-              <option *ngFor="let role of roles" [value]="role">{{role}}</option>
+              <option [value]="role" *ngFor="let role of roles" >{{role}}</option>
             </select>
         </div>
         
@@ -82,3 +84,61 @@
       <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
     </div>
   </ng-template>
+
+  <ng-template #contentDetails let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">User Details</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="form-group">
+          <label>Name</label>
+          <div class="input-group">
+            <input id="_name" class="form-control" readonly>
+          
+          </div>
+        </div>
+
+        <div class="form-group">
+            <label>Username</label>
+            <div class="input-group">
+              <input id="_username" class="form-control" readonly>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label>E-mail</label>
+          <div class="input-group">
+            <input id="_e_mail" class="form-control" readonly>
+          </div>
+        </div>
+
+      
+      </form>
+    </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
+      </div>
+    </ng-template>
+
+    <ng-template #contentDelete let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Delete</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2>Are you sure you want to delete this record.</h2>
+        <div class="border text-center"> 
+          <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Yes, Delete!</button> 
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+      </div>
+    </ng-template>
