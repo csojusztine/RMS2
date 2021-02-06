@@ -24,7 +24,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 
-
+@EnableWebSecurity
 @Profile("development")
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
@@ -50,18 +50,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .headers();
-        //.and()
-                /*
+                .headers()
+        .and().exceptionHandling()
+
                 .authenticationEntryPoint(getBasicAuthEntryPoint())
                      // important!
-                .frameOptions().disable()
-                //.formLogin().loginProcessingUrl("api/users/login").permitAll()
+                .and()
+                .formLogin()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Autowired
@@ -71,13 +71,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .passwordEncoder(passwordEncoder());
     }
 
-   /* @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-
-                .withUser("admin").password("$2a$04$YDiv9c./ytEGZQopFfExoOgGlJL6/o0er0K.hiGb5TGKHUL8Ebn..").roles("ADMIN");
-    }*/
 
     @Bean
     public CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint() {

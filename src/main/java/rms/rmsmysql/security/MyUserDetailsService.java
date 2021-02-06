@@ -13,6 +13,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import rms.rmsmysql.entities.User;
 import rms.rmsmysql.entities.enums.Role;
 import rms.rmsmysql.repository.UserRepository;
@@ -20,6 +23,8 @@ import rms.rmsmysql.repository.UserRepository;
 import java.util.*;
 
 @Service
+@RestController
+//@RequestMapping("/api/service")
 public class MyUserDetailsService implements UserDetailsService//, ApplicationListener<AuthenticationSuccessEvent>
 {
 
@@ -32,7 +37,8 @@ public class MyUserDetailsService implements UserDetailsService//, ApplicationLi
     private AuthenticatedUser authenticatedUser;
 
     @Override
-    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    //@GetMapping("/user-details")
+    @Transactional( readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> oUser = userRepository.findByUsername(username);
         if (!oUser.isPresent()) {
@@ -46,38 +52,4 @@ public class MyUserDetailsService implements UserDetailsService//, ApplicationLi
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }
 
-    /*@Override
-    public void onApplicationEvent(AuthenticationSuccessEvent event) {
-        UserDetails principal = (UserDetails) event.getAuthentication().getPrincipal();
-        String username = principal.getUsername();
-        logger.info("User successfully logged in, username: {}", username);
-        List<String> roles = new ArrayList<>();
-        principal.getAuthorities().forEach(o -> {
-            String authority = o.getAuthority();
-            roles.add(authority);
-        });
-        logger.info("User's authorities: {}", roles);
-        Optional<User> byUsername = userRepository.findByUsername(username);
-        if (byUsername.isPresent()) {
-            User existingPerson = byUsername.get();
-            Role newRole = detectRole(roles);
-            if (!newRole.equals(existingPerson.getRole())) {
-                existingPerson.setRole(newRole);
-                userRepository.save(existingPerson);
-            }
-        } else {
-            User newPerson = new User();
-            newPerson.setUsername(username);
-            newPerson.setRole(detectRole(roles));
-            userRepository.save(newPerson);
-        }
-
-    }
-    private Role detectRole(List<String> roles) {
-        if (roles.contains("ROLE_ADMIN")) {
-            return Role.ROLE_ADMIN;
-        } else {
-            return Role.ROLE_WORKER;
-        }
-    }*/
 }

@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PersonListComponent } from './person-list/person-list.component';
 import { PersonService } from './service/person.service';
 import { HomeComponent } from './component/home/home.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './component/header/header.component';
 import { MachineListComponent } from './machine-list/machine-list.component';
 import { MachineService } from './service/machine.service';
@@ -38,9 +38,10 @@ import { MachineService } from './service/machine.service';
     NgbModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule,
   ],
-  providers: [PersonService, MachineService],
+  providers: [PersonService, MachineService, ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

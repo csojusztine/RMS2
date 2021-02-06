@@ -3,6 +3,7 @@ package rms.rmsmysql.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import rms.rmsmysql.entities.Machine;
 import rms.rmsmysql.entities.User;
@@ -33,6 +34,12 @@ public class UserController {
         return ResponseEntity.ok(userRepository.findAll());
     }
 
+    @RequestMapping(value = "/username", method = RequestMethod.GET)
+    @ResponseBody
+    public String currentUserName(Authentication authentication) {
+        return authentication.getName();
+    }
+
     //@Secured({ "ROLE_ADMIN" })
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable Integer id) {
@@ -45,18 +52,15 @@ public class UserController {
     }
 
     //@Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
-    @PutMapping("/{id}")
+    @PutMapping("/editUser/{id}")
     public ResponseEntity<User> put(@RequestBody User user, @PathVariable Integer id) {
         Optional<User> oUser = userRepository.findById(id);
-        User _user = oUser.get();
-        User authenticated = authenticatedUser.getUser();
-        if (oUser.isPresent() && (authenticated.getRole().equals(Role.ROLE_ADMIN) || _user.getId() == authenticated.getId())){
-            //System.out.println(_user.getId());
-            //System.out.println(authenticated.getId());
+        //User _user = oUser.get();
+        //User authenticated = authenticatedUser.getUser();
+        if (oUser.isPresent() ) {//&& (authenticated.getRole().equals(Role.ROLE_ADMIN) || _user.getId() == authenticated.getId())){
             user.setId(id);
             return ResponseEntity.ok(userRepository.save(user));
         } else {
-            System.out.println("A worker csak a saját adatát tudja megváltoztatni!");
             return ResponseEntity.notFound().build();
         }
     }
@@ -127,8 +131,8 @@ public class UserController {
 
 
     @PostMapping("login")
-    public ResponseEntity login() {
-        return ResponseEntity.ok(authenticatedUser.getUser());
+    public ResponseEntity login(@RequestBody User user) {
+        return ResponseEntity.ok().build();
     }
 
 }
