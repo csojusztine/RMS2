@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import java.util.Arrays;
 
 @EnableWebSecurity
@@ -31,6 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private DataSource dataSource;
 
 
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
@@ -45,30 +49,30 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
                 .httpBasic().and()
                 .cors().and()
                 .csrf().disable()
-                .authorizeRequests()
-                .anyRequest().authenticated()
-                .and()
-                .headers()
-        .and().exceptionHandling()
 
-                .authenticationEntryPoint(getBasicAuthEntryPoint())
+
                      // important!
-                .and()
-                .formLogin()
-                .and()
+
+                .formLogin().loginPage("/api/users/login").permitAll();
+                /*.and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
     }
 
     @Autowired
     protected void configureAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+        auth.
+                jdbcAuthentication().passwordEncoder(new BCryptPasswordEncoder())
+                .dataSource(dataSource)
+                .usersByUsernameQuery("select username, password from user where username=?")
+                .authoritiesByUsernameQuery("select username, role from user where username=?")
+        ;
     }
 
 

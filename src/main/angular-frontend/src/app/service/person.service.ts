@@ -29,7 +29,7 @@ export class PersonService {
 
 
   public findAllPerson(): Observable<Person[]> {
-    return this.httpClient.get<Person[]>(this.person_url);
+    return this.httpClient.get<Person[]>(this.person_url, {withCredentials:true});
   }
 
   getPersonById(id: string) {

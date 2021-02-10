@@ -24,14 +24,12 @@ import java.util.*;
 
 @Service
 @RestController
-//@RequestMapping("/api/service")
+@RequestMapping("/api/service")
 public class MyUserDetailsService implements UserDetailsService//, ApplicationListener<AuthenticationSuccessEvent>
 {
 
     @Autowired
     private UserRepository userRepository;
-
-    private static final Logger logger = LoggerFactory.getLogger(MyUserDetailsService.class);
 
     @Autowired
     private AuthenticatedUser authenticatedUser;

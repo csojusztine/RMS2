@@ -34,11 +34,7 @@ public class UserController {
         return ResponseEntity.ok(userRepository.findAll());
     }
 
-    @RequestMapping(value = "/username", method = RequestMethod.GET)
-    @ResponseBody
-    public String currentUserName(Authentication authentication) {
-        return authentication.getName();
-    }
+
 
     //@Secured({ "ROLE_ADMIN" })
     @GetMapping("/{id}")
@@ -130,7 +126,7 @@ public class UserController {
     }
 
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity login(@RequestBody User user) {
         return ResponseEntity.ok().build();
     }

@@ -15,9 +15,12 @@ import { PersonListComponent } from './person-list/person-list.component';
 import { PersonService } from './service/person.service';
 import { HomeComponent } from './component/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from './component/header/header.component';
+
 import { MachineListComponent } from './machine-list/machine-list.component';
 import { MachineService } from './service/machine.service';
+import { LoginComponent } from './component/login/login.component';
+import { LoggedInGuardService } from './service/logged-in-guard.service';
+import { AuthService } from './service/auth.service';
 
 
 @NgModule({
@@ -25,8 +28,8 @@ import { MachineService } from './service/machine.service';
     AppComponent,
     PersonListComponent,
     HomeComponent,
-    HeaderComponent,
-    MachineListComponent
+    MachineListComponent,
+    LoginComponent
     
   ],
   imports: [
@@ -41,7 +44,7 @@ import { MachineService } from './service/machine.service';
     MatButtonModule,
     ReactiveFormsModule,
   ],
-  providers: [PersonService, MachineService, ],
+  providers: [PersonService, MachineService, LoggedInGuardService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
