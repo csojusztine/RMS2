@@ -17,7 +17,7 @@ ngOnInit() {
 }
 
 login(form: NgForm) {
-    const username = form.value.username;
+    const username : string = form.value.username;
     const password = form.value.password;
     this.authService.login(username, password).subscribe(
     () => {

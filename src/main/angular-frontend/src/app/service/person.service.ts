@@ -7,13 +7,7 @@ import { Person } from '../model/person';
 
 //export const person_url= 'http://localhost:8080/api/users';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 
-    'Content-Type': 'application/json',
-    'Authorization': 'Basic YWRtaW46cGFzc3dvcmQ=', // admin/password
-    //'Access-Control-Allow-Origin': 'http://localhost:4200',
-  })
-};
+
 
 
 @Injectable({

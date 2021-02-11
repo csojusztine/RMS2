@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ import java.util.*;
 
 @Service
 @RestController
+@CrossOrigin
 @RequestMapping("/api/service")
 public class MyUserDetailsService implements UserDetailsService//, ApplicationListener<AuthenticationSuccessEvent>
 {
@@ -35,7 +37,7 @@ public class MyUserDetailsService implements UserDetailsService//, ApplicationLi
     private AuthenticatedUser authenticatedUser;
 
     @Override
-    //@GetMapping("/user-details")
+    @GetMapping("/user-details")
     @Transactional( readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> oUser = userRepository.findByUsername(username);

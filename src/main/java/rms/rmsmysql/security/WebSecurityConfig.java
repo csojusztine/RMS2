@@ -26,7 +26,7 @@ import javax.sql.DataSource;
 import java.util.Arrays;
 
 @EnableWebSecurity
-@Profile("development")
+//@Profile("development")
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
@@ -42,24 +42,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedMethods("HEAD", "GET", "POST", "PATCH", "PUT", "DELETE").allowedOrigins("http://localhost:4200")
-                .allowedHeaders("Authorization", "Cache-Control", "Content-Type", "Origin", "Accept")
-                .allowCredentials(true);
+                .allowedMethods("HEAD", "GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS").allowedOrigins("http://localhost:4200")
+                .allowedHeaders("Authorization", "Cache-Control", "Content-Type", "Origin", "Accept");
+                //.allowCredentials(true);
+
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
                 .and()
-                .httpBasic().and()
-                .cors().and()
+                .httpBasic().and().cors().disable()
                 .csrf().disable()
-
-
-                     // important!
-
-                .formLogin().loginPage("/api/users/login").permitAll();
+                .formLogin().loginPage("/api/users/login").permitAll()
+                .usernameParameter("username")
+                .passwordParameter("password");
                 /*.and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/

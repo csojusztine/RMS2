@@ -126,7 +126,7 @@ public class UserController {
     }
 
 
-    @PostMapping("/login")
+    @PostMapping("/loginUser")
     public ResponseEntity login(@RequestBody User user) {
         return ResponseEntity.ok().build();
     }

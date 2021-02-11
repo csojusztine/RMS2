@@ -2,9 +2,10 @@ import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import {User} from '../model/user';
+import { User } from '../model/user';
 
-export const AUTH_API = 'http://localhost:8080/api/users';
+
+export const AUTH_API = 'http://localhost:8080/api/service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient,
               private router: Router) {
-    this.refreshAuthenticatedUser();
+    //this.refreshAuthenticatedUser();
   }
 
   refreshAuthenticatedUser() {
@@ -54,17 +55,21 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    const URL: string = AUTH_API + '/login';
+    const URL: string ='http://localhost:8080/api/users/loginUser';
     const body = new HttpParams()
       .set('username', username)
       .set('password', password);
     return this.httpClient.post(URL,
       body.toString(),
       {
-        headers: new HttpHeaders()
-          .set('Content-Type', 'application/x-www-form-urlencoded'),
-        responseType: 'text',
-        withCredentials: true
+        headers: new HttpHeaders({ 
+          'Content-Type': 'application/json, accept',
+          'Authorization': 'Basic YWRtaW46cGFzc3dvcmQ=', // admin/password
+          //'Access-Control-Allow-Origin': 'http://localhost:4200',
+          responseType: 'text',
+         
+        }),
+        
       }
     );
   }
