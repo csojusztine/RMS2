@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
+import { ProfileComponent } from './component/profile/profile.component';
 import { MachineListComponent } from './machine-list/machine-list.component';
 import { PersonListComponent } from './person-list/person-list.component';
-import { LoggedInGuardService } from './service/logged-in-guard.service';
+
 
 const routes: Routes = [
 
@@ -12,16 +13,20 @@ const routes: Routes = [
     path: '', redirectTo: 'login', pathMatch: 'full'
   },
   {
-    path: 'home', component: HomeComponent, pathMatch: 'full', canActivate: [LoggedInGuardService]
+    path: 'home', component: HomeComponent, pathMatch: 'full',
   },
 
   {
-    path: 'persons', component: PersonListComponent, canActivate: [LoggedInGuardService]
+    path: 'persons', component: PersonListComponent,
   },
   
   
   {
     path: 'login', component: LoginComponent,
+  },
+
+  {
+    path: 'profile', component: ProfileComponent,
   },
 
 ];

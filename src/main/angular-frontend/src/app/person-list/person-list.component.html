@@ -80,7 +80,7 @@
         <div class="form-group">
           <label for="e_mail">E-mail</label>
               <div class="input-group">
-                <input [(ngModel)] = "persons.e_mail "type ="email "id="e_mail" name="e_mail" class="form-control" #e_mail = "ngModel"ngModel required>
+                <input [(ngModel)] = "persons.e_mail "type ="email" id="e_mail" name="e_mail" class="form-control" #e_mail = "ngModel"ngModel required>
               </div>
               <span *ngIf="e_mail.invalid && (e_mail.dirty || e_mail.touched)" class="error">You must enter e-mail!</span>
         </div>

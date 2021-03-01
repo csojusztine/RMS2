@@ -11,24 +11,8 @@ import {PersonService} from "../../service/person.service";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(
-    private personService: PersonService) {
-  }
+ constructor(){}
 
-  ngOnInit() {
-  }
-
-  /*getLoggedUserName(): string {
-    const user = this.authService.getLoggedUser();
-    if (user != null) {
-      return user.username;
-    } else {
-      return '';
-    }
-  }
-
-  getUserRoles() {
-  return this.authService.loggedUser != null ? this.authService.loggedUser.roles : '';
-  }*/
+ ngOnInit() {}
 
 }

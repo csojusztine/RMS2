@@ -3,9 +3,15 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from '../model/user';
+import { TokenStorageService } from './token-storage.service';
 
 
-export const AUTH_API = 'http://localhost:8080/api/service';
+export const AUTH_API = 'http://localhost:8080/api/auth/';
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -15,28 +21,20 @@ export class AuthService {
   authenticated = false;
   loggedUser: User = new User();
 
-  constructor(private httpClient: HttpClient,
+  constructor(private http: HttpClient,
               private router: Router) {
-    //this.refreshAuthenticatedUser();
+    
   }
 
-  refreshAuthenticatedUser() {
-    this.getAuthenticatedUser().subscribe(
-      data => {
-        this.loggedUser = data;
-        this.authenticated = true;
-        sessionStorage.setItem('exampleAppLoggedIn', 'true');
-      },
-      (error: HttpErrorResponse) => {
-        console.log('User is not authenticated, error: ' + error.error.message);
-        sessionStorage.clear();
-        this.authenticated = false;
-        this.loggedUser = new User();
-        this.router.navigate(['/login'], {});
-      }
-    );
+  login(credentials): Observable<any> {
+    return this.http.post(AUTH_API + 'signin', {
+      username: credentials.username,
+      password: credentials.password
+    }, httpOptions);
   }
 
+
+/*
   isUserLoggedIn(): boolean {
     return sessionStorage.getItem('exampleAppLoggedIn') === 'true' || this.authenticated;
   }
@@ -48,29 +46,6 @@ export class AuthService {
   isUserInRole(role: string): boolean {
     return this.loggedUser != null && this.loggedUser.roles != null && this.loggedUser.roles.includes(role);
   }
-
-  getAuthenticatedUser(): Observable<any> {
-    const URL: string = AUTH_API + '/user-details';
-    return this.httpClient.get(URL, {withCredentials: true});
-  }
-
-  login(username: string, password: string) {
-    const URL: string ='http://localhost:8080/api/users/loginUser';
-    const body = new HttpParams()
-      .set('username', username)
-      .set('password', password);
-    return this.httpClient.post(URL,
-      body.toString(),
-      {
-        headers: new HttpHeaders({ 
-          'Content-Type': 'application/json, accept',
-          'Authorization': 'Basic YWRtaW46cGFzc3dvcmQ=', // admin/password
-          //'Access-Control-Allow-Origin': 'http://localhost:4200',
-          responseType: 'text',
-         
-        }),
-        
-      }
-    );
-  }
+S
+  }*/
 }

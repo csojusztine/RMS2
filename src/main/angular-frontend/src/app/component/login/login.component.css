@@ -100,10 +100,18 @@ width:100%;
   color:#fff;
   font-size:50px;
     line-height: 125px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    text-align:left;
+  }
+  .middle .alert.alert-success {
+   padding: 30px; 
+   text-align: center;
+   
   }
   
   #login form span.fa {
-      background-color: #fff;
+      background-color: rgb(56, 55, 55);
       border-radius: 3px 0px 0px 3px;
       color: #000;
       display: block;

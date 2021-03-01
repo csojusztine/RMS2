@@ -19,8 +19,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MachineListComponent } from './machine-list/machine-list.component';
 import { MachineService } from './service/machine.service';
 import { LoginComponent } from './component/login/login.component';
-import { LoggedInGuardService } from './service/logged-in-guard.service';
+
 import { AuthService } from './service/auth.service';
+import { AuthInterceptor } from './helpers/auth-interceptor';
+import { ProfileComponent } from './component/profile/profile.component';
+import { TokenStorageService } from './service/token-storage.service';
 
 
 @NgModule({
@@ -29,7 +32,8 @@ import { AuthService } from './service/auth.service';
     PersonListComponent,
     HomeComponent,
     MachineListComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent,
     
   ],
   imports: [
@@ -44,7 +48,7 @@ import { AuthService } from './service/auth.service';
     MatButtonModule,
     ReactiveFormsModule,
   ],
-  providers: [PersonService, MachineService, LoggedInGuardService, AuthService],
+  providers: [PersonService, MachineService, AuthService, AuthInterceptor, TokenStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
