@@ -1,17 +1,13 @@
 package rms.rmsmysql.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import rms.rmsmysql.entities.Machine;
 import rms.rmsmysql.entities.User;
-import rms.rmsmysql.entities.enums.Role;
 import rms.rmsmysql.entities.enums.Status;
 import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.UserRepository;
-import rms.rmsmysql.security.AuthenticatedUser;
 
 import java.util.Optional;
 @CrossOrigin
@@ -24,9 +20,6 @@ public class UserController {
 
     @Autowired
     private MachineRepository machineRepository;
-
-    @Autowired
-    private AuthenticatedUser authenticatedUser;
 
 
     @GetMapping("")
@@ -123,12 +116,6 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-
-    @PostMapping("/loginUser")
-    public ResponseEntity login(@RequestBody User user) {
-        return ResponseEntity.ok().build();
     }
 
 }

@@ -1,20 +1,26 @@
 package rms.rmsmysql.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import rms.rmsmysql.entities.enums.Role;
+import rms.rmsmysql.entities.enums.EnumRole;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-@Table(name = "User")
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "username"),
+        @UniqueConstraint(columnNames = "e_mail")
+})
 public class User {
 
     @Id
@@ -33,16 +39,19 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
     /*@Column(nullable = false, name = "role_type_id")
     private Integer role_type_id;*/
 
 
     @OneToMany(mappedBy = "user")
     private List<Machine> machines;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+
+    private Set<Role> roles = new HashSet<>();
 
 }
 
