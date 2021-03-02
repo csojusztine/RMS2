@@ -5,40 +5,70 @@
 
 
 
-<mat-toolbar color="primary">
-  <button mat-button routerLink="/">
-    <mat-icon>home</mat-icon>
-    RMS
+
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark"  >
+  <a class="navbar-brand" href="#">RMS</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
   </button>
 
-  <span class="fill-remaining-space" fxHide="false" fxHide.gt-sm></span>
-  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
-    <button mat-button routerLink="/persons" *ngIf="showAdminBoard">Users</button>
-    <button mat-button routerLink="/machines">Machines</button>
-    <button mat-button routerLink="/machines">Works</button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">
+          <i class="fa fa-home"></i>
+          Home
+          <span class="sr-only">(current)</span>
+          </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href = "/persons" routerlink = "persons" *ngIf="showAdminBoard">
+          <i class="fa fa-user fa-fw"></i>
+          Users
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/machines" routerlink = "machines" >
+          <i class="fa fa-television"></i>
+          Machines
+        </a>
+      </li>
+    </ul>
+      <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+        <li class="nav-item">
+          <a href="/login" class="nav-link" routerLink="login">Login</a>
+        </li>
+      </ul>
+      
+      
+      
+      <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+        <li class="nav-item">
+          <a href="/profile" class="nav-link" routerLink="profile">Hello {{ username }}</a>
+        </li>
+        <li class="nav-item">
+          <a href class="nav-link" (click)="logout()">LogOut</a>
+        </li>
+      </ul>
+     
+      
+    
+    
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
   </div>
-  <button mat-icon-button  fxHide="false" fxHide.gt-sm>
-    <mat-icon>menu</mat-icon>
-  </button>
+</nav>
 
-  
-  <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-    <li class="nav-item">
-      <a href="/login" class="nav-link" routerLink="login">Login</a>
-    </li>
-  </ul>
-  
-  
-  
-  <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-    <li class="nav-item">
-      <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-    </li>
-    <li class="nav-item">
-      <a href class="nav-link" (click)="logout()">Logout</a>
-    </li>
-  </ul>
 
-</mat-toolbar>
+
 
 <router-outlet></router-outlet>

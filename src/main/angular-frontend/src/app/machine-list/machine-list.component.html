@@ -5,6 +5,15 @@
     <div class="border">
         <button class="btn btn-md btn-outline-primary"(click)="open(content)">
           <i class="fa fa-user" ></i>Add Machine</button>
+        <form>
+            <div class="form-group form-inline">
+              Search machine by name: 
+            <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchTerm"
+                (input)="search($event.target.value)" />
+            </div>
+        </form>
+    
+    
     </div>
     <table class="table table-striped">
         <thead>
@@ -19,7 +28,7 @@
         </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let machine of machines">
+          <tr *ngFor="let machine of machines" >
             <th scope="row">{{ machine.id }}</th>
             <td>{{ machine.manufacturer }}</td>
             <td>{{ machine.type }}</td>
@@ -33,21 +42,17 @@
                     <i class="fa fa-edit"></i>Edit</button>
                   <button class="btn btn-sm btn-danger">
                     <i class="fa fa-remove"></i>Delete</button>
+                    <button class="btn btn-sm btn-info">
+                      <i class="far fa-plus-square"></i>Add</button>
                 </td>
             </tr>
       </tbody>
     </table>
+
+    <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+    [pageSize]="pageS" class="d-flex justify-content-center"></ngb-pagination>
+
     
-    <div class="d-flex justify-content-between p-2">
-        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshMachines()">
-        </ngb-pagination>
-    
-        <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (pageChange)="refreshMachines()">
-        <option [ngValue]="2">2 items per page</option>
-        <option [ngValue]="4">4 items per page</option>
-        <option [ngValue]="6">6 items per page</option>
-        </select>
-    </div>
 </div>
 
 <ng-template #content let-modal>

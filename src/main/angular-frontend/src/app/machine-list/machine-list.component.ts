@@ -10,25 +10,25 @@ import { MachineService } from '../service/machine.service';
   templateUrl: './machine-list.component.html',
   styleUrls: ['./machine-list.component.css']
 })
+
 export class MachineListComponent implements OnInit {
 
-
   page = 1;
-  pageSize = 4;
+  pageS = 4;
+  collectionSize: number;
+  currentRate = 8;
+  searchTerm: string;
   
   statuses = ["UNDER_REPARATION", "DONE", "ON_WAITING_LIST", "RETURNED"];
-
-  collectionSize = Machine.length;
 
   machines: Machine[];
   
   closeResult: string;
 
   constructor(private machineService: MachineService, private modalService: NgbModal, private httpClient: HttpClient) { }
-
+  
   ngOnInit(): void {
     this.getMachines();
-    this.refreshMachines();
   }
 
   private getMachines() {
@@ -64,10 +64,9 @@ export class MachineListComponent implements OnInit {
     this.modalService.dismissAll(); //dismiss the modal
   }
 
-  refreshMachines() {
-    this.getMachines();
-    this.machines.map((machine, i) => ({id: i + 1, ...machine}))
-      .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+  search(value: string): void {
+    this.machines.filter((val) => val.manufacturer.toLowerCase().includes(value));
+    this.collectionSize = this.machines.length;
   }
 
 }

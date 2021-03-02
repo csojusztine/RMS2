@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Pipe } from '@angular/core';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatIconModule} from '@angular/material/icon';
 import { MatButtonModule} from '@angular/material/button';
@@ -24,6 +24,7 @@ import { AuthService } from './service/auth.service';
 import { AuthInterceptor } from './helpers/auth-interceptor';
 import { ProfileComponent } from './component/profile/profile.component';
 import { TokenStorageService } from './service/token-storage.service';
+
 
 
 @NgModule({

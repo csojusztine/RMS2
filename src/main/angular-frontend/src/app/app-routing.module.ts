@@ -10,7 +10,7 @@ import { PersonListComponent } from './person-list/person-list.component';
 const routes: Routes = [
 
   {
-    path: '', redirectTo: 'login', pathMatch: 'full'
+    path: '', redirectTo: 'home', pathMatch: 'full'
   },
   {
     path: 'home', component: HomeComponent, pathMatch: 'full',
@@ -27,6 +27,9 @@ const routes: Routes = [
 
   {
     path: 'profile', component: ProfileComponent,
+  },
+  {
+    path: 'machines', component: MachineListComponent,
   },
 
 ];
