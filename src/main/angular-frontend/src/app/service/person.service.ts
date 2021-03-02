@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Person } from '../model/person';
@@ -23,7 +23,7 @@ export class PersonService {
 
 
   public findAllPerson(): Observable<Person[]> {
-    return this.httpClient.get<Person[]>(this.person_url, {withCredentials:true});
+    return this.httpClient.get<Person[]>(this.person_url);
   }
 
   getPersonById(id: string) {

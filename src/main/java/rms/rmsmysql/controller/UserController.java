@@ -2,6 +2,8 @@ package rms.rmsmysql.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rms.rmsmysql.entities.Machine;
 import rms.rmsmysql.entities.User;
@@ -21,15 +23,13 @@ public class UserController {
     @Autowired
     private MachineRepository machineRepository;
 
-
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("")
     public ResponseEntity<Iterable<User>> getAll() {
         return ResponseEntity.ok(userRepository.findAll());
     }
 
-
-
-    //@Secured({ "ROLE_ADMIN" })
+    //
     @GetMapping("/{id}")
     public ResponseEntity<User> get(@PathVariable Integer id) {
         Optional<User> user = userRepository.findById(id);

@@ -21,8 +21,7 @@ export class AuthService {
   authenticated = false;
   loggedUser: User = new User();
 
-  constructor(private http: HttpClient,
-              private router: Router) {
+  constructor(private http: HttpClient) {
     
   }
 

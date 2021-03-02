@@ -12,7 +12,7 @@ import { TokenStorageService } from '../../service/token-storage.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private http: HttpHeaders, private authService: AuthService,
+  constructor(private authService: AuthService,
     private router: Router, private tokenStorage: TokenStorageService) {}
 
     form: any = {};

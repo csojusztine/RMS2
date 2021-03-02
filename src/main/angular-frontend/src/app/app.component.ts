@@ -13,6 +13,9 @@ export class AppComponent {
   isLoggedIn = false;
   username: string;
 
+  showAdminBoard = false;
+  showWorkerBoard = false;
+
   constructor(private tokenStorageService: TokenStorageService) { }
 
 
@@ -23,13 +26,16 @@ export class AppComponent {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
 
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+      this.showWorkerBoard = this.roles.includes('ROLE_WORKER');
+
       this.username = user.username;
     }
   }
 
 
   logout() {
-    //this.tokenStorageService.signOut();
+    this.tokenStorageService.signOut();
     window.location.reload();
   }
 }

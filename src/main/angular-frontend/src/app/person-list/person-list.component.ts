@@ -22,8 +22,6 @@ export class PersonListComponent implements OnInit {
 
   editForm: FormGroup;
 
-  
-
   constructor(private personService: PersonService, private modalService: NgbModal, private httpClient: HttpClient, private fb: FormBuilder) { }
 
   ngOnInit(): void {

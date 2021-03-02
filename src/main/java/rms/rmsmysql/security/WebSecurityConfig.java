@@ -34,7 +34,7 @@ import javax.sql.DataSource;
 import java.util.Arrays;
 
 @EnableWebSecurity
-
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
 
@@ -50,10 +50,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;
 
-    @Bean
+    /*@Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
-    }
+    }*/
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -76,13 +76,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
+                .authorizeRequests().antMatchers("/api/auth/**").hasAnyRole("ROLE_ADMIN", "ROLE_WORKER")
 
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+                //.addFilter(new AuthTokenFilter());
 
-                //.addFilterAfter(new AuthTokenFilter())
+                .addFilterBefore(new AuthTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        http.addFilterAfter(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        //http.addFilterAfter(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 }
