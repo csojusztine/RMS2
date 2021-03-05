@@ -1,3 +1,4 @@
+import { Person } from "./person";
 
 
 export class Machine {
@@ -7,4 +8,5 @@ export class Machine {
     description_of_failure: string;
     reparation_price: number;
     status: string;
+    personName: string;
 }

@@ -42,6 +42,15 @@ public class MachineController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/{id}/user")
+    public ResponseEntity<User> getUserByMachine(@PathVariable Integer id) {
+        Optional<Machine> machine = machineRepository.findById(id);
+        if (machine.isPresent()) {
+            return ResponseEntity.ok(machine.get().getUser());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping("/{id}/works")
     public ResponseEntity<Iterable<Work>>getWorkByMachine(@PathVariable Integer id) {

@@ -3,5 +3,5 @@ export class Person {
     username: string;
     name: string;
     e_mail: string;
-    role: string
+    role: string[]
 }

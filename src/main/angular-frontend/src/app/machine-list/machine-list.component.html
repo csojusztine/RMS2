@@ -5,14 +5,7 @@
     <div class="border">
         <button class="btn btn-md btn-outline-primary"(click)="open(content)">
           <i class="fa fa-user" ></i>Add Machine</button>
-        <form>
-            <div class="form-group form-inline">
-              Search machine by name: 
-            <input class="form-control ml-2" type="text" name="searchTerm" [(ngModel)]="searchTerm"
-                (input)="search($event.target.value)" />
-            </div>
-        </form>
-    
+        
     
     </div>
     <table class="table table-striped">
@@ -24,17 +17,19 @@
         <th scope="col">Description of failure</th>
         <th scope="col">Reparation price</th>
         <th scope="col">Status</th>
+        <th scope="col">Worker's Name</th>
         <th scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let machine of machines" >
+          <tr *ngFor="let machine of machines" routerLink ="machinedetail/{{machine.id}}">
             <th scope="row">{{ machine.id }}</th>
             <td>{{ machine.manufacturer }}</td>
             <td>{{ machine.type }}</td>
             <td>{{ machine.description_of_failure}}</td>
             <td>{{ machine.reparation_price | number }}</td>
             <td>{{ machine.status}}</td>
+            <td>{{ machine.personName}}</td>
               <td>
                   <button class="btn btn-sm btn-info">
                     <i class="fa fa-search"></i>Details</button>

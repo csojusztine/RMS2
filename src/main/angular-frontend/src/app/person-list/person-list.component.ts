@@ -37,6 +37,7 @@ export class PersonListComponent implements OnInit {
   private getPersons() {
     this.personService.findAllPerson().subscribe(data => {
       this.persons = data;
+      
     })
   }
 
@@ -79,7 +80,7 @@ export class PersonListComponent implements OnInit {
     document.getElementById('_name').setAttribute('value', person.name);
     document.getElementById('_username').setAttribute('value', person.username);
     document.getElementById('_e_mail').setAttribute('value', person.e_mail);
-    document.getElementById('_role').setAttribute('value', person.role);
+    //document.getElementById('_role').setAttribute('value', person.role);
   }
  
  openDelete(targetModal, person: Person) {
@@ -109,7 +110,7 @@ export class PersonListComponent implements OnInit {
       name: person.name,
       username: person.username,
       e_mail: person.e_mail,
-      role: person.role,
+      roles: person.role,
 
     });
 

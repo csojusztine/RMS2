@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Machine } from '../model/machine';
+import { Person } from '../model/person';
 import { MachineService } from '../service/machine.service';
 
 @Component({
@@ -22,10 +24,13 @@ export class MachineListComponent implements OnInit {
   statuses = ["UNDER_REPARATION", "DONE", "ON_WAITING_LIST", "RETURNED"];
 
   machines: Machine[];
+
+  machine = new Machine();
+  personName : string;
   
   closeResult: string;
 
-  constructor(private machineService: MachineService, private modalService: NgbModal, private httpClient: HttpClient) { }
+  constructor(private route: ActivatedRoute, private machineService: MachineService, private modalService: NgbModal, private httpClient: HttpClient) { }
   
   ngOnInit(): void {
     this.getMachines();
@@ -36,6 +41,8 @@ export class MachineListComponent implements OnInit {
       this.machines = data;
     })
   }
+
+  
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -64,9 +71,6 @@ export class MachineListComponent implements OnInit {
     this.modalService.dismissAll(); //dismiss the modal
   }
 
-  search(value: string): void {
-    this.machines.filter((val) => val.manufacturer.toLowerCase().includes(value));
-    this.collectionSize = this.machines.length;
-  }
+
 
 }

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { ProfileComponent } from './component/profile/profile.component';
+import { MachineDetailComponent } from './machine-detail/machine-detail.component';
 import { MachineListComponent } from './machine-list/machine-list.component';
 import { PersonListComponent } from './person-list/person-list.component';
 
@@ -10,7 +11,7 @@ import { PersonListComponent } from './person-list/person-list.component';
 const routes: Routes = [
 
   {
-    path: '', redirectTo: 'home', pathMatch: 'full'
+    path: '', redirectTo: '', pathMatch: 'full'
   },
   {
     path: 'home', component: HomeComponent, pathMatch: 'full',
@@ -30,6 +31,10 @@ const routes: Routes = [
   },
   {
     path: 'machines', component: MachineListComponent,
+  },
+  
+  {
+    path: 'machinedetails/:id', component: MachineDetailComponent
   },
 
 ];
