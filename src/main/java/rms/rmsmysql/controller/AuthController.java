@@ -3,16 +3,19 @@ package rms.rmsmysql.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import rms.rmsmysql.entities.User;
 import rms.rmsmysql.payload.JwtResponse;
 import rms.rmsmysql.payload.LoginRequest;
 import rms.rmsmysql.repository.RoleRepository;
 import rms.rmsmysql.repository.UserRepository;
+import rms.rmsmysql.security.CurrentUser;
 import rms.rmsmysql.security.jwt.JwtUtils;
 import rms.rmsmysql.security.services.UserDetailsImpl;
 
@@ -28,6 +31,8 @@ public class AuthController {
 
     @Autowired
     AuthenticationManager authenticationManager;
+
+
 
     @Autowired
     UserRepository userRepository;
@@ -61,5 +66,18 @@ public class AuthController {
                 userDetails.getEmail(),
                 roles));
     }
+
+    @GetMapping("/getLoggedUser")
+    public ResponseEntity<CurrentUser> getAuthenticatedUser () {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CurrentUser current = new CurrentUser();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            current.setUsername(authentication.getName());
+            current.setUser(userRepository.findByUsername(authentication.getName()).orElse(null));
+
+        }
+        return ResponseEntity.ok(current);
+    }
+
 
 }

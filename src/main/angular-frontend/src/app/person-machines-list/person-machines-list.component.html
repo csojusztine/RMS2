@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="border">
+        
+         <h2><i class="fa fa-user">My machines</i></h2>
+    </div>
+    <table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Manufacturer</th>
+        <th scope="col"> Type </th>
+        <th scope="col">Current reparation price</th>
+        <th scope="col">Description_of_failure</th>
+        <th scope="col">Status</th>
+        <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor = "let machine of userMachines">
+            <th scope="row">{{machine.id}}</th>
+            <td>{{ machine.manufacturer }}</td>
+            <td>{{ machine.type }}</td>
+            <td>{{ machine.description_of_failure}}</td>
+            <td>{{ machine.reparation_price | number }}</td>
+            <td>{{ machine.status}}</td>
+            <td>
+                <button class="btn btn-sm btn-warning">
+                  <i class="fa fa-edit"></i>Edit</button>
+                <button class="btn btn-sm btn-danger">
+                  <i class="fa fa-remove" ></i>Delete</button>
+              </td>
+        </tr>
+    </tbody>
+    </table>
+</div>

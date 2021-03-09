@@ -33,12 +33,14 @@ export class MachineService {
     return this.httpClient.delete(url);
   }
 
+  
+
   /*saveSubject(subject: Subject) {
     return this.httpClient.post(SUBJECT_API, subject, {withCredentials: true, responseType: "text"});
   }
 */
-  loadUserForMAchine(id: number) {
+  /*loadUserForMAchine(id: number) {
     const url = this.machine_API +'/' + id + '/user';
     return this.httpClient.get<Person>(url);
-  }
+  }*/
 }

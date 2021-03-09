@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Machine } from '../model/machine';
 import { Person } from '../model/person';
+import { AuthService } from './auth.service';
 import { TokenStorageService } from './token-storage.service';
 
 
@@ -18,23 +20,33 @@ export class PersonService {
 
   person_url: string;
 
-  constructor(private httpClient: HttpClient) { 
+  loggedUserId: number;
+
+  constructor(private httpClient: HttpClient, private auth: AuthService) { 
     this.person_url = 'http://localhost:8080/api/users';
+    this.loggedUserId = this.auth.getLoggedUser().id;
   }
 
 
   public findAllPerson(): Observable<Person[]> {
     return this.httpClient.get<Person[]>(this.person_url);
   }
+
 //emiatt kell az a paramroute szar !!!
   getPersonById(id: string) {
     const url = this.person_url + '/' + id;
     return this.httpClient.get<Person>(url);
   }
 
-  save(person: Person) {
+  /*save(person: Person) {
     return this.httpClient.post<Person>(this.person_url, person);
+  }*/
+
+  getUserAllMachines(id:number) {
+    const url = this.person_url + '/' + id + '/machines';
+    return this.httpClient.get<Machine[]>(url);
   }
+
 
 
 

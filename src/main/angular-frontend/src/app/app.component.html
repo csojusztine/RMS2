@@ -36,9 +36,15 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/machines" routerlink = "machines" >
+        <a class="nav-link" href="/machines" routerlink = "machines" *ngIf = "isLoggedIn">
           <i class="fa fa-television"></i>
           Machines
+        </a>
+      </li>
+      <li class="nav-item" >
+        <a class="nav-link" href = "/persons/{{userId}}/machines" [routerlink] = "['persons/', userId, '/machines']" *ngIf = "showWorkerBoard">
+          <i class="fa fa-television"></i>
+          My machines
         </a>
       </li>
     </ul>

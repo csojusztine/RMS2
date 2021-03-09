@@ -11,6 +11,7 @@ export class AppComponent {
   title = 'RMS';
 
   private roles: string[];
+  userId: number;
   isLoggedIn = false;
   username: string;
 
@@ -26,6 +27,7 @@ export class AppComponent {
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
+      this.userId = user.id;
 
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showWorkerBoard = this.roles.includes('ROLE_WORKER');

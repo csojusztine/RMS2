@@ -42,6 +42,7 @@ public class MachineController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping("/{id}/user")
     public ResponseEntity<User> getUserByMachine(@PathVariable Integer id) {
         Optional<Machine> machine = machineRepository.findById(id);
@@ -51,6 +52,8 @@ public class MachineController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 
     @GetMapping("/{id}/works")
     public ResponseEntity<Iterable<Work>>getWorkByMachine(@PathVariable Integer id) {

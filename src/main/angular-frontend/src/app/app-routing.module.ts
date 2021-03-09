@@ -6,6 +6,7 @@ import { ProfileComponent } from './component/profile/profile.component';
 import { MachineDetailComponent } from './machine-detail/machine-detail.component';
 import { MachineListComponent } from './machine-list/machine-list.component';
 import { PersonListComponent } from './person-list/person-list.component';
+import { PersonMachinesListComponent } from './person-machines-list/person-machines-list.component';
 
 
 const routes: Routes = [
@@ -32,10 +33,10 @@ const routes: Routes = [
   {
     path: 'machines', component: MachineListComponent,
   },
-  
   {
-    path: 'machinedetails/:id', component: MachineDetailComponent
+    path: 'persons/:id/machines', component: PersonMachinesListComponent,
   },
+  
 
 ];
 

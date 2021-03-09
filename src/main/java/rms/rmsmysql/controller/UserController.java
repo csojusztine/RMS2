@@ -40,13 +40,18 @@ public class UserController {
         }
     }
 
+    @GetMapping("/{id}/machines")
+    public ResponseEntity<Iterable<Machine>> getMachines(@PathVariable Integer id) {
+        Optional<User> user = userRepository.findById(id);
+        return ResponseEntity.ok(user.get().getMachines());
+    }
+
     //@Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
     @PutMapping("/editUser/{id}")
     public ResponseEntity<User> put(@RequestBody User user, @PathVariable Integer id) {
         Optional<User> oUser = userRepository.findById(id);
-        //User _user = oUser.get();
-        //User authenticated = authenticatedUser.getUser();
-        if (oUser.isPresent() ) {//&& (authenticated.getRole().equals(Role.ROLE_ADMIN) || _user.getId() == authenticated.getId())){
+
+        if (oUser.isPresent() ) {
             user.setId(id);
             return ResponseEntity.ok(userRepository.save(user));
         } else {
@@ -73,6 +78,10 @@ public class UserController {
         }
     }
 
+    @PostMapping("/users")
+    public User save(@RequestBody User user) {
+        return userRepository.save(user);
+    }
 
     @PostMapping("/addUser")
     public ResponseEntity<User> addUser(@RequestBody User user) {
@@ -83,7 +92,7 @@ public class UserController {
     }
 
     //@Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
-    @PostMapping("/{id}/machines")
+    @PostMapping("/{id}/addMachine")
     public ResponseEntity<User> addMachine(@PathVariable Integer id, @RequestBody Machine machine) {
         Optional<User> userID = userRepository.findById(id);
         if (userID.isPresent()) {

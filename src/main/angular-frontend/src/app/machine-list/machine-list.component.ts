@@ -3,9 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ProfileComponent } from '../component/profile/profile.component';
+import { MachineDetailComponent } from '../machine-detail/machine-detail.component';
 import { Machine } from '../model/machine';
 import { Person } from '../model/person';
+import { User } from '../model/user';
+import { AuthService } from '../service/auth.service';
 import { MachineService } from '../service/machine.service';
+import { PersonService } from '../service/person.service';
 
 @Component({
   selector: 'app-machine-list',
@@ -26,11 +31,15 @@ export class MachineListComponent implements OnInit {
   machines: Machine[];
 
   machine = new Machine();
+
+  loggedUserId: number;
+
+
   personName : string;
   
   closeResult: string;
 
-  constructor(private route: ActivatedRoute, private machineService: MachineService, private modalService: NgbModal, private httpClient: HttpClient) { }
+  constructor(private authService: AuthService, private personService: PersonService, private route: ActivatedRoute, private machineService: MachineService, private modalService: NgbModal, private httpClient: HttpClient) { }
   
   ngOnInit(): void {
     this.getMachines();
@@ -42,7 +51,26 @@ export class MachineListComponent implements OnInit {
     })
   }
 
+  openToAdd(targetModal, machine: Machine) {
+
+    this.modalService.open(targetModal, {
+      backdrop: 'static',
+      size: 'lg'
+    });
+  }
+
+
+  onSubmitaMachine(machine: Machine) {
+      this.loggedUserId = this.authService.getLoggedUser().id;
+      const url = 'http://localhost:8080/api/users/' + this.loggedUserId + '/addMachine';
+      this.httpClient.post(url,machine).subscribe((result) => {
+        this.ngOnInit();
+      });
+      this.modalService.dismissAll(); 
+  }
+
   
+
 
   open(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {

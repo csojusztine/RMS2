@@ -39,9 +39,6 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    /*@Column(nullable = false, name = "role_type_id")
-    private Integer role_type_id;*/
-
 
     @OneToMany(mappedBy = "user")
     private List<Machine> machines;

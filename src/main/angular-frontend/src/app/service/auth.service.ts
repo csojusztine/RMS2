@@ -2,8 +2,8 @@ import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Person } from '../model/person';
 import { User } from '../model/user';
-import { TokenStorageService } from './token-storage.service';
 
 
 export const AUTH_API = 'http://localhost:8080/api/auth/';
@@ -18,8 +18,8 @@ const httpOptions = {
 })
 export class AuthService {
 
-  authenticated = false;
-  loggedUser: User = new User();
+  
+  loggedPerson: Person = new Person();
 
   constructor(private http: HttpClient) {
     
@@ -30,18 +30,24 @@ export class AuthService {
       username: credentials.username,
       password: credentials.password
     }, httpOptions);
+    
   }
 
+  getAuthenticatedUser(): Observable<any> {
+    const url: string = AUTH_API + 'getLoggedUser';
+    return this.http.get(url);
+  }
 
+  getLoggedUser(): Person {
+    this.getAuthenticatedUser().subscribe(
+      data => {
+        this.loggedPerson = data;
+        //console.log(data);
+      }
+    )
+    return this.loggedPerson;
+  }
 /*
-  isUserLoggedIn(): boolean {
-    return sessionStorage.getItem('exampleAppLoggedIn') === 'true' || this.authenticated;
-  }
-
-  getLoggedUser(): User {
-    return this.loggedUser;
-  }
-
   isUserInRole(role: string): boolean {
     return this.loggedUser != null && this.loggedUser.roles != null && this.loggedUser.roles.includes(role);
   }
