@@ -12,7 +12,7 @@ import { TokenStorageService } from '../service/token-storage.service';
 })
 export class PersonMachinesListComponent implements OnInit {
 
-  currentUserId: number;
+  //currentUserId: number;
 
   userMachines: Machine[];
 

@@ -30,19 +30,27 @@ export class MachineListComponent implements OnInit {
 
   machines: Machine[];
 
-  machine = new Machine();
 
   loggedUserId: number;
+
+  loggedUser: User = new User();
+  roles: string[];
+
+  machine: Machine;
 
 
   personName : string;
   
   closeResult: string;
+  deleteId: any;
 
-  constructor(private authService: AuthService, private personService: PersonService, private route: ActivatedRoute, private machineService: MachineService, private modalService: NgbModal, private httpClient: HttpClient) { }
+  constructor(private authService: AuthService, private personService: PersonService, private route: ActivatedRoute, private machineService: MachineService, private modalService: NgbModal, private httpClient: HttpClient) { 
+    
+  }
   
   ngOnInit(): void {
     this.getMachines();
+    const id = +this.route.snapshot.params['id'];
   }
 
   private getMachines() {
@@ -52,7 +60,7 @@ export class MachineListComponent implements OnInit {
   }
 
   openToAdd(targetModal, machine: Machine) {
-
+    this.machine = machine;
     this.modalService.open(targetModal, {
       backdrop: 'static',
       size: 'lg'
@@ -60,14 +68,32 @@ export class MachineListComponent implements OnInit {
   }
 
 
-  onSubmitaMachine(machine: Machine) {
-      this.loggedUserId = this.authService.getLoggedUser().id;
-      const url = 'http://localhost:8080/api/users/' + this.loggedUserId + '/addMachine';
-      this.httpClient.post(url,machine).subscribe((result) => {
+  onSubmitaMachine(id:number) {
+      const url = 'http://localhost:8080/api/users/' + id + '/addMachine';
+      this.httpClient.post(url,this.machine).subscribe((result) => {
+        console.log(result);
         this.ngOnInit();
       });
       this.modalService.dismissAll(); 
   }
+
+  openDelete(targetModal, machine: Machine) {
+    this.deleteId = machine.id;
+    this.modalService.open(targetModal, {
+      backdrop: 'static',
+      size: 'lg'
+    });
+  }
+
+  onDelete() {
+    const deleteURL = 'http://localhost:8080/api/machines/delete/' + this.deleteId;
+    this.httpClient.delete(deleteURL)
+      .subscribe((results) => {
+        this.ngOnInit();
+        this.modalService.dismissAll();
+      });
+  }
+
 
   
 
@@ -98,6 +124,7 @@ export class MachineListComponent implements OnInit {
       });
     this.modalService.dismissAll(); //dismiss the modal
   }
+
 
 
 

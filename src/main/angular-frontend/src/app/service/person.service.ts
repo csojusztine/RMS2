@@ -32,15 +32,12 @@ export class PersonService {
     return this.httpClient.get<Person[]>(this.person_url);
   }
 
-//emiatt kell az a paramroute szar !!!
+
   getPersonById(id: string) {
     const url = this.person_url + '/' + id;
     return this.httpClient.get<Person>(url);
   }
 
-  /*save(person: Person) {
-    return this.httpClient.post<Person>(this.person_url, person);
-  }*/
 
   getUserAllMachines(id:number) {
     const url = this.person_url + '/' + id + '/machines';

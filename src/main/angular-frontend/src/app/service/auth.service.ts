@@ -21,6 +21,8 @@ export class AuthService {
   
   loggedPerson: Person = new Person();
 
+  loggedUser: User = new User();
+
   constructor(private http: HttpClient) {
     
   }
@@ -47,7 +49,12 @@ export class AuthService {
     )
     return this.loggedPerson;
   }
+
+
 /*
+/*
+
+
   isUserInRole(role: string): boolean {
     return this.loggedUser != null && this.loggedUser.roles != null && this.loggedUser.roles.includes(role);
   }

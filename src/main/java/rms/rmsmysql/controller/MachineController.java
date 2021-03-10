@@ -102,14 +102,17 @@ public class MachineController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity delete(@PathVariable Integer id) {
         Optional<Machine> oMachine = machineRepository.findById(id);
         if (oMachine.isPresent()) {
             Machine m = oMachine.get();
-            User u = m.getUser();
-            u.getMachines().remove(m);
-            userRepository.save(u);
+            if(m.getStatus() != Status.ON_WAITING_LIST) {
+                User u = m.getUser();
+                u.getMachines().remove(m);
+                userRepository.save(u);
+            }
+
             machineRepository.deleteById(id);
             return ResponseEntity.ok().build();
         } else {
