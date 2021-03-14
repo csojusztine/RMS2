@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './component/home/home.component';
 import { LoginComponent } from './component/login/login.component';
 import { ProfileComponent } from './component/profile/profile.component';
-import { MachineDetailComponent } from './machine-detail/machine-detail.component';
+
 import { MachineListComponent } from './machine-list/machine-list.component';
 import { PersonListComponent } from './person-list/person-list.component';
 import { PersonMachinesListComponent } from './person-machines-list/person-machines-list.component';
@@ -34,8 +34,9 @@ const routes: Routes = [
     path: 'machines', component: MachineListComponent,
   },
   {
-    path: 'persons/:id/machines', component: PersonMachinesListComponent,
+    path: 'persons/:id/machines', component: PersonMachinesListComponent 
   },
+
   
 
 ];

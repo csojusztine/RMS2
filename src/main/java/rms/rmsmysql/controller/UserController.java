@@ -92,7 +92,7 @@ public class UserController {
     }
 
     //@Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
-    @PostMapping("/{id}/addMachine")
+    @PostMapping("/addMachine/{id}")
     public ResponseEntity<User> addMachine(@PathVariable Integer id, @RequestBody Machine machine) {
         Optional<User> userID = userRepository.findById(id);
         if (userID.isPresent()) {
@@ -110,9 +110,10 @@ public class UserController {
     }
 
     //@Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
-    @DeleteMapping("/{id}/machine")
-    public ResponseEntity deleteMachineFromUser(@PathVariable Integer id, @RequestBody Machine machine) {
+    @DeleteMapping("/{id}/{_id}}")
+    public ResponseEntity deleteMachineFromUser(@PathVariable Integer id, @PathVariable Integer _id) {
         Optional<User> oUser = userRepository.findById(id);
+        Optional<Machine> machine = machineRepository.findById(_id);
         if (oUser.isPresent()) {
             User u = oUser.get();
             Machine deletedMachine = machineRepository.save(machine);

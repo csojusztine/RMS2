@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Person } from '../model/person';
 import { User } from '../model/user';
+import { TokenStorageService } from './token-storage.service';
 
 
 export const AUTH_API = 'http://localhost:8080/api/auth/';
@@ -23,7 +24,7 @@ export class AuthService {
 
   loggedUser: User = new User();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private tokenStorageService: TokenStorageService) {
     
   }
 
@@ -35,21 +36,12 @@ export class AuthService {
     
   }
 
-  getAuthenticatedUser(): Observable<any> {
-    const url: string = AUTH_API + 'getLoggedUser';
-    return this.http.get(url);
-  }
 
-  getLoggedUser(): Person {
-    this.getAuthenticatedUser().subscribe(
-      data => {
-        this.loggedPerson = data;
-        //console.log(data);
-      }
-    )
-    return this.loggedPerson;
+  getLoggedUser(): User {
+    const user = this.tokenStorageService.getUser();
+    this.loggedUser = user;
+    return this.loggedUser;
   }
-
 
 /*
 /*

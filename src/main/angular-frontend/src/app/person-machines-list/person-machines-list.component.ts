@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Machine } from '../model/machine';
 import { AuthService } from '../service/auth.service';
 import { PersonService } from '../service/person.service';
@@ -12,17 +14,17 @@ import { TokenStorageService } from '../service/token-storage.service';
 })
 export class PersonMachinesListComponent implements OnInit {
 
-  //currentUserId: number;
+  loggedUserId: number;
 
   userMachines: Machine[];
 
-  constructor(private route: ActivatedRoute, private authService: AuthService, private personService: PersonService) { }
+
+  constructor(private route: ActivatedRoute, private authService: AuthService, private personService: PersonService, private httpClient: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.params['id'];
     this.getUserAllMachines(id);
-    
-    
+    this.loggedUserId = this.authService.getLoggedUser().id;
   }
 
   private getUserAllMachines(id:number) {
@@ -34,6 +36,23 @@ export class PersonMachinesListComponent implements OnInit {
       }
     )
   }
+
+  openDelete(targetModal, machine: Machine) {
+    this.modalService.open(targetModal, {
+      backdrop: 'static',
+      size: 'lg'
+    });
+  }
+
+  onDelete() {
+    const deleteURL = 'http://localhost:8080/api/users/' + this.loggedUserId + '/machine';
+    this.httpClient.delete(deleteURL)
+      .subscribe((results) => {
+        this.ngOnInit();
+        this.modalService.dismissAll();
+      });
+  }
+
 
 
 }

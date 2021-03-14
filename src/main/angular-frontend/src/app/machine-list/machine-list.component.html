@@ -37,14 +37,13 @@
                     <i class="fa fa-edit"></i>Edit</button>
                   <button class="btn btn-sm btn-danger" *ngIf = "showAdminBoard" (click)= "openDelete(contentDelete, machine)">
                     <i class="fa fa-remove"></i>Delete</button>
-                    <button class="btn btn-primary btn-sm" (click)="openToAdd(contentAdding, machine)">
+                    <button class="btn btn-primary btn-sm" [disabled] = "isMachineAdded(machine)" (click)="openToAdd(contentAdding, machine)">
                       <i class="fa fa-plus-square"></i>Add</button>
                 </td>
             </tr>
       </tbody>
     </table>
 
-    
 
     
 </div>
@@ -81,7 +80,7 @@
       </div>
       
       <div class="border text-center">
-        <button data-dismiss="modal" class="btn btn-info">Submit</button>
+        <button data-dismiss="modal" class="btn btn-info" ng-disabled="ngForm.$invalid">Submit</button>
         </div>
     </form>
   </div>
@@ -121,7 +120,7 @@
   <div class="modal-body">
     <h2>Are you sure you want to add this record.</h2>
     <div class="border text-center"> 
-      <button data-dismiss="modal" class="btn btn-outline-success" (click)="onSubmitaMachine(userId)">Yes, Add!</button> 
+      <button data-dismiss="modal" class="btn btn-outline-success" (click)="onSubmitaMachine()">Yes, Add!</button> 
     </div>
   </div>
   <div class="modal-footer">

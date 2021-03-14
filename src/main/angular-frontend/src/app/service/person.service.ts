@@ -20,11 +20,10 @@ export class PersonService {
 
   person_url: string;
 
-  loggedUserId: number;
+  
 
-  constructor(private httpClient: HttpClient, private auth: AuthService) { 
+  constructor(private httpClient: HttpClient) { 
     this.person_url = 'http://localhost:8080/api/users';
-    this.loggedUserId = this.auth.getLoggedUser().id;
   }
 
 

@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ProfileComponent } from '../component/profile/profile.component';
-import { MachineDetailComponent } from '../machine-detail/machine-detail.component';
+
+
 import { Machine } from '../model/machine';
 import { Person } from '../model/person';
 import { User } from '../model/user';
@@ -20,24 +20,19 @@ import { PersonService } from '../service/person.service';
 
 export class MachineListComponent implements OnInit {
 
-  page = 1;
-  pageS = 4;
-  collectionSize: number;
-  currentRate = 8;
-  searchTerm: string;
+
   
   statuses = ["UNDER_REPARATION", "DONE", "ON_WAITING_LIST", "RETURNED"];
 
   machines: Machine[];
 
-
   loggedUserId: number;
 
   loggedUser: User = new User();
-  roles: string[];
 
   machine: Machine;
 
+  isAdded: boolean;
 
   personName : string;
   
@@ -50,7 +45,8 @@ export class MachineListComponent implements OnInit {
   
   ngOnInit(): void {
     this.getMachines();
-    const id = +this.route.snapshot.params['id'];
+    this.loggedUserId = this.authService.getLoggedUser().id;
+    console.log(this.loggedUserId);
   }
 
   private getMachines() {
@@ -60,6 +56,7 @@ export class MachineListComponent implements OnInit {
   }
 
   openToAdd(targetModal, machine: Machine) {
+    
     this.machine = machine;
     this.modalService.open(targetModal, {
       backdrop: 'static',
@@ -68,8 +65,9 @@ export class MachineListComponent implements OnInit {
   }
 
 
-  onSubmitaMachine(id:number) {
-      const url = 'http://localhost:8080/api/users/' + id + '/addMachine';
+  onSubmitaMachine() {
+      
+      const url = 'http://localhost:8080/api/users/addMachine/' + this.loggedUserId;
       this.httpClient.post(url,this.machine).subscribe((result) => {
         console.log(result);
         this.ngOnInit();
@@ -94,8 +92,6 @@ export class MachineListComponent implements OnInit {
       });
   }
 
-
-  
 
 
   open(content) {
@@ -125,6 +121,15 @@ export class MachineListComponent implements OnInit {
     this.modalService.dismissAll(); //dismiss the modal
   }
 
+
+  isMachineAdded(machine: Machine) : boolean {
+    if(machine.status === "UNDER_REPARATION" || machine.status === "DONE") {
+      this.isAdded = true;
+    } else {
+      this.isAdded = false;
+    }
+    return this.isAdded;
+  }
 
 
 

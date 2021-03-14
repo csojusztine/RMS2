@@ -37,7 +37,7 @@ import javax.sql.DataSource;
 import java.util.Arrays;
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true) //prePostEnabled = true)
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
 
@@ -60,10 +60,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter  {
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> wrapper = new UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken>(userDetailsService);
+        /*UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken> wrapper = new UserDetailsByNameServiceWrapper<PreAuthenticatedAuthenticationToken>(userDetailsService);
         PreAuthenticatedAuthenticationProvider preAuthProvider = new PreAuthenticatedAuthenticationProvider();
         preAuthProvider.setPreAuthenticatedUserDetailsService(wrapper);
-        authenticationManagerBuilder.authenticationProvider(preAuthProvider);
+        authenticationManagerBuilder.authenticationProvider(preAuthProvider);*/
 
         authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
