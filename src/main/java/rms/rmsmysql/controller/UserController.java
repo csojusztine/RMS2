@@ -110,10 +110,9 @@ public class UserController {
     }
 
     //@Secured({ "ROLE_ADMIN", "ROLE_WORKER" })
-    @DeleteMapping("/{id}/{_id}}")
-    public ResponseEntity deleteMachineFromUser(@PathVariable Integer id, @PathVariable Integer _id) {
+    @PutMapping("/{id}/machine")
+    public ResponseEntity deleteMachineFromUser(@PathVariable Integer id, @RequestBody Machine machine) {
         Optional<User> oUser = userRepository.findById(id);
-        Optional<Machine> machine = machineRepository.findById(_id);
         if (oUser.isPresent()) {
             User u = oUser.get();
             Machine deletedMachine = machineRepository.save(machine);

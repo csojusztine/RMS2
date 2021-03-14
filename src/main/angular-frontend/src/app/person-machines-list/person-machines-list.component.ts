@@ -18,6 +18,8 @@ export class PersonMachinesListComponent implements OnInit {
 
   userMachines: Machine[];
 
+  machine: Machine;
+
 
   constructor(private route: ActivatedRoute, private authService: AuthService, private personService: PersonService, private httpClient: HttpClient, private modalService: NgbModal) { }
 
@@ -38,6 +40,7 @@ export class PersonMachinesListComponent implements OnInit {
   }
 
   openDelete(targetModal, machine: Machine) {
+    this.machine = machine;
     this.modalService.open(targetModal, {
       backdrop: 'static',
       size: 'lg'
@@ -46,7 +49,7 @@ export class PersonMachinesListComponent implements OnInit {
 
   onDelete() {
     const deleteURL = 'http://localhost:8080/api/users/' + this.loggedUserId + '/machine';
-    this.httpClient.delete(deleteURL)
+    this.httpClient.put(deleteURL, this.machine)
       .subscribe((results) => {
         this.ngOnInit();
         this.modalService.dismissAll();
