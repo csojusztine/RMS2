@@ -20,8 +20,6 @@ export class WorkService {
     return this.httpClient.get<Work[]>(this.work_url);
   }
 
-  public getWorks() {
-    
-  }
+
 
 }

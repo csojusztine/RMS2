@@ -12,6 +12,7 @@ import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.UserRepository;
 import rms.rmsmysql.repository.WorkRepository;
 
+import javax.crypto.Mac;
 import java.util.Optional;
 @CrossOrigin
 @RestController
@@ -66,6 +67,8 @@ public class MachineController {
     }
 
 
+
+
     @PostMapping("/addMachine")
     public ResponseEntity<Machine> post(@RequestBody Machine machine) {
         Machine savedMachine = machineRepository.save(machine);
@@ -95,6 +98,8 @@ public class MachineController {
         Optional<Machine> oMachine = machineRepository.findById(id);
         if (oMachine.isPresent()) {
             machine.setId(id);
+            machine.setUser(oMachine.get().getUser());
+            machine.setStatus(oMachine.get().getStatus());
             return ResponseEntity.ok(machineRepository.save(machine));
         } else {
             return ResponseEntity.notFound().build();

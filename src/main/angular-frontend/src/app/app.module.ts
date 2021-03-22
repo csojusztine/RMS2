@@ -25,6 +25,7 @@ import { AuthInterceptor } from './helpers/auth-interceptor';
 import { ProfileComponent } from './component/profile/profile.component';
 import { TokenStorageService } from './service/token-storage.service';
 import { PersonMachinesListComponent } from './person-machines-list/person-machines-list.component';
+import { EditMachineFormComponent } from './edit-machine-form/edit-machine-form.component';
 
 
 
@@ -37,6 +38,7 @@ import { PersonMachinesListComponent } from './person-machines-list/person-machi
     LoginComponent,
     ProfileComponent,
     PersonMachinesListComponent,
+    EditMachineFormComponent,
     
   ],
   imports: [

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Machine } from '../model/machine';
 import { AuthService } from '../service/auth.service';
@@ -21,7 +21,7 @@ export class PersonMachinesListComponent implements OnInit {
   machine: Machine;
 
 
-  constructor(private route: ActivatedRoute, private authService: AuthService, private personService: PersonService, private httpClient: HttpClient, private modalService: NgbModal) { }
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private personService: PersonService, private httpClient: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.params['id'];
@@ -54,6 +54,10 @@ export class PersonMachinesListComponent implements OnInit {
         this.ngOnInit();
         this.modalService.dismissAll();
       });
+  }
+
+  editMachine(id: number) {
+    this.router.navigate(['machines/' + id + '/edit']);
   }
 
 

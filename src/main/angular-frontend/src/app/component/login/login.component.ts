@@ -54,23 +54,5 @@ reloadPage() {
 }
 
 
-
-/*login(form: NgForm) {
-    const username : string = form.value.username;
-    const password = form.value.password;
-    this.authService.login(username, password).subscribe(
-    () => {
-      sessionStorage.setItem('exampleAppLoggedIn', 'true');
-      this.authService.authenticated = true;
-      this.authService.refreshAuthenticatedUser();
-      this.router.navigate(['/home']);
-    },
-    error => {
-      console.log('login failed, error: ' + error.error);
-      alert("Login failed");
-      this.authService.refreshAuthenticatedUser();
-    }
-    );
-  }*/
   
 }

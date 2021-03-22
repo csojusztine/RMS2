@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Machine } from '../model/machine';
 import { Person } from '../model/person';
+import { Work } from '../model/work';
 
 
 
@@ -28,19 +29,20 @@ export class MachineService {
     return this.httpClient.get<Machine>(url);
   }
 
-  deleteMachine(id) {
-    const url = this.machine_API + "/" + id;
-    return this.httpClient.delete(url);
+  loadWorksforMachine(id: number){
+    const url = this.machine_API + '/' + id + '/works';
+    return this.httpClient.get<Work[]>(url);
   }
-
   
-
-  /*saveSubject(subject: Subject) {
-    return this.httpClient.post(SUBJECT_API, subject, {withCredentials: true, responseType: "text"});
+  addWorkToMachine(id: number, work: Work) {
+    const url = this.machine_API + '/' + id + '/work';
+    return this.httpClient.post(url, work);
   }
-*/
-  /*loadUserForMAchine(id: number) {
+
+
+
+  loadUserForMAchine(id: number) {
     const url = this.machine_API +'/' + id + '/user';
     return this.httpClient.get<Person>(url);
-  }*/
+  }
 }

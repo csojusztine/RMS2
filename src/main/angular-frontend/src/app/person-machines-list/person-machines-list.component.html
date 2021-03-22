@@ -24,7 +24,7 @@
             <td>{{ machine.reparation_price | number }}</td>
             <td>{{ machine.status}}</td>
             <td>
-                <button class="btn btn-sm btn-warning">
+                <button class="btn btn-sm btn-warning" (click) = "editMachine(machine.id)">
                   <i class="fa fa-edit"></i>Edit</button>
                 <button class="btn btn-sm btn-danger" (click) = "openDelete(contentDelete, machine)">
                   <i class="fa fa-remove" ></i>Discard</button>

@@ -3,7 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Person } from '../model/person';
 import { PersonService } from '../service/person.service';
 import {ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 

@@ -43,13 +43,4 @@ export class AuthService {
     return this.loggedUser;
   }
 
-/*
-/*
-
-
-  isUserInRole(role: string): boolean {
-    return this.loggedUser != null && this.loggedUser.roles != null && this.loggedUser.roles.includes(role);
-  }
-S
-  }*/
 }

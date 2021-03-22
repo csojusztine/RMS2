@@ -21,21 +21,18 @@ import { PersonService } from '../service/person.service';
 export class MachineListComponent implements OnInit {
 
 
-  
-  statuses = ["UNDER_REPARATION", "DONE", "ON_WAITING_LIST", "RETURNED"];
-
   machines: Machine[];
 
   loggedUserId: number;
 
-  loggedUser: User = new User();
+  loggedUser: User;
+
 
   machine: Machine;
 
   isAdded: boolean;
 
-  personName : string;
-  
+
   closeResult: string;
   deleteId: any;
 
@@ -46,6 +43,7 @@ export class MachineListComponent implements OnInit {
   ngOnInit(): void {
     this.getMachines();
     this.loggedUserId = this.authService.getLoggedUser().id;
+    this.loggedUser = this.authService.getLoggedUser();
     console.log(this.loggedUserId);
   }
 
@@ -131,6 +129,19 @@ export class MachineListComponent implements OnInit {
     return this.isAdded;
   }
 
+  loadUserforMachine(id: number) {
+    this.machineService.loadUserForMAchine(id).subscribe( data => {
+        const userName = data.name;
+        return userName;
+    })
+    
+  }
 
+  isAdmin(): boolean {
+    if(this.loggedUser.roles.includes('ROLE_ADMIN')) {
+      return true;
+    }
+    return false;
+  }
 
 }

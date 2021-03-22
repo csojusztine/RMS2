@@ -50,9 +50,10 @@ public class UserController {
     @PutMapping("/editUser/{id}")
     public ResponseEntity<User> put(@RequestBody User user, @PathVariable Integer id) {
         Optional<User> oUser = userRepository.findById(id);
-
         if (oUser.isPresent() ) {
             user.setId(id);
+            user.setRoles(oUser.get().getRoles());
+            user.setPassword(oUser.get().getPassword());
             return ResponseEntity.ok(userRepository.save(user));
         } else {
             return ResponseEntity.notFound().build();
