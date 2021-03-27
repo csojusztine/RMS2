@@ -27,6 +27,7 @@
     "core-js": "^2.6.12",
     "enhanced-resolve": "^3.4.1",
     "font-awesome": "^4.7.0",
+    "ng-multiselect-dropdown": "^0.3.4",
     "rxjs": "^6.6.6",
     "tslib": "^2.1.0",
     "zone.js": "~0.10.2"

@@ -34,9 +34,9 @@ export class MachineService {
     return this.httpClient.get<Work[]>(url);
   }
   
-  addWorkToMachine(id: number, work: Work) {
+  addWorkToMachine(id: number, works: Work[]) {
     const url = this.machine_API + '/' + id + '/work';
-    return this.httpClient.post(url, work);
+    return this.httpClient.post(url, works);
   }
 
 

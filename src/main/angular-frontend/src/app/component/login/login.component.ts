@@ -38,7 +38,6 @@ onSubmit() {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
       this.reloadPage();
-      //this.router.navigate(['/profile'])
     },
     err => {
       this.errorMessage = err.error.message;
@@ -49,8 +48,6 @@ onSubmit() {
 
 reloadPage() {
   window.location.reload();
-  
-
 }
 
 
