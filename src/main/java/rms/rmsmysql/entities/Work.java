@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -28,7 +29,7 @@ public class Work {
         private Integer price;
 
         @ManyToMany(mappedBy = "works")
-        @JsonIgnore
+
         private List<Machine> machines;
 
 

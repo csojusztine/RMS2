@@ -51,6 +51,41 @@ input[type=text], select, textarea{
     display: table;
     clear: both;
   }
+
+  div.col-25 button {
+    text-orientation: sideways-right;
+    
+    height: 40%;
+    position:relative;
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 6px ; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    margin-left: 70px;
+    
+  }
+
+  div.col-25 button:hover {
+    background-color: RoyalBlue;
+  }
+  select.form-control {
+    width: 100%;
+      height: 100%;
+      padding-bottom: 6px;
+      margin-top: 0px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;       /* Remove default arrow */
+         /* Add custom arrow */
+   
+  }
+  select.form-control option {
+    text-align: center;
+    font-family: 'Poppins', 'sans-serif';
+ 
+}
   
   /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
   @media screen and (max-width: 600px) {

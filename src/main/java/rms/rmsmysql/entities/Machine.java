@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import rms.rmsmysql.entities.enums.Status;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -41,9 +43,9 @@ public class Machine {
     private Status status;
 
 
-    @ManyToMany
-    @JoinTable
+    @ManyToMany(fetch = FetchType.LAZY)
     @JsonIgnore
+
     private List<Work> works;
 
 

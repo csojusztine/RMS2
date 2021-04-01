@@ -56,6 +56,7 @@
       </div>
       
       
+      
       <div class="row">
         <div class="col-25">
           <label>Description of failure</label>
@@ -71,20 +72,18 @@
 
       <div class="row">
         <div class="col-25">
-          <label>Works</label>
+          <label>New Works</label>
+          <button (click) = "addWork(selectedWork)"> <i class="fa fa-plus">Add work</i></button>
         </div>
         <div class="col-75">
-          <div class = "form-group">
-          <ng-multiselect-dropdown
-            
-            [placeholder]="'Select Work'"
-            [settings]="dropdownSettings"
-            [data]="allWorks"
-            formControlName="works"  
-            
-            (onSelect)="onItemSelect($event)">
-          </ng-multiselect-dropdown>
-          </div>
+          
+      
+            <select [(ngModel)] = "selectedWork"  [ngModelOptions]="{standalone: true}" name = "first">
+              <option value = "" disabled selected> Select Work</option>
+              <option *ngFor = "let work of allWorks" [ngValue] = "work"> {{work.description}}</option>
+            </select>
+            <p>Selected work: {{selectedWork.description}}</p> 
+          
         </div>
       </div>
       

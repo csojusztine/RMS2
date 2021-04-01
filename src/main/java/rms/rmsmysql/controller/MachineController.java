@@ -1,6 +1,8 @@
 package rms.rmsmysql.controller;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,8 @@ public class MachineController {
     @Autowired
     private UserRepository userRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(MachineController.class);
+
 
     @Autowired
     private MachineRepository machineRepository;
@@ -38,6 +42,7 @@ public class MachineController {
     public ResponseEntity<Machine> get(@PathVariable Integer id) {
         Optional<Machine> machine = machineRepository.findById(id);
         if (machine.isPresent()) {
+            machine.get().setWorks(machine.get().getWorks());
             return ResponseEntity.ok(machine.get());
         } else {
             return ResponseEntity.notFound().build();
@@ -84,7 +89,12 @@ public class MachineController {
             Machine machine = byId.get();
             Work newWork = workRepository.save(work);
             machine.getWorks().add(newWork);
-            machine.setReparation_price(machine.getReparation_price() + newWork.getPrice());
+            if(machine.getReparation_price() != null ) {
+                machine.setReparation_price(machine.getReparation_price() + newWork.getPrice());
+            } else {
+                machine.setReparation_price(newWork.getPrice());
+            }
+
             machineRepository.save(machine);
             workRepository.save(newWork);
             return ResponseEntity.ok(machine);
@@ -96,10 +106,13 @@ public class MachineController {
     @PutMapping("/{id}")
     public ResponseEntity<Machine> put(@RequestBody Machine machine, @PathVariable Integer id) {
         Optional<Machine> oMachine = machineRepository.findById(id);
+        if(!(oMachine.get().getWorks().isEmpty())) {
+            logger.info("helloka ez nem ures");
+        }
         if (oMachine.isPresent()) {
-            machine.setId(id);
             machine.setUser(oMachine.get().getUser());
-            machine.setStatus(oMachine.get().getStatus());
+            machine.setWorks(oMachine.get().getWorks());
+            machine.setId(id);
             return ResponseEntity.ok(machineRepository.save(machine));
         } else {
             return ResponseEntity.notFound().build();

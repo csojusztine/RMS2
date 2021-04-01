@@ -23,12 +23,12 @@ export class EditMachineFormComponent implements OnInit {
 
   worksByMachine: Work[];
 
-  dropdownSettings: IDropdownSettings = {};
+  selectedWork: Work = new Work();
+
   selectedWorks: Work[];
 
 
   constructor(private workService: WorkService, private httpClient: HttpClient, private fb: FormBuilder, private route: ActivatedRoute, private machineService: MachineService) { 
-    this.getAllWorks();
     this.editForm = this.fb.group( {
       id: [''],
       manufacturer: [''],
@@ -36,22 +36,17 @@ export class EditMachineFormComponent implements OnInit {
       reparation_price: [''],
       description_of_failure: [''],
       status: [''],
-      works: [this.selectedWorks]
-
-
+      
     });
   }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.params['id'];
     this.getMachine(id);
-    this.dropdownSettings = {
-      singleSelection: false,
-      allowSearchFilter: true,
-      idField: 'id',
-      textField: 'description',
-      
-    };
+    this.getAllWorks();
+    this.getWorksbyMachine(id);
+    this.deleteFromWorks();
+    
     
   }
 
@@ -59,35 +54,39 @@ export class EditMachineFormComponent implements OnInit {
     this.machineService.getMachineById(id).subscribe( data=> {
       this.machine = data;
       this.openForedit(data);
-      //console.log(data);
     })
-
+    //const index: number = this.worksByMachine.indexOf(msg);
+    
   }
+
+ 
 
   getWorksbyMachine(id: number) {
     this.machineService.loadWorksforMachine(id).subscribe(data => {
       this.worksByMachine = data;
-      console.log(data);
+      //console.log(data);
     })
   }
-  onItemSelect(item: any) {
-    console.log('onItemSelect', item);
+ 
+ addWork(work : Work) {
+    const url = 'http://localhost:8080/api/machines/' + this.machine.id + '/work';
+    this.httpClient.post(url, work).subscribe((results) => {
+      console.log(results);
+      this.ngOnInit();
+    })
+  
   }
+
+
 
 
 
   onSubmit() {
     const editUrl = 'http://localhost:8080/api/machines/' + this.machine.id;
-    const url = editUrl + '/work';
-    this.httpClient.post(url, this.selectedWorks).subscribe((results) => {
-      //console.log(results);
-      this.ngOnInit();
-    })
-     
-    console.log(this.selectedWorks);
+
     this.httpClient.put(editUrl, this.editForm.value)
       .subscribe((results) => {
-        
+        console.log(results);
       });
   }
 
@@ -99,7 +98,7 @@ export class EditMachineFormComponent implements OnInit {
       reparation_price: machine.reparation_price,
       description_of_failure: machine.description_of_failure,
       status: machine.status,
-      works: machine.works
+      
     });
 
   }
@@ -109,6 +108,19 @@ export class EditMachineFormComponent implements OnInit {
       this.allWorks = data;
       console.log(data);
     })
+  }
+
+  deleteFromWorks()  {
+    for(let i = 0; i< this.allWorks.length; i++) {
+      for(let j = 0; j< this.worksByMachine.length; j++) {
+          if(this.allWorks[i] === this.worksByMachine[j]) {
+            console.log(this.allWorks[i]);
+            this.allWorks.splice(i, 1);  
+          }
+      }
+    }
+    
+
   }
   
 
