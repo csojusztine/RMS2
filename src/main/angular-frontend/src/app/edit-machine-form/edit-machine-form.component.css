@@ -1,3 +1,11 @@
+@import url('//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css');
+
+
+
+
+
+
+
 input[type=text], select, textarea{
     width: 100%;
     padding: 12px;
@@ -55,7 +63,7 @@ input[type=text], select, textarea{
   div.col-25 button {
     text-orientation: sideways-right;
     
-    height: 40%;
+    
     position:relative;
     background-color: DodgerBlue; /* Blue background */
     border: none; /* Remove borders */
@@ -64,7 +72,25 @@ input[type=text], select, textarea{
     font-size: 16px; /* Set a font size */
     cursor: pointer; /* Mouse pointer on hover */
     margin-left: 70px;
+    border-radius: 3px 3px 3px 3px;
     
+  }
+
+  .col-75 h2 {
+    text-decoration: underline;
+    text-transform: uppercase;
+    font-size:large;
+    font-family: 'Poppins ';
+  }
+
+  div.col-75 tbody button {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+
   }
 
   div.col-25 button:hover {
@@ -81,6 +107,8 @@ input[type=text], select, textarea{
          /* Add custom arrow */
    
   }
+
+ 
   select.form-control option {
     text-align: center;
     font-family: 'Poppins', 'sans-serif';

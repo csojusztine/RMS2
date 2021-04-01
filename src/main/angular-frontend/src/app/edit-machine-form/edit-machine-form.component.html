@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+
 <div class="container">
   <form action="action_page.php" [formGroup] = "editForm" (ngSubmit)="onSubmit()" novalidate>
 
@@ -73,7 +76,7 @@
       <div class="row">
         <div class="col-25">
           <label>New Works</label>
-          <button (click) = "addWork(selectedWork)"> <i class="fa fa-plus">Add work</i></button>
+          <button type="button" (click) = "addWork(selectedWork)"> <i class="fa fa-plus">Add work</i></button>
         </div>
         <div class="col-75">
           
@@ -83,7 +86,32 @@
               <option *ngFor = "let work of allWorks" [ngValue] = "work"> {{work.description}}</option>
             </select>
             <p>Selected work: {{selectedWork.description}}</p> 
+            
+            <div class="alert alert-success alert-dismissible" role="alert" *ngIf = "addingSuccess">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <strong>Success!</strong> Indicates a successful or positive action.
+            </div>
           
+            <h2>Added works to this machine: </h2>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Works</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor = "let work of worksByMachine">
+                  <th scope="row">{{work.description}}</th>
+                  <td>
+                    <button>
+                      <i class="fas fa-trash fa-2x" style="color:red"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
         </div>
       </div>
       
@@ -92,4 +120,5 @@
         <input type="submit" value="Submit">
       </div>
   </form>
+  
 </div>

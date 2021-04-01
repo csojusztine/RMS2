@@ -27,6 +27,7 @@ export class EditMachineFormComponent implements OnInit {
 
   selectedWorks: Work[];
 
+  alert: boolean;
 
   constructor(private workService: WorkService, private httpClient: HttpClient, private fb: FormBuilder, private route: ActivatedRoute, private machineService: MachineService) { 
     this.editForm = this.fb.group( {
@@ -46,8 +47,7 @@ export class EditMachineFormComponent implements OnInit {
     this.getAllWorks();
     this.getWorksbyMachine(id);
     this.deleteFromWorks();
-    
-    
+    this.alert = false;
   }
 
   getMachine(id: number) {
@@ -64,15 +64,16 @@ export class EditMachineFormComponent implements OnInit {
   getWorksbyMachine(id: number) {
     this.machineService.loadWorksforMachine(id).subscribe(data => {
       this.worksByMachine = data;
-      //console.log(data);
     })
   }
  
  addWork(work : Work) {
     const url = 'http://localhost:8080/api/machines/' + this.machine.id + '/work';
     this.httpClient.post(url, work).subscribe((results) => {
-      console.log(results);
+      this.alert = true;
+      console.log(this.alert);
       this.ngOnInit();
+
     })
   
   }
