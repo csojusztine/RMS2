@@ -29,6 +29,10 @@ export class EditMachineFormComponent implements OnInit {
 
   alert: boolean;
 
+  done = false;
+  
+  theCheckbox = false;
+
   constructor(private workService: WorkService, private httpClient: HttpClient, private fb: FormBuilder, private route: ActivatedRoute, private machineService: MachineService) { 
     this.editForm = this.fb.group( {
       id: [''],
@@ -39,20 +43,21 @@ export class EditMachineFormComponent implements OnInit {
       status: [''],
       
     });
+    this.getAllWorks();
   }
 
   ngOnInit(): void {
     const id = +this.route.snapshot.params['id'];
     this.getMachine(id);
-    this.getAllWorks();
+    
     this.getWorksbyMachine(id);
-    this.deleteFromWorks();
     this.alert = false;
   }
 
   getMachine(id: number) {
     this.machineService.getMachineById(id).subscribe( data=> {
       this.machine = data;
+
       this.openForedit(data);
     })
     //const index: number = this.worksByMachine.indexOf(msg);
@@ -64,20 +69,32 @@ export class EditMachineFormComponent implements OnInit {
   getWorksbyMachine(id: number) {
     this.machineService.loadWorksforMachine(id).subscribe(data => {
       this.worksByMachine = data;
+      console.log(data);
     })
   }
  
  addWork(work : Work) {
     const url = 'http://localhost:8080/api/machines/' + this.machine.id + '/work';
+    const index = this.allWorks.indexOf(work);
+    console.log(index);
     this.httpClient.post(url, work).subscribe((results) => {
       this.alert = true;
       console.log(this.alert);
+      this.allWorks.splice(index,1);
+      console.log(this.allWorks);
       this.ngOnInit();
 
     })
   
   }
 
+  deleteWorkFromMachine(work: Work) {
+    const url = 'http://localhost:8080/api/machines/' + this.machine.id + '/deleteWork';
+    this.httpClient.put(url, work).subscribe((results) => {
+      this.allWorks.push(work);
+      this.ngOnInit();
+    })
+  }
 
 
 
@@ -111,18 +128,22 @@ export class EditMachineFormComponent implements OnInit {
     })
   }
 
-  deleteFromWorks()  {
-    for(let i = 0; i< this.allWorks.length; i++) {
-      for(let j = 0; j< this.worksByMachine.length; j++) {
-          if(this.allWorks[i] === this.worksByMachine[j]) {
-            console.log(this.allWorks[i]);
-            this.allWorks.splice(i, 1);  
-          }
-      }
+  changeToDone(e) {
+    const editUrl = 'http://localhost:8080/api/machines/' + this.machine.id + '/changeStatus';
+    if(this.done) {
+      e.preventDefault();
+    } else {
+      if(e.target.checked) {
+      this.httpClient.put(editUrl, null).subscribe(data => {
+        console.log(e.target.checked);
+        this.ngOnInit();
+      })
+    }
     }
     
-
+    
   }
+  
   
 
 }

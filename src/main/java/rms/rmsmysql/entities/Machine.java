@@ -43,7 +43,7 @@ public class Machine {
     private Status status;
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnore
 
     private List<Work> works;

@@ -89,6 +89,7 @@ public class MachineController {
             Machine machine = byId.get();
             Work newWork = workRepository.save(work);
             machine.getWorks().add(newWork);
+
             if(machine.getReparation_price() != null ) {
                 machine.setReparation_price(machine.getReparation_price() + newWork.getPrice());
             } else {
@@ -137,20 +138,38 @@ public class MachineController {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/{id}/work")
+    @PutMapping("/{id}/deleteWork")
     public ResponseEntity deleteWorkfromMachine(@PathVariable Integer id, @RequestBody Work work) {
         Optional<Machine> oMachine = machineRepository.findById(id);
         if (oMachine.isPresent()) {
             Machine m = oMachine.get();
             Work deletedWork = workRepository.save(work);
+
             m.getWorks().remove(deletedWork);
-            deletedWork.getMachines().remove(m);
-            machineRepository.deleteById(id);
+            m.setReparation_price(m.getReparation_price() - deletedWork.getPrice());
+
+            workRepository.save(deletedWork);
+            machineRepository.save(m);
+
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping("/{id}/changeStatus")
+    public ResponseEntity changeStatusToDone(@PathVariable Integer id){
+        Optional<Machine> oMachine = machineRepository.findById(id);
+        if (oMachine.isPresent()) {
+            Machine m = oMachine.get();
+            m.setStatus(Status.DONE);
+            machineRepository.save(m);
+            return ResponseEntity.ok().build();
+        }  else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 
 

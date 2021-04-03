@@ -81,14 +81,16 @@
         <div class="col-75">
           
       
-            <select [(ngModel)] = "selectedWork"  [ngModelOptions]="{standalone: true}" name = "first">
+            <select [(ngModel)] = "selectedWork"  [ngModelOptions]="{standalone: true}" >
               <option value = "" disabled selected> Select Work</option>
               <option *ngFor = "let work of allWorks" [ngValue] = "work"> {{work.description}}</option>
             </select>
             <p>Selected work: {{selectedWork.description}}</p> 
             
-            <div class="alert alert-success alert-dismissible" role="alert" *ngIf = "addingSuccess">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div class="alert alert-success alert-dismissible" *ngIf = "alert" role = "alert">
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true"> &times; </span>
+              </button>
               <strong>Success!</strong> Indicates a successful or positive action.
             </div>
           
@@ -104,13 +106,18 @@
                 <tr *ngFor = "let work of worksByMachine">
                   <th scope="row">{{work.description}}</th>
                   <td>
-                    <button>
+                    <button (click) = "deleteWorkFromMachine(work)">
                       <i class="fas fa-trash fa-2x" style="color:red"></i>
                     </button>
                   </td>
                 </tr>
               </tbody>
             </table>
+
+            <label class="container"> 
+              <input type="checkbox"  id="isCheckBox"  data-md-icheck (change)="changeToDone($event)"/> Is Machine done?
+              <span class="checkmark"></span>
+            </label>
 
         </div>
       </div>

@@ -33,12 +33,6 @@ export class MachineService {
     const url = this.machine_API + '/' + id + '/works';
     return this.httpClient.get<Work[]>(url);
   }
-  
-  addWorkToMachine(id: number, works: Work[]) {
-    const url = this.machine_API + '/' + id + '/work';
-    return this.httpClient.post(url, works);
-  }
-
 
 
   loadUserForMAchine(id: number) {

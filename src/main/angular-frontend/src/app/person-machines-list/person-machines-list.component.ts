@@ -21,6 +21,8 @@ export class PersonMachinesListComponent implements OnInit {
   machine: Machine;
 
 
+
+
   constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService, private personService: PersonService, private httpClient: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -59,6 +61,8 @@ export class PersonMachinesListComponent implements OnInit {
   editMachine(id: number) {
     this.router.navigate(['machines/' + id + '/edit']);
   }
+
+
 
 
 
