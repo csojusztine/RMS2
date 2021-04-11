@@ -20,7 +20,7 @@ const httpOptions = {
 export class AuthService {
 
   
-  loggedPerson: Person = new Person();
+  
 
   loggedUser: User = new User();
 

@@ -8,5 +8,7 @@ export class Machine {
     description_of_failure: string;
     reparation_price: number;
     status: string;
+    reparation_limit: number;
+    single_work_limit: number;
     works: Work[];
 }

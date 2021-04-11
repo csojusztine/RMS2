@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 
+
+
 <div class="container">
   <form action="action_page.php" [formGroup] = "editForm" (ngSubmit)="onSubmit()" novalidate>
 
@@ -57,6 +59,19 @@
           </div>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-25">
+          <label>Reparation limit</label>
+        </div>
+        <div class="col-75">
+          <div class = "form-group">
+            <div class="input-group">
+              <input formControlName = "reparation_limit" class = "form-control">
+            </div>
+          </div>
+        </div>
+      </div>
       
       
       
@@ -75,24 +90,67 @@
 
       <div class="row">
         <div class="col-25">
-          <label>New Works</label>
-          <button type="button" (click) = "addWork(selectedWork)"> <i class="fa fa-plus">Add work</i></button>
+          <label>Status</label>
         </div>
         <div class="col-75">
-          
+          <div class = "form-group">
+            <div class="input-group">
+
+              <input formControlName = "status" class = "form-control" readonly>    
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf = "!isDone()">
+        <div class="row" >
+          <div class="col-25">
+            <label>Change To Done</label>
+          </div>
+          <div class="col-75">
+            <label class="switch">
+              <input type="checkbox" id = "toggleId">
+              <div class="slider round"></div>
+            </label>
+          </div>
+        </div>
+      </ng-container>
       
-            <select [(ngModel)] = "selectedWork"  [ngModelOptions]="{standalone: true}" >
-              <option value = "" disabled selected> Select Work</option>
-              <option *ngFor = "let work of allWorks" [ngValue] = "work"> {{work.description}}</option>
-            </select>
+
+
+
+      <div class="row">
+        <div class="col-25">
+          <label>New Works</label>
+          <button class="btn btn-primary btn-sm"  (click) = "addWork(selectedWork)">
+            <i class="fa fa-plus-square"></i>Add work</button>
+        </div>
+        <div class="col-75">
+
+
+            <ng-select class = "custom" [items]="allWorks" placeholder = "Search work..."
+                bindLabel="description"
+                [loading]="loading"
+                [(ngModel)] = "selectedWork" [ngModelOptions]="{standalone: true}"
+                >
+            </ng-select>
             <p>Selected work: {{selectedWork.description}}</p> 
             
-            <div class="alert alert-success alert-dismissible" *ngIf = "alert" role = "alert">
+            <div class="alert alert-danger alert-dismissible fade show" *ngIf = "notallow">
               <button type="button" class="close" data-dismiss="alert">
                 <span aria-hidden="true"> &times; </span>
               </button>
-              <strong>Success!</strong> Indicates a successful or positive action.
+              <strong>Hey!</strong> Work cannot be added to this machine!
             </div>
+
+
+
+            <div class="alert alert-success alert-dismissible fade show" *ngIf = "successfully">
+              <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true"> &times; </span>
+              </button>
+              <strong>Success!</strong> Work added to this machine!
+            </div>
+            <button (click) = "openContact(contentContact, selectedWork)">Open Contact</button>
           
             <h2>Added works to this machine: </h2>
             <table class="table table-bordered table-striped">
@@ -114,12 +172,10 @@
               </tbody>
             </table>
 
-            <label class="container"> 
-              <input type="checkbox"  id="isCheckBox"  data-md-icheck (change)="changeToDone($event)"/> Is Machine done?
-              <span class="checkmark"></span>
-            </label>
-
         </div>
+
+        
+            
       </div>
       
     
@@ -129,3 +185,62 @@
   </form>
   
 </div>
+
+<ng-template #contentContact let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title2">Contact User</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="contactForm" novalidate>
+      
+
+      <div class="form-group">
+        <label>Machine name</label>
+        <div class="input-group">
+          <input formControlName="manufacturer" class="form-control" readonly>
+        </div>
+      </div>
+      
+      <div class="form-group">
+         <label for="type">Type</label>
+         <div class="input-group">
+           <input formControlName="type" class="form-control" readonly>
+         </div>
+      </div>
+      <div class="form-group">
+         <label for="description">Work description</label>
+         <div class="input-group">
+           <input class="form-control" formControlName = "description" readonly>
+         </div>
+      </div>
+      <div class="form-group">
+        <label for="e_mail">Customers e-mail</label>
+        <div class="input-group">
+          <input class="form-control" formControlName = "e_mail" readonly>
+        </div>
+     </div>
+      <div class="form-group">
+        <label for="price">Work price</label>
+        <div class="input-group">
+          <input class="form-control" formControlName = "price" readonly>
+        </div>
+     </div>
+      <div class="form-group">
+         <label for="note">Note from user</label>
+         <div class="input-group">
+           <textarea class="form-control" required></textarea>
+         </div>
+      </div>
+  
+       
+      <div class="border text-center"> <button data-dismiss="modal" (click) = "sendEmail()"class="btn btn-info">Send</button> </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

@@ -5,12 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 import rms.rmsmysql.entities.enums.Status;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -36,11 +34,16 @@ public class Machine {
     @Column(name = "reparation_price")
     private Integer reparation_price;
 
-    /*@Column(nullable = false, name = "status_id")
-    private Integer status_id;*/
+
     @Column
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Column(name = "reparation_limit")
+    private Integer reparation_limit;
+
+    @Column(name = "single_work_limit", updatable = false)
+    private Integer single_work_limit;
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -53,6 +56,11 @@ public class Machine {
     @JoinColumn
     @JsonIgnore
     private User user;
+
+    @ManyToOne
+    @JoinColumn(updatable = false)
+    @JsonIgnore
+    private Customer customer;
 
 
 }

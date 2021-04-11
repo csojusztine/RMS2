@@ -3,9 +3,6 @@
 
 
 
-
-
-
 input[type=text], select, textarea{
     width: 100%;
     padding: 12px;
@@ -76,71 +73,63 @@ input[type=text], select, textarea{
     
   }
 
-  label.container {
-    display: block;
+  .switch {
     position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 22px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-/* Hide the browser's default checkbox */
-label.container input {
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {display:none;}
+  
+  /* The slider */
+  .slider {
     position: absolute;
-    opacity: 0;
     cursor: pointer;
-}
-
-/* Create a custom checkbox */
-.checkmark {
-    position:absolute;
     top: 0;
     left: 0;
-    height: 25px;
-    width: 25px;
-    margin-bottom: 30px;
-    background-color: rgb(28, 47, 53);
-}
-
-/* On mouse-over, add a grey background color */
-label.container:hover input ~ .checkmark {
+    right: 0;
+    bottom: 0;
     background-color: #ccc;
-}
-
-/* When the checkbox is checked, add a blue background */
-label.container input:checked ~ .checkmark {
-    background-color: #2196F3;
-}
-
-/* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
-    content: "";
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
     position: absolute;
-    display: none;
-}
-
-/* Show the checkmark when checked */
-label.container input:checked ~ .checkmark:after {
-    display: block;
-}
-
-/* Style the checkmark/indicator */
-label.container .checkmark:after {
-    left: 9px;
-    top: 5px;
-    width: 5px;
-    height: 10px;
-    border: solid white;
-    border-width: 0 3px 3px 0;
-    -webkit-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
 
 
 
@@ -217,3 +206,5 @@ input[type=checkbox]:checked + label:before {
   border-color: MediumSeaGreen;
   color: #fff;
 }
+
+

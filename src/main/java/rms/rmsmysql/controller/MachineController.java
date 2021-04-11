@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rms.rmsmysql.entities.Customer;
 import rms.rmsmysql.entities.Machine;
 import rms.rmsmysql.entities.User;
 import rms.rmsmysql.entities.Work;
@@ -43,6 +44,7 @@ public class MachineController {
         Optional<Machine> machine = machineRepository.findById(id);
         if (machine.isPresent()) {
             machine.get().setWorks(machine.get().getWorks());
+            machine.get().setCustomer(machine.get().getCustomer());
             return ResponseEntity.ok(machine.get());
         } else {
             return ResponseEntity.notFound().build();
@@ -54,6 +56,16 @@ public class MachineController {
         Optional<Machine> machine = machineRepository.findById(id);
         if (machine.isPresent()) {
             return ResponseEntity.ok(machine.get().getUser());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/{id}/customer")
+    public ResponseEntity<Customer> getCustomerByMachine(@PathVariable Integer id) {
+        Optional<Machine> machine = machineRepository.findById(id);
+        if (machine.isPresent()) {
+            return ResponseEntity.ok(machine.get().getCustomer());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -88,17 +100,22 @@ public class MachineController {
         if (byId.isPresent()) {
             Machine machine = byId.get();
             Work newWork = workRepository.save(work);
-            machine.getWorks().add(newWork);
-
-            if(machine.getReparation_price() != null ) {
-                machine.setReparation_price(machine.getReparation_price() + newWork.getPrice());
+            if(!machine.getWorks().contains(newWork)) {
+                if(machine.getReparation_price() != null ) {
+                    machine.setReparation_price(machine.getReparation_price() + newWork.getPrice());
+                } else {
+                    machine.setReparation_price(newWork.getPrice());
+                }
+                machine.getWorks().add(newWork);
+                machineRepository.save(machine);
+                workRepository.save(newWork);
+                return ResponseEntity.ok(machine);
             } else {
-                machine.setReparation_price(newWork.getPrice());
+                return ResponseEntity.badRequest().build();
             }
 
-            machineRepository.save(machine);
-            workRepository.save(newWork);
-            return ResponseEntity.ok(machine);
+
+
         } else {
             return ResponseEntity.notFound().build();
         }

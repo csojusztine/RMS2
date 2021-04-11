@@ -11,6 +11,8 @@
         <th scope="col"> Type </th>
         <th scope="col">Description_of_failure</th>
         <th scope="col">Current reparation price</th>
+        <th scope="col">Reparation limit</th>
+        <th scope="col">Single Work limit</th>
         <th scope="col">Status</th>
         <th scope="col">Action</th>
     </tr>
@@ -22,6 +24,8 @@
             <td>{{ machine.type }}</td>
             <td>{{ machine.description_of_failure}}</td>
             <td>{{ machine.reparation_price | number }}</td>
+            <td>{{ machine.reparation_limit | number }}</td>
+            <td>{{ machine.single_work_limit | number }}</td>
             <td>{{ machine.status}}</td>
             <td>
                 <button class="btn btn-sm btn-warning" (click) = "editMachine(machine.id)">
@@ -43,7 +47,7 @@
       </button>
     </div>
     <div class="modal-body">
-      <h2>Are you sure you want to discard this record.</h2>
+      <h2>Are you sure you want to discard this machine.</h2>
       <div class="border text-center"> 
         <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Yes, Delete!</button> 
       </div>

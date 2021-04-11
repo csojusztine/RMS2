@@ -26,7 +26,8 @@ import { ProfileComponent } from './component/profile/profile.component';
 import { TokenStorageService } from './service/token-storage.service';
 import { PersonMachinesListComponent } from './person-machines-list/person-machines-list.component';
 import { EditMachineFormComponent } from './edit-machine-form/edit-machine-form.component';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 
 
@@ -53,7 +54,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     MatIconModule,
     MatButtonModule,
     ReactiveFormsModule,
-    NgMultiSelectDropDownModule
+    NgSelectModule,
   ],
   providers: [PersonService, MachineService, AuthService, AuthInterceptor, TokenStorageService,
     { 
