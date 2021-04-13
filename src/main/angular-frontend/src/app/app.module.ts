@@ -1,7 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Pipe } from '@angular/core';
-import { MatToolbarModule} from '@angular/material/toolbar';
+import { MatCardModule} from '@angular/material/card';
+import {MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { MatCheckboxModule} from '@angular/material/checkbox';
+
 import { MatIconModule} from '@angular/material/icon';
+import { MatInputModule} from '@angular/material/input';
 import { MatButtonModule} from '@angular/material/button';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -50,9 +55,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
     HttpClientModule,
     FormsModule,
     NgbModule,
-    MatToolbarModule,
-    MatIconModule,
+    MatInputModule,
+    MatCardModule,
+    MatTabsModule,
+    MatFormFieldModule,
     MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,
     ReactiveFormsModule,
     NgSelectModule,
   ],

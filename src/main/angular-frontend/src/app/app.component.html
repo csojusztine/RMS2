@@ -8,8 +8,8 @@
 
   <!-- Navigation -->
 <header>
-<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark" >
-  <div class = "container-fluid">
+<nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark" *ngIf = "isLoggedIn">
+  <div class = "container-fluid" >
   <a class="navbar-brand" href="#">RMS</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -43,11 +43,6 @@
         </a>
       </li>
     </ul>
-      <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-        <li class="nav-item">
-          <a href="/login" class="nav-link" routerLink="login">Login</a>
-        </li>
-      </ul>
       
       
       
@@ -60,18 +55,74 @@
         </li>
       </ul>
      
-      
-    
-    
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
     
   </div>
   </div>
 </nav>
 
+<div class="login-page" *ngIf = "!isLoggedIn">
+  <mat-card class="mat-elevation-z12">
+    <mat-card-title style="text-align:center;">Sign In</mat-card-title>
+    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs">
+      <mat-tab label="Sign In">
+          <mat-card-content>
+            <form name = "form"
+            (ngSubmit) = "f.form.valid && onSubmit()" #f = "ngForm" action="javascript:void(0);"  novalidate>
+              <mat-form-field>
+                <input
+                  matInput placeholder="Username" 
+                  [(ngModel)] = "form.username" name = "username" #username = "ngModel" required>
+                  <mat-error *ngIf="username.invalid">Username is required</mat-error>
+                <mat-icon matSuffix>account_box</mat-icon>
+              </mat-form-field>
+              <mat-form-field>
+                <input
+                  matInput
+                  placeholder="Password"
+                  type="password"
+                  required
+                  minlength="6"
+                  name="password"
+                  [(ngModel)] = "form.password"
+                  #password="ngModel">
+                  <mat-error
+                    *ngIf="password.errors && password.errors.required">
+                    Password is required
+                  </mat-error>
+                  <mat-error
+                    *ngIf="password.errors && password.errors.minlength">
+                    Password must be of length 6
+                  </mat-error>
+                <mat-icon matSuffix>lock</mat-icon>
+              </mat-form-field>
+              <div class="alert alert-success" *ngIf="isLoggedIn">
+                Success!.
+              </div>
+              <div class="form-group">
+                <div
+                  class="alert alert-danger"
+                  role="alert"
+                  *ngIf="f.submitted && isLoginFailed">
+                  Login failed: {{ errorMessage }}
+                </div>
+              </div>
+              <mat-checkbox>Remember Me!</mat-checkbox>
+              <button
+                mat-raised-button
+                color="primary"
+                class="login-button">
+                Sign In
+              </button>
+
+              
+            </form>
+          </mat-card-content>
+      </mat-tab>
+      
+          
+    </mat-tab-group>
+  </mat-card>
+</div>
 
 
 

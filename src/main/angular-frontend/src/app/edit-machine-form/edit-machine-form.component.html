@@ -135,7 +135,7 @@
             </ng-select>
             <p>Selected work: {{selectedWork.description}}</p> 
             
-            <div class="alert alert-danger alert-dismissible fade show" *ngIf = "notallow">
+            <div class="alert alert-danger" role="alert" *ngIf = "notallow">
               <button type="button" class="close" data-dismiss="alert">
                 <span aria-hidden="true"> &times; </span>
               </button>
@@ -201,38 +201,38 @@
       <div class="form-group">
         <label>Machine name</label>
         <div class="input-group">
-          <input formControlName="manufacturer" class="form-control" readonly>
+          <input name= "manufacturer" formControlName="manufacturer" class="form-control" readonly>
         </div>
       </div>
       
       <div class="form-group">
          <label for="type">Type</label>
          <div class="input-group">
-           <input formControlName="type" class="form-control" readonly>
+           <input name= "type" formControlName="type" class="form-control" readonly>
          </div>
       </div>
       <div class="form-group">
          <label for="description">Work description</label>
          <div class="input-group">
-           <input class="form-control" formControlName = "description" readonly>
+           <input name = "description" class="form-control" formControlName = "description" readonly>
          </div>
       </div>
       <div class="form-group">
         <label for="e_mail">Customers e-mail</label>
         <div class="input-group">
-          <input class="form-control" formControlName = "e_mail" readonly>
+          <input name = "e_mail" type = "email" class="form-control" formControlName = "e_mail" readonly>
         </div>
      </div>
       <div class="form-group">
         <label for="price">Work price</label>
         <div class="input-group">
-          <input class="form-control" formControlName = "price" readonly>
+          <input name="price" class="form-control" formControlName = "price" readonly>
         </div>
      </div>
       <div class="form-group">
          <label for="note">Note from user</label>
          <div class="input-group">
-           <textarea class="form-control" required></textarea>
+           <textarea name="note" class="form-control" required></textarea>
          </div>
       </div>
   

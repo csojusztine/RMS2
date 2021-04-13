@@ -9,68 +9,50 @@
 <!-- Include the above in your HEAD tag -->
 
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<script>
+  // Get the modal
+  var modal = document.getElementById('id01');
+  
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+  </script> 
+
+<button onclick="document.getElementById('id01').style.display='block'">Login</button>
 
 
-<!--suppress HtmlFormInputWithoutLabel -->
-<div class="main">
-    
-    
-  <div class="container">
-    
-    <div class="middle">
-          <div id="login">
-    
-            <form *ngIf = "!isLoggedIn" name = "form"
-                (ngSubmit) = "f.form.valid && onSubmit()" #f = "ngForm" action="javascript:void(0);"  novalidate>
-    
-              <fieldset class="clearfix">
-    
-                <p ><span class="fa fa-user"></span><input [(ngModel)] = "form.username" type="text" name = "username" #username = "ngModel" Placeholder="Username" required ></p>
-                  <div class="alert alert-danger" role="alert" *ngIf="f.submitted && username.invalid">Username is required!</div> 
-                <p><span class="fa fa-lock"></span><input [(ngModel)] = "form.password" type="password" name = "password" #password = "ngModel" Placeholder="Password" required minlength="6" ></p>
-                  <div
-                      class="alert alert-danger"
-                      role="alert"
-                      *ngIf="f.submitted && password.invalid">
-                        <div *ngIf="password.errors.required">Password is required</div>
-                      <div *ngIf="password.errors.minlength">
-                    Password must be at least 6 characters</div>
-                  </div>
-                
-                
-                  <div class="form-group">
-                                    <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text" href="#">Forgot
-                                    password?</a></span>
-                                    <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Login" [disabled] = "!f.valid"></span>
-                  </div>
-                  <div class="form-group">
-                    <div
-                      class="alert alert-danger"
-                      role="alert"
-                      *ngIf="f.submitted && isLoginFailed">
-                      Login failed: {{ errorMessage }}
-                    </div>
-                  </div>
-    
-              </fieldset>
-                <div class="clearfix"></div>
-            </form>
-    
-            <div class="clearfix"></div>
 
-            <div class="alert alert-success" *ngIf="isLoggedIn">
-              Logged in as {{ roles }}.
-            </div>
+ <!-- The Modal -->
+ <div id="id01" class="modal">
+   <span onclick="document.getElementById('id01').style.display='none'"
+ class="close" title="Close Modal">&times;</span>
+ 
+   <!-- Modal Content -->
+   <form class="modal-content animate" action="/action_page.php">
+     <div class="imgcontainer">
+       <img src="img_avatar2.png" alt="Avatar" class="avatar">
+     </div>
+ 
+     <div class="container">
+       <label for="uname"><b>Username</b></label>
+       <input type="text" placeholder="Enter Username" name="uname" required>
+ 
+       <label for="psw"><b>Password</b></label>
+       <input type="password" placeholder="Enter Password" name="psw" required>
+ 
+       <button type="submit">Login</button>
+       <label>
+         <input type="checkbox" checked="checked" name="remember"> Remember me
+       </label>
+     </div>
+ 
+     <div class="container" style="background-color:#f1f1f1">
+       <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+       <span class="psw">Forgot <a href="#">password?</a></span>
+     </div>
+   </form>
+ </div> 
 
-          </div> <!-- end login -->
-         
-          <div class="logo">RMS
-              
-              <div class="clearfix"></div>
-          </div>
-          
-    </div>
-    
-  </div>
-    
-</div>

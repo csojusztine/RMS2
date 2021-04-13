@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './service/auth.service';
 import { TokenStorageService } from './service/token-storage.service';
 
 @Component({
@@ -14,11 +15,14 @@ export class AppComponent {
   userId: number;
   isLoggedIn = false;
   username: string;
+  form: any = {};
+  isLoginFailed = false;
+  errorMessage = '';
 
   showAdminBoard = false;
   showWorkerBoard = false;
 
-  constructor(private tokenStorageService: TokenStorageService, private router:Router) { }
+  constructor(private authService: AuthService, private tokenStorageService: TokenStorageService, private router:Router) { }
 
 
   ngOnInit() {
@@ -36,10 +40,27 @@ export class AppComponent {
     }
   }
 
+  onSubmit() {
+    this.authService.login(this.form).subscribe(
+      data => {
+        this.tokenStorageService.saveToken(data.token);
+        this.tokenStorageService.saveUser(data);
+  
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.tokenStorageService.getUser().roles;
+        window.location.href = '/profile';
+      },
+      err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    );
+  }
+
 
   logout() {
     this.tokenStorageService.signOut();
     window.location.reload();
-    this.router.navigate(['/login']);
   }
 }
