@@ -23,7 +23,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MachineListComponent } from './machine-list/machine-list.component';
 import { MachineService } from './service/machine.service';
-import { LoginComponent } from './component/login/login.component';
+
 
 import { AuthService } from './service/auth.service';
 import { AuthInterceptor } from './helpers/auth-interceptor';
@@ -42,7 +42,6 @@ import { NgSelectModule } from '@ng-select/ng-select';
     PersonListComponent,
     HomeComponent,
     MachineListComponent,
-    LoginComponent,
     ProfileComponent,
     PersonMachinesListComponent,
     EditMachineFormComponent,

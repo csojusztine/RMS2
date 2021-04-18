@@ -10,5 +10,6 @@ export class Machine {
     status: string;
     reparation_limit: number;
     single_work_limit: number;
+    arriving_date: string;
     works: Work[];
 }

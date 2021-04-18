@@ -45,7 +45,7 @@
     </div>
 
     <div class="modal-body">
-      <form #f="ngForm" (ngSubmit)="onSubmit(f)" novalidate>
+      <form name = "form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit(f)" novalidate>
         <div class="form-group">
           <label for="name">Name</label>
           <div class="input-group">
