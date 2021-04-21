@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rms.rmsmysql.entities.Customer;
 import rms.rmsmysql.entities.Machine;
 import rms.rmsmysql.entities.User;
 import rms.rmsmysql.entities.Work;
@@ -15,7 +14,6 @@ import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.UserRepository;
 import rms.rmsmysql.repository.WorkRepository;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -46,7 +44,6 @@ public class MachineController {
         Optional<Machine> machine = machineRepository.findById(id);
         if (machine.isPresent()) {
             machine.get().setWorks(machine.get().getWorks());
-            machine.get().setCustomer(machine.get().getCustomer());
             return ResponseEntity.ok(machine.get());
         } else {
             return ResponseEntity.notFound().build();
@@ -63,15 +60,7 @@ public class MachineController {
         }
     }
 
-    @GetMapping("/{id}/customer")
-    public ResponseEntity<Customer> getCustomerByMachine(@PathVariable Integer id) {
-        Optional<Machine> machine = machineRepository.findById(id);
-        if (machine.isPresent()) {
-            return ResponseEntity.ok(machine.get().getCustomer());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
+
 
     @GetMapping("/{identifier}/machine")
     public ResponseEntity<Machine> getMachineByIdentifier(@PathVariable("identifier") UUID identifier) {

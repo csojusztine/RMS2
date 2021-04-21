@@ -80,10 +80,6 @@ public class Machine {
     @JsonIgnore
     private User user;
 
-    @ManyToOne
-    @JoinColumn(updatable = false)
-    @JsonIgnore
-    private Customer customer;
 
 
 }

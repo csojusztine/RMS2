@@ -12,7 +12,7 @@
         <th scope="col">Username</th>
         <th scope="col"> Name </th>
         <th scope="col">E-mail</th>
-        <th scope="col">Role</th>
+        <th scope="col">Phone number</th>
         <th scope="col">Action</th>
     </tr>
     </thead>
@@ -22,7 +22,7 @@
             <td> {{person.username}}</td>
             <td> {{person.name}}</td>
             <td> {{person.e_mail}}</td>
-            <td> {{ person.role}}</td> 
+            <td> {{ person.phone_number}}</td> 
             <td>
                 <button class="btn btn-sm btn-info" (click) = "openDetails(contentDetails, person)">
                   <i class="fa fa-search"></i>Details</button>
@@ -95,6 +95,15 @@
             </div>
         </div>
         
+
+        <div class="form-group">
+          <label for="phone_number">Phone number</label>
+              <div class="input-group">
+                <input [(ngModel)] = "persons.phone_number "type ="phone_number" id="phone_number" name="phone_number" class="form-control" #phone_number = "ngModel"ngModel required>
+              </div>
+              <span *ngIf="phone_number.invalid && (phone_number.dirty || phone_number.touched)" class="error">You must enter number!</span>
+        </div>
+      
         <div class="border text-center">
           <button data-dismiss="modal" class="btn btn-info" ng-disabled="ngForm.$invalid">Submit</button>
         </div>
@@ -138,9 +147,9 @@
         </div>
 
         <div class="form-group">
-          <label>Role</label>
+          <label>Phone nunber</label>
           <div class="input-group">
-            <input id="_role" class="form-control" readonly>
+            <input id="_phone_number" class="form-control" readonly>
           </div>
         </div>
 
@@ -163,7 +172,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <h2>Are you sure you want to delete this record.</h2>
+        <h2>Are you sure you want to delete this user.</h2>
         <div class="border text-center"> 
           <button data-dismiss="modal" class="btn btn-danger" (click)="onDelete()">Yes, Delete!</button> 
         </div>
@@ -212,6 +221,13 @@
                <input formControlName="e_mail" class="form-control">
              </div>
            </div>
+           <div class="form-group">
+            <label for="phone_number">Phone number</label>
+            <div class="input-group">
+              <input formControlName="phone_number" class="form-control">
+            </div>
+          </div>
+     
       
            
            <div class="border text-center"> <button data-dismiss="modal" class="btn btn-info" (click)="onSave()" >Save Changes</button> </div>

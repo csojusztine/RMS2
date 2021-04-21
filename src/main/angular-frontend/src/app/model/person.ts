@@ -6,6 +6,6 @@ export class Person {
     username: string;
     name: string;
     e_mail: string;
-    role: string;
+    phone_number: string;
     machines: Machine[]
 }

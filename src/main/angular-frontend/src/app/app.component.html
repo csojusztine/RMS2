@@ -37,9 +37,16 @@
         </a>
       </li>
       <li class="nav-item" >
-        <a class="nav-link" href = "/persons/{{userId}}/machines" [routerlink] = "['persons/', userId, '/machines']" *ngIf = "showWorkerBoard">
+        <a class="nav-link" href = "/persons/{{userId}}/machines" routerlink = "['persons/', userId, '/machines']" *ngIf = "showWorkerBoard">
           <i class="fa fa-television"></i>
           My machines
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/works" routerlink = "works" *ngIf = "isLoggedIn && showAdminBoard">
+          <i class="fa fa-tasks" aria-hidden="true"></i>
+          Works
         </a>
       </li>
     </ul>

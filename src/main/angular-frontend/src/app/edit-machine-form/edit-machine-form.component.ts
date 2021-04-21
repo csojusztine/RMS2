@@ -5,7 +5,6 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
-import { Customer } from '../model/customer';
 import { Machine } from '../model/machine';
 import { Work } from '../model/work';
 import { MachineService } from '../service/machine.service';
@@ -39,7 +38,6 @@ export class EditMachineFormComponent implements OnInit {
 
   notallow: boolean;
 
-  customer: Customer;
 
   loading: boolean = false;
 
@@ -64,7 +62,7 @@ export class EditMachineFormComponent implements OnInit {
       type: [''],
       description: [''],
       price: [''],
-      e_mail: [''],
+      customers_email: [''],
     })
     
     
@@ -77,7 +75,7 @@ export class EditMachineFormComponent implements OnInit {
     this.getMachine(id);
     this.getAllWorks();
     this.getWorksbyMachine(id);   
-    this.getCustomerByMachine(id);
+
   }
 
   getMachine(id: number) {
@@ -187,19 +185,14 @@ export class EditMachineFormComponent implements OnInit {
       type: this.machine.type,
       description: work.description,
       price: work.price,
-      e_mail: this.customer.e_mail,
+      e_mail: this.machine.customers_email,
       
 
     });
 
   }
 
-  getCustomerByMachine(id: number){
-    this.machineService.getCustomerByMachine(id).subscribe(data => {
-      this.customer = data;
-      console.log(data);
-    })
-  }
+
 
   handleError(error: HttpErrorResponse){
     console.log("nem tudja addolni");

@@ -8,6 +8,7 @@ import { EditMachineFormComponent } from './edit-machine-form/edit-machine-form.
 import { MachineListComponent } from './machine-list/machine-list.component';
 import { PersonListComponent } from './person-list/person-list.component';
 import { PersonMachinesListComponent } from './person-machines-list/person-machines-list.component';
+import { WorkListComponent } from './work-list/work-list.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,10 @@ const routes: Routes = [
   },
   {
     path: 'machines/:id/edit', component: EditMachineFormComponent 
+  },
+
+  {
+    path: 'works', component: WorkListComponent
   },
   
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Customer } from '../model/customer';
+
 import { Machine } from '../model/machine';
 import { Person } from '../model/person';
 import { Work } from '../model/work';
@@ -34,12 +34,6 @@ export class MachineService {
     const url = this.machine_API + '/' + id + '/works';
     return this.httpClient.get<Work[]>(url);
   }
-
-  getCustomerByMachine(id: number) {
-    const url = this.machine_API + '/' + id + '/customer';
-    return this.httpClient.get<Customer>(url);
-  }
-
   
 
 

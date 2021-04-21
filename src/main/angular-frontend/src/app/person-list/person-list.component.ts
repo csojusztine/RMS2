@@ -31,6 +31,7 @@ export class PersonListComponent implements OnInit {
       name: [''],
       username: [''],
       e_mail: [''],
+      phone_number: ['']
     } );
   }
 
@@ -81,6 +82,7 @@ export class PersonListComponent implements OnInit {
     document.getElementById('_name').setAttribute('value', person.name);
     document.getElementById('_username').setAttribute('value', person.username);
     document.getElementById('_e_mail').setAttribute('value', person.e_mail);
+    document.getElementById('_phone_number').setAttribute('value', person.phone_number);
   }
  
  openDelete(targetModal, person: Person) {
@@ -110,7 +112,7 @@ export class PersonListComponent implements OnInit {
       name: person.name,
       username: person.username,
       e_mail: person.e_mail,
-      //roles: person.role,
+      phone_number: person.phone_number,
 
     });
 

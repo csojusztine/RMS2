@@ -18,25 +18,25 @@ export class ProfileComponent implements OnInit {
   loggedUser: any;
 
   constructor(private token: TokenStorageService, private fb: FormBuilder, private httpClient: HttpClient, private auth:AuthService) {
-    
+    this.editForm = this.fb.group( {
+      name: [''],
+      username: [''],
+      email: ['']
+    })  
   }
 
   ngOnInit() {
     this.currentUser = this.token.getUser();
     this.loggedUser = this.auth.getLoggedUser();
-    this.editForm = this.fb.group( {
-      name: [''],
-      username: [''],
-      e_mail: ['']
-    })  
+    
     this.editForm.patchValue( {
-      name: this.loggedUser.name,
+      name: this.currentUser.name,
       username: this.currentUser.username,
-      e_mail: this.currentUser.email,
+      email: this.currentUser.email,
       
     });
-    //this.loggedUser = this.token.getUser();
-    //this.openForedit(this.currentUser);
+    this.loggedUser = this.token.getUser();
+    console.log(this.currentUser.email);
   }
 
 
@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
     this.httpClient.put(editUrl, this.editForm.value)
       .subscribe((results) => {
         console.log(results);
-        this.ngOnInit();
+        
       });
   }
 

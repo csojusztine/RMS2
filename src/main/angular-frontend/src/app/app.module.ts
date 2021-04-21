@@ -32,6 +32,14 @@ import { TokenStorageService } from './service/token-storage.service';
 import { PersonMachinesListComponent } from './person-machines-list/person-machines-list.component';
 import { EditMachineFormComponent } from './edit-machine-form/edit-machine-form.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { WorkListComponent } from './work-list/work-list.component';
+import { MatTableModule } from '@angular/material/table';
+
+
+import { MatToolbarModule} from '@angular/material/toolbar';
+import { CommonModule } from '@angular/common';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 
 
@@ -45,6 +53,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ProfileComponent,
     PersonMachinesListComponent,
     EditMachineFormComponent,
+    WorkListComponent,
     
   ],
   imports: [
@@ -63,7 +72,13 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatIconModule,
     ReactiveFormsModule,
     NgSelectModule,
+    MatTableModule,
+    MatPaginatorModule 
+
+
+
   ],
+  exports: [CommonModule, MatToolbarModule, MatInputModule, MatTableModule],
   providers: [PersonService, MachineService, AuthService, AuthInterceptor, TokenStorageService,
     { 
       provide: HTTP_INTERCEPTORS, 
