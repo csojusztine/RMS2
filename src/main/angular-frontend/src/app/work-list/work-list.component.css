@@ -3,3 +3,16 @@ table {
     font-family: 'Poppins', 'sans-serif';
 
   }
+
+button {
+  font-family: 'Poppins', 'sans-serif';
+}
+
+mat-form-field {
+  margin-left: 20px;
+}
+
+div.search-div button {
+  margin-left: 10px;
+
+}

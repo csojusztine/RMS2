@@ -28,7 +28,7 @@ public class Work {
         @Column(name = "price")
         private Integer price;
 
-        @ManyToMany(mappedBy = "works")
+        @ManyToMany(mappedBy = "works", cascade = CascadeType.REFRESH)
 
         private List<Machine> machines;
 

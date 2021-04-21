@@ -19,8 +19,6 @@ public class WorkController {
     @Autowired
     private WorkRepository workRepository;
 
-    @Autowired
-    private MachineRepository machineRepository;
 
     @GetMapping("")
     public ResponseEntity<Iterable<Work>> getAll() {
@@ -37,6 +35,27 @@ public class WorkController {
         }
     }
 
+    @PutMapping("/{id}")
+    public  ResponseEntity<Work> put(@RequestBody Work work, @PathVariable Integer id) {
+        Optional<Work> oWork = workRepository.findById(id);
 
+        if (oWork.isPresent()) {
+            work.setId(id);
+            return ResponseEntity.ok(workRepository.save(work));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Integer id) {
+        Optional<Work> oWork = workRepository.findById(id);
+        if (oWork.isPresent()) {
+            workRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+
+        }
+        return ResponseEntity.notFound().build();
+    }
 
 }

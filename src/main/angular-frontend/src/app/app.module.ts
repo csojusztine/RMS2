@@ -39,7 +39,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -74,6 +75,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     NgSelectModule,
     MatTableModule,
     MatPaginatorModule,
+    MatDialogModule,
+    MatSnackBarModule
 
 
 

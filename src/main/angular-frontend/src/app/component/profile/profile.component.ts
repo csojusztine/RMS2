@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit {
 
   onSubmit() {
     const editUrl = 'http://localhost:8080/api/users/editUser/' + this.currentUser.id;
-    this.httpClient.put(editUrl, this.editForm.value)
+    this.httpClient.patch(editUrl, this.editForm.value)
       .subscribe((results) => {
         console.log(results);
         

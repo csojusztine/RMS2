@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { Work } from '../model/work';
 import { WorkService } from '../service/work.service';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -19,12 +20,18 @@ export class WorkListComponent implements OnInit {
 
   works: Work[];
 
-  displayedColumns = ['id', 'description', 'price'];
+  displayedColumns = ['id', 'description', 'price', 'edit', 'delete'];
 
   dataSource = new MatTableDataSource<Work>();
   
 
-  constructor(private workService: WorkService, private http: HttpClient) { }
+  constructor(private workService: WorkService, private http: HttpClient, private snackBar: MatSnackBar) { }
+
+  config: MatSnackBarConfig = {
+    duration: 3000,
+    horizontalPosition: 'right',
+    verticalPosition: 'top'
+  }
 
   ngOnInit(): void {
     this.getAllWorks();    
@@ -52,5 +59,23 @@ export class WorkListComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
+  onDelete(id: number) {
+    const deleteURL = 'http://localhost:8080/api/works/' + id;
+    if(confirm('Are you sure to delete this record ?')){
+      this.http.delete(deleteURL)
+      .subscribe((results) => {
+        this.ngOnInit();
+        this.ngAfterViewInit();
+      });
+      this.warn('! Deleted successfully');
+    } 
+    
+  }
+
+
+  warn(msg) {
+    this.config['panelClass'] = ['notification', 'warn'];
+    this.snackBar.open(msg, '', this.config);
+  }
 
 }
