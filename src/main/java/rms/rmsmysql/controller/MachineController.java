@@ -15,7 +15,6 @@ import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.UserRepository;
 import rms.rmsmysql.repository.WorkRepository;
 
-import javax.crypto.Mac;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -75,14 +74,11 @@ public class MachineController {
     }
 
     @GetMapping("/{identifier}/machine")
-    public ResponseEntity<Machine> getMachineByIdentifier(@PathVariable UUID identifier) {
-        List<Machine> allMachine = machineRepository.findAll();
-        for(Machine m:allMachine) {
-            if(m.getIdentifier() == identifier) {
-                System.out.println(m.getIdentifier());
-                //return ResponseEntity.ok(m);
-            }
-        }
+    public ResponseEntity<Machine> getMachineByIdentifier(@PathVariable("identifier") UUID identifier) {
+        Machine machine = machineRepository.findByIdentifier(identifier);
+        System.out.println(identifier);
+        System.out.println(machine);
+
         return ResponseEntity.notFound().build();
     }
 
@@ -112,8 +108,9 @@ public class MachineController {
     public ResponseEntity<Machine> post(@RequestBody Machine machine) {
         Machine savedMachine = machineRepository.save(machine);
         savedMachine.setStatus(Status.ON_WAITING_LIST);
-        UUID uuid = UUID.randomUUID();
-        savedMachine.setIdentifier(uuid);
+        UUID identifier = UUID.randomUUID();
+        System.out.println(identifier);
+        savedMachine.setIdentifier(identifier);
         machineRepository.save(savedMachine);
         return ResponseEntity.ok(savedMachine);
     }

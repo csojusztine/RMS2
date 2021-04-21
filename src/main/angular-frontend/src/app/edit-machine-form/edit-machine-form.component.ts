@@ -47,10 +47,6 @@ export class EditMachineFormComponent implements OnInit {
 
   
 
-
-
-  
-
   constructor(private modalService: NgbModal, private workService: WorkService, private httpClient: HttpClient, private fb: FormBuilder, private route: ActivatedRoute, private machineService: MachineService) { 
     this.editForm = this.fb.group( {
       id: [''],

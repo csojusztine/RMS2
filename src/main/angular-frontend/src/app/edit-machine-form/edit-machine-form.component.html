@@ -131,6 +131,7 @@
                 bindLabel="description"
                 [loading]="loading"
                 [(ngModel)] = "selectedWork" [ngModelOptions]="{standalone: true}"
+                [clearable] = "true"
                 >
             </ng-select>
             <p>Selected work: {{selectedWork.description}}</p> 

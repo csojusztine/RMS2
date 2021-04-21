@@ -53,24 +53,21 @@ public class Machine {
     @Column(name = "single_work_limit", updatable = false)
     private Integer single_work_limit;
 
-    @Column(name = "identifier", columnDefinition = "uuid", updatable = false)
-    @Type(type="uuid-char")
+    @Column(name = "identifier")
     private UUID identifier;
 
     @Column(name = "arriving_date", updatable = false)
     @DateTimeFormat(pattern= "yyyy-MM-dd")
     private LocalDate arriving_date = LocalDate.now();
 
+    @Column(name = "customers_email")
+    private String customers_email;
 
     /*@PrePersist
     protected void onCreate() {
-        arriving_date = LocalDate.now();
-    }
-*/
-    @PrePersist
-    protected void onCreate() {
-        setIdentifier(java.util.UUID.randomUUID());
-    }
+        setIdentifier(UUID.randomUUID());
+    }*/
+
 
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

@@ -81,6 +81,36 @@
               </div>
               <span *ngIf="description_of_failure.invalid && (description_of_failure.dirty || description_of_failure.touched)" class="error">You must enter the failure!</span>
       </div>
+
+      <div class="form-group">
+        <label for="reparation_limit">Reparation limit</label>
+        <div class="input-group">
+          <input [(ngModel)] = "machines.reparation_limit" id="reparation_limit" name="reparation_limit" class="form-control" #reparation_limit = "ngModel" >
+        </div>
+        <span *ngIf="reparation_limit.invalid && (reparation_limit.dirty || reparation_limit.touched)" class="warning">Are u sure you dont set limit?</span>
+
+
+      </div>
+
+      <div class="form-group">
+        <label for="reparation_limit">Single work limit</label>
+        <div class="input-group">
+          <input [(ngModel)] = "machines.single_work_limit" id="single_work_limit" name="single_work_limit" class="form-control" #single_work_limit = "ngModel" >
+        </div>
+        <span *ngIf="single_work_limit.invalid && (single_work_limit.dirty || single_work_limit.touched)" class="warning">Are u sure you dont set limit?</span>
+
+
+      </div>
+
+      <div class="form-group">
+        <label for="customers_email">Customers email</label>
+        <div class="input-group">
+          <input [(ngModel)] = "machines.customers_email" id="customers_email" name="customers_email" class="form-control" #customers_email = "ngModel" required>
+        </div>
+        <span *ngIf="customers_email.invalid && (customers_email.dirty || customers_email.touched)" class="error">Customers email is require!</span>
+
+
+      </div>
       
       <div class="border text-center">
         <button data-dismiss="modal" class="btn btn-info" ng-disabled="ngForm.$invalid">Submit</button>

@@ -12,4 +12,5 @@ export class Machine {
     single_work_limit: number;
     arriving_date: string;
     works: Work[];
+    customers_email: string;
 }

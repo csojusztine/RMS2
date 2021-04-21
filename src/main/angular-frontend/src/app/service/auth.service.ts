@@ -18,8 +18,6 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-
-  
   
 
   loggedUser: User = new User();

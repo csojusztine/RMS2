@@ -54,6 +54,7 @@ public class UserController {
             user.setId(id);
             user.setRoles(oUser.get().getRoles());
             user.setPassword(oUser.get().getPassword());
+
             return ResponseEntity.ok(userRepository.save(user));
         } else {
             return ResponseEntity.notFound().build();
