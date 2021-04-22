@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import rms.rmsmysql.entities.Machine;
 import rms.rmsmysql.entities.User;
 import rms.rmsmysql.entities.Work;
+import rms.rmsmysql.entities.enums.Status;
 import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.WorkRepository;
 
 import java.util.Optional;
+import java.util.UUID;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/works")
@@ -38,7 +41,6 @@ public class WorkController {
     @PutMapping("/{id}")
     public  ResponseEntity<Work> put(@RequestBody Work work, @PathVariable Integer id) {
         Optional<Work> oWork = workRepository.findById(id);
-
         if (oWork.isPresent()) {
             work.setId(id);
             return ResponseEntity.ok(workRepository.save(work));
@@ -51,11 +53,29 @@ public class WorkController {
     public ResponseEntity delete(@PathVariable Integer id) {
         Optional<Work> oWork = workRepository.findById(id);
         if (oWork.isPresent()) {
-            workRepository.deleteById(id);
-            return ResponseEntity.ok().build();
-
+            if(oWork.get().getMachines().isEmpty()) {
+                workRepository.deleteById(id);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.badRequest().build();
+            }
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{id}/machines")
+    public ResponseEntity<Iterable<Machine>> getMachinesById(@PathVariable Integer id) {
+        Optional<Work> oWork = workRepository.findById(id);
+        if (oWork.isPresent()) {
+            return ResponseEntity.ok(oWork.get().getMachines());
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/addWork")
+    public ResponseEntity<Work> addWork(@RequestBody Work work) {
+        Work savedWork = workRepository.save(work);
+        return ResponseEntity.ok(savedWork);
     }
 
 }

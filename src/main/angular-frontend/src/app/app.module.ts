@@ -33,14 +33,16 @@ import { PersonMachinesListComponent } from './person-machines-list/person-machi
 import { EditMachineFormComponent } from './edit-machine-form/edit-machine-form.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { WorkListComponent } from './work-list/work-list.component';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { WorkFormComponent } from './component/work-form/work-form.component';
 
 
 
@@ -55,6 +57,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     PersonMachinesListComponent,
     EditMachineFormComponent,
     WorkListComponent,
+    WorkFormComponent
     
   ],
   imports: [
@@ -70,25 +73,46 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    NgSelectModule,
+    MatIconModule,   
     MatTableModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatGridListModule,
+    MatToolbarModule,
 
+    ReactiveFormsModule,
+    NgSelectModule,
+ 
 
 
 
   ],
-  exports: [CommonModule, MatToolbarModule, MatInputModule, MatTableModule],
-  providers: [PersonService, MachineService, AuthService, AuthInterceptor, TokenStorageService,
+  exports: [
+    MatInputModule,
+    MatCardModule,
+    MatTabsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatIconModule,   
+    MatTableModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatGridListModule,
+    MatToolbarModule,
+  ],
+  providers: [PersonService, MachineService, AuthService, AuthInterceptor, WorkFormComponent, TokenStorageService,
     { 
       provide: HTTP_INTERCEPTORS, 
       useClass: AuthInterceptor, 
       multi: true 
-    }
+    },
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
   ],
   bootstrap: [AppComponent]
 })
