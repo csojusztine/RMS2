@@ -40,9 +40,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { WorkFormComponent } from './component/work-form/work-form.component';
+
 
 
 
@@ -57,7 +58,8 @@ import { WorkFormComponent } from './component/work-form/work-form.component';
     PersonMachinesListComponent,
     EditMachineFormComponent,
     WorkListComponent,
-    WorkFormComponent
+    WorkFormComponent,
+    
     
   ],
   imports: [
@@ -67,6 +69,7 @@ import { WorkFormComponent } from './component/work-form/work-form.component';
     HttpClientModule,
     FormsModule,
     NgbModule,
+
     MatInputModule,
     MatCardModule,
     MatTabsModule,
@@ -80,6 +83,8 @@ import { WorkFormComponent } from './component/work-form/work-form.component';
     MatSnackBarModule,
     MatGridListModule,
     MatToolbarModule,
+ 
+
 
     ReactiveFormsModule,
     NgSelectModule,
@@ -112,6 +117,10 @@ import { WorkFormComponent } from './component/work-form/work-form.component';
     {
       provide: MatDialogRef,
       useValue: {}
+    },
+    { 
+      provide: MAT_DIALOG_DATA, 
+      useValue: {} 
     },
   ],
   bootstrap: [AppComponent]

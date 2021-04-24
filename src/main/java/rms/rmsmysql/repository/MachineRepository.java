@@ -12,6 +12,6 @@ public interface MachineRepository extends CrudRepository<Machine, Integer> {
 
     Optional<Machine> findById(Integer id);
 
-    Machine findByIdentifier(UUID identifier);
+    Optional<Machine> findByIdentifier(Long identifier);
 
 }

@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { Work } from '../model/work';
@@ -8,14 +8,17 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { WorkFormComponent } from '../component/work-form/work-form.component';
+
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
   selector: 'app-work-list',
   templateUrl: './work-list.component.html',
-  styleUrls: ['./work-list.component.css']
+  styleUrls: ['./work-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 
@@ -32,9 +35,14 @@ export class WorkListComponent implements OnInit {
   dataSource = new MatTableDataSource<Work>();
 
 
+
+  form:FormGroup;
+
   
 
-  constructor(private workForm: WorkFormComponent ,private workService: WorkService, private http: HttpClient, private snackBar: MatSnackBar, private dialog: MatDialog) { }
+  constructor(private fb: FormBuilder, private modalService: NgbModal, private workForm: WorkFormComponent ,private workService: WorkService, private http: HttpClient, private snackBar: MatSnackBar, private dialog: MatDialog) {
+  
+   }
 
   config: MatSnackBarConfig = {
     duration: 3000,
@@ -43,12 +51,54 @@ export class WorkListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAllWorks();    
+    this.getAllWorks();   
+    this.form = this.fb.group({
+      id: [''],
+      description: [''],
+      price: [''],
+      
+    } );
+    /*/this.form = new FormGroup({
+      id:  new FormControl(''),
+      description: new FormControl(''),
+      price: new FormControl(''),
+   }); */
     
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
+  }
+
+  openEdit(targetModal, work: Work) {
+    this.modalService.open(targetModal, {
+      backdrop: 'static',
+      size: 'medium'
+    });
+    this.form.patchValue( {
+      id: work.id,
+      description: work.description,
+      price: work.price,
+
+
+    });
+
+  }
+
+  onSave() {
+    const editURL = 'http://localhost:8080/api/works/' + this.form.value.id;
+    console.log(this.form.value);
+    let msg ='Successfully modified!';
+    this.http.put(editURL, this.form.value)
+      .subscribe((results) => {
+        this.success(msg);
+        this.ngOnInit();
+        this.modalService.dismissAll();
+      });
+  }
+
+  onClear() {
+    this.form.reset();
   }
 
 
@@ -62,18 +112,12 @@ export class WorkListComponent implements OnInit {
 
   }
 
-  getMachinesOfTheWork(id: number) : boolean {
-    const url = 'http://localhost:8080/api/works/' + id + '/machines';
-    this.http.get(url).subscribe(data => {
-      this.machinesOfTheWork = data;
-      console.log(data);
-    });
-    if(this.machinesOfTheWork.length === 0) {
-      return true;
-    } else {
-      return false;
-    }
+  onClose() {
+    this.form.reset();
+    //this.initializeFormGroup();
+    this.modalService.dismissAll();
   }
+
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
@@ -103,6 +147,7 @@ export class WorkListComponent implements OnInit {
   handleError(error: HttpErrorResponse){
     let errormessage = 'You cannot delete this work, because it is a property of a machine!';
     window.alert(errormessage);
+    this.warn(errormessage);
     return throwError(errormessage);
   }
 
@@ -117,6 +162,18 @@ export class WorkListComponent implements OnInit {
     this.ngOnInit();
     this.ngAfterViewInit();
   }
+
+  
+
+  success(msg) {
+    this.config['panelClass'] = ['notification', 'success'];
+    this.snackBar.open(msg, '',this.config);
+  }
+
+  
+
+  
+
 
 
 

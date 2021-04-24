@@ -5,14 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import rms.rmsmysql.entities.enums.Status;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -53,8 +53,8 @@ public class Machine {
     @Column(name = "single_work_limit", updatable = false)
     private Integer single_work_limit;
 
-    @Column(name = "identifier")
-    private UUID identifier;
+    @Column(name = "identifier", updatable = false, unique=true)
+    private Long identifier;
 
     @Column(name = "arriving_date", updatable = false)
     @DateTimeFormat(pattern= "yyyy-MM-dd")
@@ -63,10 +63,10 @@ public class Machine {
     @Column(name = "customers_email")
     private String customers_email;
 
-    /*@PrePersist
+    @PrePersist
     protected void onCreate() {
-        setIdentifier(UUID.randomUUID());
-    }*/
+        setIdentifier(UUID.randomUUID().getMostSignificantBits());
+    }
 
 
 

@@ -32,7 +32,7 @@ export class PersonService {
   }
 
 
-  getPersonById(id: string) {
+  getPersonById(id: number) {
     const url = this.person_url + '/' + id;
     return this.httpClient.get<Person>(url);
   }

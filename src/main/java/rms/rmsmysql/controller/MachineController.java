@@ -14,6 +14,7 @@ import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.UserRepository;
 import rms.rmsmysql.repository.WorkRepository;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -63,10 +64,14 @@ public class MachineController {
 
 
     @GetMapping("/{identifier}/machine")
-    public ResponseEntity<Machine> getMachineByIdentifier(@PathVariable("identifier") UUID identifier) {
-        Machine machine = machineRepository.findByIdentifier(identifier);
+    public ResponseEntity<Machine> getMachineByIdentifier(@PathVariable Long identifier) {
+        Optional<Machine> machine = machineRepository.findByIdentifier(identifier);
         System.out.println(identifier);
-        System.out.println(machine);
+        System.out.println(machine.get());
+        if(machine.isPresent()) {
+            return ResponseEntity.ok(machine.get());
+        }
+
 
         return ResponseEntity.notFound().build();
     }
@@ -84,7 +89,7 @@ public class MachineController {
     }
 
     @GetMapping("/{id}/identifier")
-    public ResponseEntity<UUID> getIdentifierByMachine(@PathVariable Integer id) {
+    public ResponseEntity<Long> getIdentifierByMachine(@PathVariable Integer id) {
         Optional<Machine> machine = machineRepository.findById(id);
         if (machine.isPresent()) {
             return ResponseEntity.ok(machine.get().getIdentifier());
@@ -97,9 +102,9 @@ public class MachineController {
     public ResponseEntity<Machine> post(@RequestBody Machine machine) {
         Machine savedMachine = machineRepository.save(machine);
         savedMachine.setStatus(Status.ON_WAITING_LIST);
-        UUID identifier = UUID.randomUUID();
-        System.out.println(identifier);
-        savedMachine.setIdentifier(identifier);
+        //Long identifier = UUID.randomUUID().getMostSignificantBits();
+        //System.out.println(identifier);
+        //savedMachine.setIdentifier(identifier);
         machineRepository.save(savedMachine);
         return ResponseEntity.ok(savedMachine);
     }

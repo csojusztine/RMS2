@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Person } from '../../model/person';
 import { User } from '../../model/user';
 import { AuthService } from '../../service/auth.service';
+import { PersonService } from '../../service/person.service';
 import { TokenStorageService } from '../../service/token-storage.service';
 
 @Component({
@@ -14,39 +16,60 @@ export class ProfileComponent implements OnInit {
 
   currentUser: any;
   editForm: FormGroup;
+  loggedUser: Person = new Person();
 
-  loggedUser: any;
-
-  constructor(private token: TokenStorageService, private fb: FormBuilder, private httpClient: HttpClient, private auth:AuthService) {
-    this.editForm = this.fb.group( {
+ 
+  constructor(private token: TokenStorageService, private fb: FormBuilder, private httpClient: HttpClient, private personS: PersonService) {
+    
+      this.editForm = this.fb.group( {
       name: [''],
       username: [''],
-      email: ['']
+      e_mail: ['']
     })  
   }
 
   ngOnInit() {
     this.currentUser = this.token.getUser();
-    this.loggedUser = this.auth.getLoggedUser();
-    
+    this.getUserById(this.currentUser.id);
     this.editForm.patchValue( {
       name: this.currentUser.name,
       username: this.currentUser.username,
-      email: this.currentUser.email,
+      e_mail: this.currentUser.email,
       
     });
-    this.loggedUser = this.token.getUser();
-    console.log(this.currentUser.email);
+    this.patchForm();
+
+    
+    //console.log(this.loggedUser);
   }
 
 
   onSubmit() {
-    const editUrl = 'http://localhost:8080/api/users/editUser/' + this.currentUser.id;
-    this.httpClient.patch(editUrl, this.editForm.value)
+    const editUrl = 'http://localhost:8080/api/users/' + this.loggedUser.id;
+    this.httpClient.put(editUrl, this.editForm.value)
       .subscribe((results) => {
+        this.currentUser = results;
         console.log(results);
+        this.patchForm();
         
       });
+  }
+
+  getUserById(id: number) {
+    this.personS.getPersonById(id).subscribe((data) => {
+      this.loggedUser = data;
+      console.log(data);
+    })
+  }
+
+  patchForm() {
+    this.editForm.patchValue( {
+      name: this.loggedUser.name,
+      username: this.loggedUser.username,
+        e_mail: this.loggedUser.e_mail,
+      
+    });
+  
   }
 
 
