@@ -74,7 +74,7 @@
       <mat-tab label="Sign In">
           <mat-card-content>
             <form name = "form"
-            (ngSubmit) = "f.form.valid && onSubmit()" #f = "ngForm" action="javascript:void(0);"  novalidate>
+             #f = "ngForm" action="javascript:void(0);"  novalidate>
               <mat-form-field>
                 <input
                   matInput placeholder="Username" 
@@ -113,11 +113,11 @@
                   Login failed: {{ errorMessage }}
                 </div>
               </div>
-              <mat-checkbox>Remember Me!</mat-checkbox>
+             
               <button
                 mat-raised-button
                 color="primary"
-                class="login-button">
+                class="login-button" (click) = "onSubmit()">
                 Sign In
               </button>
 
@@ -136,13 +136,14 @@
                 required
                 name="identifier"
                 ngModel
-                #username="ngModel">
+
+                #identifier="ngModel">
               <mat-icon matSuffix>perm_identity</mat-icon>
             </mat-form-field>
             <button
               mat-raised-button
               color="primary"
-              class="login-button">
+              class="login-button" (click) = "onCheck(machineDetailContent, identifier.value)">
               Check
             </button>
           </form>
@@ -151,6 +152,55 @@
     </mat-tab-group>
   </mat-card>
 </div>
+
+<ng-template #machineDetailContent let-modal>
+<mat-toolbar>
+  <span>{{"My machine"}}</span>
+  <span class="fill-remaining-space"></span>
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</mat-toolbar>
+<form [formGroup]="detailForm" class="normal-form" (submit)="onSubmit()">
+  <mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <input type="hidden" formControlName="id" >
+        <mat-form-field>
+          <input formControlName="manufacturer" matInput placeholder="Manufacturer*" readonly>   
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="type" matInput placeholder="Type" readonly>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="description_of_failure" matInput placeholder="Description of failure*" readonly>
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="reparation_price" matInput placeholder="Current reparation price" readonly>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+        <mat-form-field>
+          <input formControlName="status" matInput placeholder="Status" readonly>
+        </mat-form-field>
+        
+          <mat-select placeholder="Works">
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let work of worksByMachine">
+              <mat-option value="{{work.id}}">{{work.description -- work.price}}</mat-option>
+            </ng-container>
+          </mat-select>
+        
+        <mat-form-field>
+          <input formControlName="arriving_date" matInput placeholder="Date of arrival" readonly>
+        </mat-form-field>
+        
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
+</ng-template>
+
 
 
 

@@ -34,6 +34,11 @@ export class MachineService {
     const url = this.machine_API + '/' + id + '/works';
     return this.httpClient.get<Work[]>(url);
   }
+
+  getMachineByIdentifier(id: number) {
+    const url = 'http://localhost:8080/api/machines/' + id + '/machine';
+    return this.httpClient.get<Machine>(url);
+  }
   
 
 
