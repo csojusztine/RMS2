@@ -60,7 +60,7 @@ public class Machine {
     @DateTimeFormat(pattern= "yyyy-MM-dd")
     private LocalDate arriving_date = LocalDate.now();
 
-    @Column(name = "customers_email")
+    @Column(name = "customers_email", updatable = false)
     private String customers_email;
 
     @PrePersist

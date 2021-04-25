@@ -183,18 +183,36 @@
         <mat-form-field>
           <input formControlName="status" matInput placeholder="Status" readonly>
         </mat-form-field>
-        
-          <mat-select placeholder="Works">
-            <mat-option>None</mat-option>
-            <ng-container *ngFor="let work of worksByMachine">
-              <mat-option value="{{work.id}}">{{work.description -- work.price}}</mat-option>
-            </ng-container>
-          </mat-select>
-        
+
+
         <mat-form-field>
           <input formControlName="arriving_date" matInput placeholder="Date of arrival" readonly>
         </mat-form-field>
+        <h3>Works so far:</h3>
+
+          <table mat-table [dataSource]="dataSource" matSort>
+            <!-- Position Column -->
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+              <td mat-cell *matCellDef="let work"> {{work.id}} </td>
+            </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+              <td mat-cell *matCellDef="let work"> {{work.description}} </td>
+            </ng-container>
+            <!-- Weight Column -->
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+              <td mat-cell *matCellDef="let work"> {{work.price}} </td>
+            </ng-container>
         
+            
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        
+
       </div>
     </mat-grid-tile>
   </mat-grid-list>

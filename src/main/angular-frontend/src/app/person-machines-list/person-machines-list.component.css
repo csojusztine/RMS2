@@ -1,4 +1,5 @@
-div.border h2 i.fa.fa.user {
+span{
     font-family: 'Poppins', 'sans-serif';
-    text-align: end;
+    text-align:left;
+    font-size:x-large;
 }

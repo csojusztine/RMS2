@@ -71,7 +71,6 @@ export class EditMachineFormComponent implements OnInit {
   ngOnInit(): void {
     const id = +this.route.snapshot.params['id'];
     this.successfully = false;
-    this.notallow = false;
     this.getMachine(id);
     this.getAllWorks();
     this.getWorksbyMachine(id);   
@@ -81,6 +80,7 @@ export class EditMachineFormComponent implements OnInit {
   getMachine(id: number) {
     this.machineService.getMachineById(id).subscribe( data=> {
       this.machine = data;
+      console.log(data);
       this.openForedit(data);
     })
   }
@@ -99,13 +99,12 @@ export class EditMachineFormComponent implements OnInit {
     const url = 'http://localhost:8080/api/machines/' + this.machine.id + '/work';
     this.httpClient.post(url, work).pipe(catchError(this.handleError)).subscribe((results) => {
       this.successfully = true;
-      console.log(results);
-      this.getWorksbyMachine(this.machine.id);
-      this.getMachine(this.machine.id);
+      //console.log(results);
       
     })
+    this.getWorksbyMachine(this.machine.id);
+    this.getMachine(this.machine.id);
     this.successfully = false;
-    this.notallow = false;
   }
 
   deleteWorkFromMachine(work: Work) {
@@ -127,6 +126,7 @@ export class EditMachineFormComponent implements OnInit {
     this.httpClient.put(editUrl, this.editForm.value)
       .subscribe((results) => {
         console.log(results);
+        this.ngOnInit();
       });
   }
 
@@ -185,7 +185,7 @@ export class EditMachineFormComponent implements OnInit {
       type: this.machine.type,
       description: work.description,
       price: work.price,
-      e_mail: this.machine.customers_email,
+      customers_email: this.machine.customers_email,
       
 
     });
@@ -196,8 +196,8 @@ export class EditMachineFormComponent implements OnInit {
 
   handleError(error: HttpErrorResponse){
     console.log("nem tudja addolni");
-    this.notallow = true;
-    console.log(this.notallow);
+    let errormessage = 'You cannot add this one more!'
+    window.alert(errormessage);
     return throwError(error);
   }
 

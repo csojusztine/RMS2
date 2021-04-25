@@ -178,3 +178,12 @@ span {
     height: 40px;
     padding: 0px !important;
   }
+
+  mat-form-field input, h3 {
+    font-family: 'Poppins', 'sans-serif';
+  }
+
+  h3 {
+    text-decoration: underline;
+  }
+

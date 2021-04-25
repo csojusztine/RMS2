@@ -66,13 +66,11 @@ public class MachineController {
     @GetMapping("/{identifier}/machine")
     public ResponseEntity<Machine> getMachineByIdentifier(@PathVariable Long identifier) {
         Optional<Machine> machine = machineRepository.findByIdentifier(identifier);
-        System.out.println(identifier);
-        System.out.println(machine.get());
+        //System.out.println(identifier);
+        //System.out.println(machine.get());
         if(machine.isPresent()) {
             return ResponseEntity.ok(machine.get());
         }
-
-
         return ResponseEntity.notFound().build();
     }
 
@@ -158,7 +156,7 @@ public class MachineController {
         Optional<Machine> oMachine = machineRepository.findById(id);
         if (oMachine.isPresent()) {
             Machine m = oMachine.get();
-            if(m.getStatus() != Status.ON_WAITING_LIST) {
+            if(m.getStatus() == Status.UNDER_REPARATION) {
                 User u = m.getUser();
                 u.getMachines().remove(m);
                 userRepository.save(u);

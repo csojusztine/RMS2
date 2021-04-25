@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Machine } from './model/machine';
@@ -24,11 +25,17 @@ export class AppComponent {
   isLoginFailed = false;
   errorMessage = '';
 
+  displayedColumns = ['id', 'description', 'price'];
+
+  dataSource = new MatTableDataSource<Work>();
+
 
   detailForm: FormGroup;
   machine: Machine;
 
   worksByMachine: Work[];
+  loading:boolean;
+  selectedWork: any;
 
   showAdminBoard = false;
   showWorkerBoard = false;
@@ -41,8 +48,7 @@ export class AppComponent {
       reparation_price: [''],
       description_of_failure: [''],
       status: [''],
-      arriving_date: [''],
-      work: ['']
+      arriving_date: ['']
     });
   }
 
@@ -103,16 +109,18 @@ export class AppComponent {
       description_of_failure: machine.description_of_failure,
       status: machine.status,
       arriving_date: machine.arriving_date,
-      work: machine.works
+
       
       
     });
 
   }
 
-  getWorksbyMachine(id: number) {
+  getWorksbyMachine(id: number){
+    
     this.machineService.loadWorksforMachine(id).subscribe(data => {
       this.worksByMachine = data;
+      this.dataSource.data = data;
       console.log(data);
       
     })
