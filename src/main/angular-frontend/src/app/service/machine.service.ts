@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Contact } from '../model/contact';
 
 import { Machine } from '../model/machine';
 import { Person } from '../model/person';
@@ -38,6 +39,11 @@ export class MachineService {
   getMachineByIdentifier(id: number) {
     const url = 'http://localhost:8080/api/machines/' + id + '/machine';
     return this.httpClient.get<Machine>(url);
+  }
+
+  sendEmail(contact: Contact) {
+    const url = 'http://localhost:8080/api/contact';
+    return this.httpClient.post(url, contact);
   }
   
 

@@ -136,14 +136,7 @@
             </ng-select>
             <p>Selected work: {{selectedWork.description}}</p> 
             
-            <div class="alert alert-danger" role="alert" *ngIf = "notallow">
-              <button type="button" class="close" data-dismiss="alert">
-                <span aria-hidden="true"> &times; </span>
-              </button>
-              <strong>Hey!</strong> Work cannot be added to this machine!
-            </div>
-
-
+          
 
             <div class="alert alert-success alert-dismissible fade show" *ngIf = "successfully">
               <button type="button" class="close" data-dismiss="alert">
@@ -173,10 +166,7 @@
               </tbody>
             </table>
 
-        </div>
-
-        
-            
+        </div>     
       </div>
       
     
@@ -188,60 +178,73 @@
 </div>
 
 <ng-template #contentContact let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title2">Contact User</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-
-  <div class="modal-body">
-    <form [formGroup]="contactForm" novalidate>
-      
-
-      <div class="form-group">
-        <label>Machine name</label>
-        <div class="input-group">
-          <input name= "manufacturer" formControlName="manufacturer" class="form-control" readonly>
-        </div>
-      </div>
-      
-      <div class="form-group">
-         <label for="type">Type</label>
-         <div class="input-group">
-           <input name= "type" formControlName="type" class="form-control" readonly>
-         </div>
-      </div>
-      <div class="form-group">
-         <label for="description">Work description</label>
-         <div class="input-group">
-           <input name = "description" class="form-control" formControlName = "description" readonly>
-         </div>
-      </div>
-      <div class="form-group">
-        <label for="e_mail">Customers e-mail</label>
-        <div class="input-group">
-          <input name = "customers_email" type = "email" class="form-control" formControlName = "customers_email" readonly>
-        </div>
-     </div>
-      <div class="form-group">
-        <label for="price">Work price</label>
-        <div class="input-group">
-          <input name="price" class="form-control" formControlName = "price" readonly>
-        </div>
-     </div>
-      <div class="form-group">
-         <label for="note">Note from user</label>
-         <div class="input-group">
-           <textarea name="note" class="form-control" required></textarea>
-         </div>
-      </div>
+  <mat-toolbar>
+    <span>{{"Contact customer"}}</span>
+    <span class="fill-remaining-space"></span>
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+  </mat-toolbar>
   
-       
-      <div class="border text-center"> <button data-dismiss="modal" (click) = "sendEmail()"class="btn btn-info">Send</button> </div>
+  <form  [formGroup]="contactForm" class="normal-form" novalidate>
+     
+    
+    <mat-grid-list cols="2" rowHeight="300px">
+      <mat-grid-tile>
+        <div class="controles-container">
+          <mat-form-field>
+            <div class="form-group">
+							 
+                <input formControlName="manufacturer"  type = "text" 
+                class="form-control"  name = "manufacturer"  matInput placeholder="Manufacturer*" readonly>   
+              
+            </div>
+          </mat-form-field>
+
+          <mat-form-field>
+            <div class="form-group">
+							
+                <input type = "text"  formControlName="type" class="form-control"  id="type" name="type"   matInput placeholder="Type" readonly>
+              
+            </div>
+          </mat-form-field>
+
+          <mat-form-field>
+            <div class="form-group">
+							
+                <input type = "text"  formControlName="description" class="form-control" name = "description" matInput    placeholder="Description of the work*" readonly>
+
+          </div>
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div class="controles-container">
+          <mat-form-field>
+            <div class="form-group">
+							
+                <input type = "text" formControlName="price" class="form-control" name = "price" matInput   placeholder="Price of the work*" readonly>
+              </div>
+
+          </mat-form-field>
+
+          <mat-form-field>
+            <div class="form-group">
+
+            <input type = "text"  formControlName="customers_email"  class="form-control" name = "customers_email"  matInput   placeholder="Customers e-mail*" readonly>
+
+          </div>
+          </mat-form-field>
+
+          <mat-form-field>
+            <textarea formControlName = "note" name = "note" class = "form-control" matInput placeholder="Note to customer*" ></textarea>
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <div class="button-row">
+      <button mat-raised-button color="primary" (click) = "sendEmail()">Send</button>
+    </div>
+      
     </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
-  </div>
+  
 </ng-template>

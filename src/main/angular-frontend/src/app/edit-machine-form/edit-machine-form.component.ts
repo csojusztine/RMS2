@@ -12,6 +12,7 @@ import { WorkService } from '../service/work.service';
 
 import { catchError } from 'rxjs/operators'
 import { throwError } from 'rxjs';
+import { Contact } from '../model/contact';
 
 
 @Component({
@@ -36,12 +37,12 @@ export class EditMachineFormComponent implements OnInit {
 
   selectedWorks: Work[];
 
-  notallow: boolean;
-
 
   loading: boolean = false;
 
   successfully : boolean;
+
+  model = new Contact();
 
   
 
@@ -63,6 +64,7 @@ export class EditMachineFormComponent implements OnInit {
       description: [''],
       price: [''],
       customers_email: [''],
+      note: ['']
     })
     
     
@@ -180,17 +182,31 @@ export class EditMachineFormComponent implements OnInit {
       backdrop: 'static',
       size: 'lg'
     });
+    this.model.manufacturer= this.machine.manufacturer;
+      this.model.type = this.machine.type;
+      this.model.description= work.description;
+      this.model.price = work.price;
+      this.model.customers_email = this.machine.customers_email;
+
     this.contactForm.patchValue( {
       manufacturer: this.machine.manufacturer,
       type: this.machine.type,
       description: work.description,
       price: work.price,
-      customers_email: this.machine.customers_email,
+      customers_email: this.machine.customers_email, 
+      note: ""
       
-
     });
 
   }
+
+  
+  onClose() {
+    this.contactForm.reset();
+    //this.initializeFormGroup();
+    this.modalService.dismissAll();
+  }
+
 
 
 
@@ -202,11 +218,28 @@ export class EditMachineFormComponent implements OnInit {
   }
 
 
-  sendEmail() {
+  /*sendEmail() {
     const url = 'http://localhost:8080/api/contact';
     this.httpClient.post(url, this.contactForm.value).subscribe(result => {
       console.log("sikeresen elküldve");
     })
+  }*/
+
+  sendEmail() {
+    const url = 'http://localhost:8080/api/contact';
+    this.model.note = this.contactForm.value.note;
+    this.httpClient.post(url, this.model).subscribe(res => {
+      location.reload();
+    }, err =>  {
+      alert("An error has accoured while sending email");
+    });
+    /*this.machineService.sendEmail(this.model).subscribe(res => {
+      location.reload();
+    }, err =>  {
+      alert("An error has accoured while sending email");
+    });*/
   }
 
 }
+
+

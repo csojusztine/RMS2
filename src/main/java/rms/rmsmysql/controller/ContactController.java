@@ -5,6 +5,7 @@ package rms.rmsmysql.controller;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,24 +14,30 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import rms.rmsmysql.mail.ContactMailSender;
+import rms.rmsmysql.mail.ContactSender;
+import rms.rmsmysql.model.ContactModel;
 
 @CrossOrigin
+@RequestMapping("/api")
 @RestController
 public class ContactController {
+
+
+    @Autowired
+    private ContactMailSender contactMailSender;
 
     @Autowired
     private JavaMailSender mailSender;
 
-    @GetMapping("api/contact")
+    @GetMapping("/contact")
     public String showContactForm() {
         return "contact_form";
     }
 
-    @PostMapping("api/contact")
+    /*@PostMapping("/contact")
     public String submitContact(HttpServletRequest request) throws MessagingException {
         String manufacturer = request.getParameter("manufacturer");
         String type = request.getParameter("type");
@@ -58,7 +65,25 @@ public class ContactController {
 
 
         return "message";
-    }
+    }*/
 
+    @PostMapping("/contact")
+    public void sendContact(@RequestBody ContactModel contactModel,
+                             BindingResult bindingResult) throws MessagingException {
+        if(bindingResult.hasErrors()){
+            throw new ValidationException("Feedback has errors; Can not send it;");
+        }
+
+        this.contactMailSender.sendContact(
+                contactModel.getManufacturer(),
+                contactModel.getType(),
+                contactModel.getDescription(),
+                contactModel.getPrice(),
+                contactModel.getCustomers_email(),
+                contactModel.getNote()
+        );
+
+
+    }
 }
 

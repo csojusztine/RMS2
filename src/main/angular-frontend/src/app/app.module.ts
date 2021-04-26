@@ -107,6 +107,7 @@ import { WorkFormComponent } from './component/work-form/work-form.component';
     MatSnackBarModule,
     MatGridListModule,
     MatToolbarModule,
+    FormsModule
   ],
   providers: [PersonService, MachineService, AuthService, AuthInterceptor, WorkFormComponent, TokenStorageService,
     { 
