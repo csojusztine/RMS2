@@ -28,9 +28,13 @@ public class Work {
         @Column(name = "price")
         private Integer price;
 
+        private boolean isEnabled;
+
         @ManyToMany(mappedBy = "works")
 
         private List<Machine> machines;
+
+
 
 
 }

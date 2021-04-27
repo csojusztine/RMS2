@@ -55,7 +55,7 @@
       
       <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
         <li class="nav-item">
-          <a href="/profile" class="nav-link" routerLink="profile">Hello {{ username }}</a>
+          <a href="/profile" class="nav-link" routerLink="profile">Hello {{ name }}</a>
         </li>
         <li class="nav-item">
           <a href class="nav-link" (click)="logout()">LogOut</a>
@@ -159,8 +159,8 @@
   <span class="fill-remaining-space"></span>
   <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
 </mat-toolbar>
-<form [formGroup]="detailForm" class="normal-form" (submit)="onSubmit()">
-  <mat-grid-list cols="2" rowHeight="300px">
+<form [formGroup]="detailForm" class="normal-form" >
+  <mat-grid-list cols="2" rowHeight="410px">
     <mat-grid-tile>
       <div class="controles-container">
         <input type="hidden" formControlName="id" >

@@ -236,6 +236,10 @@ form.normal-form{
 }
 
 
+
+textarea {
+  height: 50px;
+}
 .btn-dialog-close{
   width: 45px;
   min-width: 0px !important;

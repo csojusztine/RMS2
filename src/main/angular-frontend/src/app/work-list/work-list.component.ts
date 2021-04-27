@@ -58,11 +58,6 @@ export class WorkListComponent implements OnInit {
       price: [''],
       
     } );
-    /*/this.form = new FormGroup({
-      id:  new FormControl(''),
-      description: new FormControl(''),
-      price: new FormControl(''),
-   }); */
     
   }
 

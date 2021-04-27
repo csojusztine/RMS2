@@ -14,6 +14,17 @@ body, header, button, table {
 	font-family: 'Poppins', sans-serif;				
 }
 
+snack-bar-container.success {
+  background-color: #5cb85c;
+  color : #fff;
+}
+
+snack-bar-container.warn {
+  background-color: #f99157;
+  color : #fff;
+}
+
+
 
 .border{
     padding: 10px;

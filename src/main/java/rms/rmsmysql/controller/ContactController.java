@@ -16,9 +16,17 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import rms.rmsmysql.entities.ConfirmationToken;
+import rms.rmsmysql.entities.Work;
 import rms.rmsmysql.mail.ContactMailSender;
 import rms.rmsmysql.mail.ContactSender;
 import rms.rmsmysql.model.ContactModel;
+import rms.rmsmysql.repository.ConfirmationTokenRepository;
+import rms.rmsmysql.repository.WorkRepository;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Optional;
 
 @CrossOrigin
 @RequestMapping("/api")
@@ -30,46 +38,14 @@ public class ContactController {
     private ContactMailSender contactMailSender;
 
     @Autowired
-    private JavaMailSender mailSender;
+    private WorkRepository workRepository;
 
-    @GetMapping("/contact")
-    public String showContactForm() {
-        return "contact_form";
-    }
-
-    /*@PostMapping("/contact")
-    public String submitContact(HttpServletRequest request) throws MessagingException {
-        String manufacturer = request.getParameter("manufacturer");
-        String type = request.getParameter("type");
-        String description = request.getParameter("description");
-        String e_mail = request.getParameter("e_mail");
-        String price = request.getParameter("price");
-        String note = request.getParameter("note");
-
-        MimeMessage message = mailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(message);
-
-
-        String mailSubject = "RMS Company has sent a message";
-        String mailContent = "<p><b>Dear Customer! Your machine: " + manufacturer + type + "needs serious repair</p>";
-        mailContent+="Work dexcription for the machine" + description;
-        mailContent+= "Price of the work" + price;
-        mailContent+= "Any note from the worker: " + note;
-
-        helper.setFrom("juszti27@gmail.com");
-        helper.setTo("ivic46@gmail.com");
-        helper.setSubject(mailSubject);
-        helper.setText(mailContent, true);
-
-        mailSender.send(message);
-
-
-        return "message";
-    }*/
+    @Autowired
+    private ConfirmationTokenRepository confirmationTokenRepository;
 
     @PostMapping("/contact")
     public void sendContact(@RequestBody ContactModel contactModel,
-                             BindingResult bindingResult) throws MessagingException {
+                             BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
         if(bindingResult.hasErrors()){
             throw new ValidationException("Feedback has errors; Can not send it;");
         }
@@ -80,10 +56,29 @@ public class ContactController {
                 contactModel.getDescription(),
                 contactModel.getPrice(),
                 contactModel.getCustomers_email(),
-                contactModel.getNote()
+                contactModel.getNote(),
+                contactModel.getWork()
         );
 
 
+    }
+
+    @GetMapping("/confirm-work")
+    public ModelAndView confirmWork(ModelAndView modelAndView, @RequestParam("token")String confirmationToken) {
+        ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+        String pageTitle;
+        if(token != null) {
+            Optional<Work> work = workRepository.findById(token.getWork().getId());
+            Work _work = work.get();
+            _work.setEnabled(true);
+            workRepository.save(_work);
+            pageTitle = "Work confirmed!";
+            modelAndView.addObject("pagetitle", pageTitle);
+        } else {
+            modelAndView.addObject("message","The link is invalid or broken!");
+            modelAndView.setViewName("error");
+        }
+        return modelAndView;
     }
 }
 

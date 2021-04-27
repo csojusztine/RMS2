@@ -167,6 +167,13 @@ span {
   padding: 5%;    
 }
 
+.controles-container table{
+ font-family: 'Poppins', 'sans-serif';  
+}
+
+
+
+
 .controles-container > * {
   width: 100%;
   }

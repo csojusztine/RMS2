@@ -21,6 +21,7 @@ export class AppComponent {
   userId: number;
   isLoggedIn = false;
   username: string;
+  name:string;
   form: any = {};
   isLoginFailed = false;
   errorMessage = '';
@@ -34,7 +35,6 @@ export class AppComponent {
   machine: Machine;
 
   worksByMachine: Work[];
-  loading:boolean;
   selectedWork: any;
 
   showAdminBoard = false;
@@ -60,6 +60,7 @@ export class AppComponent {
       const user = this.tokenStorageService.getUser();
       this.roles = user.roles;
       this.userId = user.id;
+      this.name = user.name;
 
       this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
       this.showWorkerBoard = this.roles.includes('ROLE_WORKER');

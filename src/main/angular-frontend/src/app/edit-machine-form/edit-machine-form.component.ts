@@ -13,6 +13,7 @@ import { WorkService } from '../service/work.service';
 import { catchError } from 'rxjs/operators'
 import { throwError } from 'rxjs';
 import { Contact } from '../model/contact';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class EditMachineFormComponent implements OnInit {
 
   
 
-  constructor(private modalService: NgbModal, private workService: WorkService, private httpClient: HttpClient, private fb: FormBuilder, private route: ActivatedRoute, private machineService: MachineService) { 
+  constructor(private snackBar: MatSnackBar, private modalService: NgbModal, private workService: WorkService, private httpClient: HttpClient, private fb: FormBuilder, private route: ActivatedRoute, private machineService: MachineService) { 
     this.editForm = this.fb.group( {
       id: [''],
       manufacturer: [''],
@@ -68,6 +69,12 @@ export class EditMachineFormComponent implements OnInit {
     })
     
     
+  }
+
+  config: MatSnackBarConfig = {
+    duration: 7000,
+    horizontalPosition: 'right',
+    verticalPosition: 'top'
   }
 
   ngOnInit(): void {
@@ -98,21 +105,27 @@ export class EditMachineFormComponent implements OnInit {
   }
  
  addWork(work : Work) {
-    const url = 'http://localhost:8080/api/machines/' + this.machine.id + '/work';
-    this.httpClient.post(url, work).pipe(catchError(this.handleError)).subscribe((results) => {
-      this.successfully = true;
-      //console.log(results);
-      
-    })
-    this.getWorksbyMachine(this.machine.id);
-    this.getMachine(this.machine.id);
-    this.successfully = false;
+    if(this.machine.single_work_limit < work.price || this.machine.reparation_limit < (this.machine.reparation_price + work.price)) {
+      this.warn('Limit reached, ask for a permission!');
+    } else {
+      const url = 'http://localhost:8080/api/machines/' + this.machine.id + '/work';
+      this.httpClient.post(url, work).pipe(catchError(this.handleError)).subscribe((results) => {
+        this.successfully = true;
+        //console.log(results);
+        
+      })
+      this.getWorksbyMachine(this.machine.id);
+      this.getMachine(this.machine.id);
+      this.successfully = false;
+    }
+    
   }
 
   deleteWorkFromMachine(work: Work) {
     const url = 'http://localhost:8080/api/machines/' + this.machine.id + '/deleteWork';
     this.httpClient.put(url, work).subscribe((results) => {
       this.ngOnInit();
+      this.success('Work deleted successfully!');
     })
   }
 
@@ -127,7 +140,7 @@ export class EditMachineFormComponent implements OnInit {
     const editUrl = 'http://localhost:8080/api/machines/' + this.machine.id;
     this.httpClient.put(editUrl, this.editForm.value)
       .subscribe((results) => {
-        console.log(results);
+        this.success('Machine updated!');
         this.ngOnInit();
       });
   }
@@ -187,6 +200,7 @@ export class EditMachineFormComponent implements OnInit {
       this.model.description= work.description;
       this.model.price = work.price;
       this.model.customers_email = this.machine.customers_email;
+      this.model.work = work;
 
     this.contactForm.patchValue( {
       manufacturer: this.machine.manufacturer,
@@ -218,27 +232,27 @@ export class EditMachineFormComponent implements OnInit {
   }
 
 
-  /*sendEmail() {
-    const url = 'http://localhost:8080/api/contact';
-    this.httpClient.post(url, this.contactForm.value).subscribe(result => {
-      console.log("sikeresen elküldve");
-    })
-  }*/
-
   sendEmail() {
     const url = 'http://localhost:8080/api/contact';
     this.model.note = this.contactForm.value.note;
     this.httpClient.post(url, this.model).subscribe(res => {
+      this.success('The email is successfully sent!');
       location.reload();
+      
     }, err =>  {
       alert("An error has accoured while sending email");
     });
-    /*this.machineService.sendEmail(this.model).subscribe(res => {
-      location.reload();
-    }, err =>  {
-      alert("An error has accoured while sending email");
-    });*/
   }
+  warn(msg) {
+    this.config['panelClass'] = ['notification', 'warn'];
+    this.snackBar.open(msg, '', this.config);
+  }
+
+  success(msg) {
+    this.config['panelClass'] = ['notification', 'success'];
+    this.snackBar.open(msg, '',this.config);
+  }
+
 
 }
 

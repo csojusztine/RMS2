@@ -4,7 +4,7 @@
 
 
 <div class="container">
-  <form action="action_page.php" [formGroup] = "editForm" (ngSubmit)="onSubmit()" novalidate>
+  <form action="action_page.php" [formGroup] = "editForm"  novalidate>
 
       <div class="row">
         <div class="col-25">
@@ -121,8 +121,6 @@
       <div class="row">
         <div class="col-25">
           <label>New Works</label>
-          <button class="btn btn-primary btn-sm"  (click) = "addWork(selectedWork)">
-            <i class="fa fa-plus-square"></i>Add work</button>
         </div>
         <div class="col-75">
 
@@ -135,6 +133,10 @@
                 >
             </ng-select>
             <p>Selected work: {{selectedWork.description}}</p> 
+
+            
+            <button class="btn btn-primary btn-sm"  (click) = "addWork(selectedWork)">
+              <i class="fa fa-plus-square"></i>Add work</button>
             
           
 
@@ -144,9 +146,9 @@
               </button>
               <strong>Success!</strong> Work added to this machine!
             </div>
-            <button (click) = "openContact(contentContact, selectedWork)">Open Contact</button>
+            <button class="btn btn-primary btn-sm"  (click) = "openContact(contentContact, selectedWork)">Open Contact</button>
           
-            <h2>Added works to this machine: </h2>
+            <h2>Added works to this machine: </h2> 
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
@@ -170,8 +172,9 @@
       </div>
       
     
-      <div class="row">
-        <input type="submit" value="Submit">
+      <div class="button-row">
+        <button mat-raised-button color="primary" (click) = "onSubmit()">Submit</button>
+        
       </div>
   </form>
   
