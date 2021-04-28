@@ -154,6 +154,7 @@ export class WorkListComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = "50%";
     this.dialog.open(WorkFormComponent,dialogConfig);
+    
     this.ngOnInit();
     this.ngAfterViewInit();
   }

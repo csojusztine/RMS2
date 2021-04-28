@@ -33,6 +33,7 @@ export class WorkFormComponent implements OnInit {
       this.initializeFormGroup();
       this.success(':: Submitted successfully');
       this.onClose();
+      location.reload();
     }
   }
 

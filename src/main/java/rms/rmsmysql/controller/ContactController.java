@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import rms.rmsmysql.entities.ConfirmationToken;
+import rms.rmsmysql.entities.Machine;
 import rms.rmsmysql.entities.Work;
 import rms.rmsmysql.mail.ContactMailSender;
 import rms.rmsmysql.mail.ContactSender;
@@ -32,7 +33,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 @CrossOrigin
-@RequestMapping()
+@RequestMapping
 @RestController
 public class ContactController {
 
@@ -72,6 +73,9 @@ public class ContactController {
     public String confirmation(@RequestParam("token")String confirmationToken, Model model) {
         ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
 
+        if(token != null && token.isEnabled() == true) {
+            model.addAttribute("message","You already confirmed it");
+        }
         if(token != null) {
             Optional<Work> work = workRepository.findById(token.getWork().getId());
             logger.info(work.get().getDescription());
@@ -86,5 +90,17 @@ public class ContactController {
 
         return "Confirmed";
     }
+
+    /*@PostMapping("/sendIdentifier")
+    public void sendIdentifier(@RequestBody Machine machine,
+                            BindingResult bindingResult) throws MessagingException, UnsupportedEncodingException {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException("Feedback has errors; Can not send it;");
+        }
+
+        this.contactMailSender.sendIdentifier(machine);
+
+
+    }*/
 }
 

@@ -120,7 +120,7 @@ export class PersonListComponent implements OnInit {
 
 
   onSave() {
-    const editURL = 'http://localhost:8080/api/users/editUser/' + this.editForm.value.id;
+    const editURL = 'http://localhost:8080/api/users/' + this.editForm.value.id;
     console.log(this.editForm.value);
     this.httpClient.put(editURL, this.editForm.value)
       .subscribe((results) => {

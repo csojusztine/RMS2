@@ -27,6 +27,9 @@ export class MachineListComponent implements OnInit {
 
   loggedUser: User;
 
+  sendIdUrl: string;
+  success: boolean;
+
 
   machine: Machine;
 
@@ -37,7 +40,7 @@ export class MachineListComponent implements OnInit {
   deleteId: any;
 
   constructor(private authService: AuthService, private personService: PersonService, private route: ActivatedRoute, private machineService: MachineService, private modalService: NgbModal, private httpClient: HttpClient) { 
-    
+    this.sendIdUrl = 'http://localhost:8080/sendIdentifier';
   }
   
   ngOnInit(): void {
@@ -63,9 +66,9 @@ export class MachineListComponent implements OnInit {
   }
 
 
-  onSubmitaMachine() {
-      
+  onSubmitaMachine() {   
       const url = 'http://localhost:8080/api/users/addMachine/' + this.loggedUserId;
+      
       this.httpClient.post(url,this.machine).subscribe((result) => {
         console.log(result);
         this.ngOnInit();
@@ -115,7 +118,7 @@ export class MachineListComponent implements OnInit {
     this.httpClient.post(url, f.value)
       .subscribe((result) => {
         this.ngOnInit(); //reload the table
-      });
+      });  
     this.modalService.dismissAll(); //dismiss the modal
   }
 

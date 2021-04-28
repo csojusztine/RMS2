@@ -11,10 +11,13 @@ import rms.rmsmysql.entities.Machine;
 import rms.rmsmysql.entities.User;
 import rms.rmsmysql.entities.Work;
 import rms.rmsmysql.entities.enums.Status;
+import rms.rmsmysql.mail.ContactMailSender;
 import rms.rmsmysql.repository.MachineRepository;
 import rms.rmsmysql.repository.UserRepository;
 import rms.rmsmysql.repository.WorkRepository;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.UUID;
@@ -29,6 +32,9 @@ public class MachineController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ContactMailSender contactMailSender;
 
     private static final Logger logger = LoggerFactory.getLogger(MachineController.class);
 
@@ -98,12 +104,10 @@ public class MachineController {
     }
 
     @PostMapping("/addMachine")
-    public ResponseEntity<Machine> post(@RequestBody Machine machine) {
+    public ResponseEntity<Machine> post(@RequestBody Machine machine) throws MessagingException, UnsupportedEncodingException {
         Machine savedMachine = machineRepository.save(machine);
         savedMachine.setStatus(Status.ON_WAITING_LIST);
-        //Long identifier = UUID.randomUUID().getMostSignificantBits();
-        //System.out.println(identifier);
-        //savedMachine.setIdentifier(identifier);
+        contactMailSender.sendIdentifier(machine);
         machineRepository.save(savedMachine);
         return ResponseEntity.ok(savedMachine);
     }
