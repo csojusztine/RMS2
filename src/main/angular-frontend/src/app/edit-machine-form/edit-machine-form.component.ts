@@ -105,21 +105,26 @@ export class EditMachineFormComponent implements OnInit {
   }
  
  addWork(work : Work) {
-    if(this.machine.single_work_limit < work.price || this.machine.reparation_limit < (this.machine.reparation_price + work.price)) {
+    if(this.machine.single_work_limit > work.price || this.machine.reparation_limit < (this.machine.reparation_price + work.price)) {
       this.warn('Limit reached, ask for a permission!');
+
     } else {
       const url = 'http://localhost:8080/api/machines/' + this.machine.id + '/work';
       this.httpClient.post(url, work).pipe(catchError(this.handleError)).subscribe((results) => {
+        this.success('Work added succesfully!');
         this.successfully = true;
-        //console.log(results);
+        this.ngOnInit();
         
       })
-      this.getWorksbyMachine(this.machine.id);
-      this.getMachine(this.machine.id);
-      this.successfully = false;
+     
+      //this.getMachine(this.machine.id);
+      //this.successfully = false;
     }
     
+      
   }
+    
+  
 
   deleteWorkFromMachine(work: Work) {
     const url = 'http://localhost:8080/api/machines/' + this.machine.id + '/deleteWork';
@@ -233,7 +238,7 @@ export class EditMachineFormComponent implements OnInit {
 
 
   sendEmail() {
-    const url = 'http://localhost:8080/api/contact';
+    const url = 'http://localhost:8080/contact';
     this.model.note = this.contactForm.value.note;
     this.httpClient.post(url, this.model).subscribe(res => {
       this.success('The email is successfully sent!');

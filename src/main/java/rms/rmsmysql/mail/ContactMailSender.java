@@ -48,7 +48,7 @@ public class ContactMailSender implements ContactSender{
         mailContent+="<p><b>Work description for the machine: </b>" + description + "</p>";
         mailContent+= "<p><b>Price of the work: </b>" + price.toString() + " Ft</p>";
         mailContent+= "<p><b>Any note from the worker: </b>" + note + "</p>";
-        mailContent+= "<p>To confirm your work, please click here: " + "http://localhost:8080/confirm-work?token="+ confirmationToken.getConfirmationToken();
+        mailContent+= "<p>To confirm your work, please click here: " + "http://localhost:8080/confirmation?token="+ confirmationToken.getConfirmationToken();
 
         mailContent+="<p><b>RMS Company </b></p>";
 

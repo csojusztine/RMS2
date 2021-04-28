@@ -26,9 +26,14 @@ public class ConfirmationToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(targetEntity = Work.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "work_id")
+    @Column
+    private boolean isEnabled;
+
+    @ManyToOne(targetEntity = Work.class, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false)
     private Work work;
+
+
 
     public ConfirmationToken(Work work) {
         this.work = work;

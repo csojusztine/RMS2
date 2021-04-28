@@ -7,6 +7,8 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ValidationException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.mail.SimpleMailMessage;
@@ -14,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,10 +32,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 
 @CrossOrigin
-@RequestMapping("/api")
+@RequestMapping()
 @RestController
 public class ContactController {
 
+
+    private static final Logger logger = LoggerFactory.getLogger(MachineController.class);
 
     @Autowired
     private ContactMailSender contactMailSender;
@@ -63,22 +68,23 @@ public class ContactController {
 
     }
 
-    @GetMapping("/confirm-work")
-    public ModelAndView confirmWork(ModelAndView modelAndView, @RequestParam("token")String confirmationToken) {
+    @GetMapping("/confirmation")
+    public String confirmation(@RequestParam("token")String confirmationToken, Model model) {
         ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
-        String pageTitle;
+
         if(token != null) {
             Optional<Work> work = workRepository.findById(token.getWork().getId());
-            Work _work = work.get();
-            _work.setEnabled(true);
-            workRepository.save(_work);
-            pageTitle = "Work confirmed!";
-            modelAndView.addObject("pagetitle", pageTitle);
+            logger.info(work.get().getDescription());
+
+            token.setEnabled(true);
+            confirmationTokenRepository.save(token);
+
+            model.addAttribute("message", "The work is successfully confirmed!");
         } else {
-            modelAndView.addObject("message","The link is invalid or broken!");
-            modelAndView.setViewName("error");
+            model.addAttribute("message", "Your activation token is invalid!");
         }
-        return modelAndView;
+
+        return "Confirmed";
     }
 }
 

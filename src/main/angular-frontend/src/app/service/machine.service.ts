@@ -41,11 +41,7 @@ export class MachineService {
     return this.httpClient.get<Machine>(url);
   }
 
-  sendEmail(contact: Contact) {
-    const url = 'http://localhost:8080/api/contact';
-    return this.httpClient.post(url, contact);
-  }
-  
+
 
 
   loadUserForMAchine(id: number) {

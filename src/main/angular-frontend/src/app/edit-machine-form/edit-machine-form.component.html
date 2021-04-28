@@ -138,7 +138,8 @@
             <button class="btn btn-primary btn-sm"  (click) = "addWork(selectedWork)">
               <i class="fa fa-plus-square"></i>Add work</button>
             
-          
+            <button class="btn btn-primary btn-sm"  (click) = "openContact(contentContact, selectedWork)">Open Contact</button>
+            <br>
 
             <div class="alert alert-success alert-dismissible fade show" *ngIf = "successfully">
               <button type="button" class="close" data-dismiss="alert">
@@ -146,8 +147,7 @@
               </button>
               <strong>Success!</strong> Work added to this machine!
             </div>
-            <button class="btn btn-primary btn-sm"  (click) = "openContact(contentContact, selectedWork)">Open Contact</button>
-          
+
             <h2>Added works to this machine: </h2> 
             <table class="table table-bordered table-striped">
               <thead>

@@ -4,6 +4,7 @@ package rms.rmsmysql.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import rms.rmsmysql.entities.ConfirmationToken;
 import rms.rmsmysql.entities.Machine;
 import rms.rmsmysql.entities.User;
 import rms.rmsmysql.entities.Work;
